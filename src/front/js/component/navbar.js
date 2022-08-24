@@ -4,34 +4,63 @@ import { Link } from "react-router-dom";
 export const Navbar = () => {
 	return (
 
+
 		<nav className="navbar navbar-expand-lg navbar-light bg-light">
-			<div className="container-fluid">
-				<a className="navbar-brand" href="#">Quienes somos</a>
-				<button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-					<span className="navbar-toggler-icon"></span>
+
+			<div className="container">
+				<a className="navbar-brand me-2" href="/">
+					<img
+						src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp"
+						height="16"
+						alt="MDB Logo"
+						loading="lazy"
+						style={{ mt: "-1px" }} />
+				</a>
+
+
+				<button
+					className="navbar-toggler"
+					type="button"
+					data-mdb-toggle="collapse"
+					data-mdb-target="#navbarButtonsExample"
+					aria-controls="navbarButtonsExample"
+					aria-expanded="false"
+					aria-label="Toggle navigation">
+					<i className="fas fa-bars"></i>
 				</button>
-				<div className="collapse navbar-collapse" id="navbarNav">
-					<ul className="navbar-nav">
+
+
+
+				<div className="collapse navbar-collapse" id="navbarButtonsExample">
+
+					<ul className="navbar-nav me-auto mb-2 mb-lg-0">
 						<li className="nav-item">
-							<a className="nav-link active" aria-current="page" href="#">Home</a>
-						</li>
-						<li className="nav-item">
-							<Link to="/menú">
-								<a className="nav-link" href="#">Menú</a>
-							</Link>
-						</li>
-						<li className="nav-item">
-							<a className="nav-link" href="#">Login/Registro</a>
+							<a className="nav-link" href="/QuienesSomos"> Quienes somos</a>
 						</li>
 					</ul>
+
+
+					<div className="d-flex align-items-center">
+						<ul className="navbar-nav mb-2 mb-lg-0">
+							<button type="button" class="btn btn-primary me-3">
+								Register
+							</button>
+
+
+
+
+							<li className="nav-item">
+								<a className="nav-link" href="/Miperfil">Login</a>
+							</li>
+
+						</ul>
+					</div>
 				</div>
-				<div className="nav-item">
-					<Link to="/carrito">
-						<a className="align-self-end btn btn-outline-success" href="#" tabindex="-1" aria-disabled="true">Carrito</a>
-					</Link>
-				</div>
+
 			</div>
+
 		</nav>
+
 
 	);
 };
