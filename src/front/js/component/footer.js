@@ -3,7 +3,7 @@ import React, { Component } from "react";
 export const Footer = () => {
 	return (
 
-<footer className="text-center text-lg-start bg-light text-muted">
+<footer className="text-center text-lg-start bg-light text-muted fixed-bottom">
  
   <section className="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
    
@@ -106,7 +106,7 @@ export const Footer = () => {
   
 
   
-  <div className="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+  <div className="text-center p-4" style={{ background: "rgba(0, 0, 0, 0.05)"}}>
     © 2021 Copyright:
     <a className="text-reset fw-bold" href="https://mdbootstrap.com/">MDBootstrap.com</a>
   </div>
