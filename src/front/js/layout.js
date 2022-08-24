@@ -3,14 +3,16 @@ import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 
 import { Home } from "./pages/home";
-import { Demo } from "./pages/demo";
+import { Customer } from "./pages/customer";
 import { Single } from "./pages/single";
 import { Carrito } from "./pages/carrito";
 import injectContext from "./store/appContext";
-
-import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Menú } from "./component/menú";
+import { Miperfil } from "./pages/MiPerfil";
+import { QuienesSomos } from "./pages/QuienesSomos";
+import { Navbar } from "./component/navbar";
+
 
 //create your first component
 const Layout = () => {
@@ -22,10 +24,11 @@ const Layout = () => {
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
-                    <Navbar />
                     <Routes>
                         <Route element={<Home />} path="/" />
-                        <Route element={<Demo />} path="/demo" />
+                        <Route element={<Customer />} path="/customer" />
+                        <Route element={<Miperfil />} path="/Miperfil" />
+                        <Route element={<QuienesSomos />} path="/QuienesSomos" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
                         <Route element={<Carrito />} path="/carrito" />
