@@ -2,7 +2,7 @@ import React from "react";
 import { FaPizzaSlice } from "react-icons/fa";
 export const Footer = () => {
   return (
-    <footer className="text-center text-lg-start bg-light text-muted fixed-bottom">
+    <footer className="footer mt-auto py-3 text-center">
       <section className="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
         <div className="me-5 d-none d-lg-block">
           <span>Get connected with us on social networks:</span>
@@ -34,7 +34,7 @@ export const Footer = () => {
           <div className="row mt-3">
             <div className="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
               <h6 className="text-uppercase fw-bold mb-4">
-                <FaPizzaSlice/> Localización 
+                <FaPizzaSlice /> Localización
               </h6>
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3037.453491523754!2d-3.7002924854345727!3d40.42095616330786!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4229c00799ed5d%3A0xdb745a3936539667!2sPORTAL%2010%20-%20Pizzas%20Artesanas%F0%9F%8D%95!5e0!3m2!1ses!2ses!4v1661363301167!5m2!1ses!2ses"
