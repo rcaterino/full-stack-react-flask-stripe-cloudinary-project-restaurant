@@ -8,13 +8,6 @@ from api.utils import generate_sitemap, APIException
 api = Blueprint('api', __name__)
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
-# get all the people
-@api.route('/users', methods=['GET'])
-def getUsers():
-    people_query = User.query.all()
-    return jsonify(people_query), 200
-
-#----------------------------------------------------------------------------------------------------------------------------------------------------------
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
 
@@ -23,6 +16,21 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
+# get all the people
+@api.route('/users', methods=['GET'])
+def getUsers():
+    people_query = User.query.all()
+    return jsonify(people_query), 200
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
+# get one person
+@api.route('/user/<int:id>', methods=['GET'])
+def getUser(id):
+    user= User.query.filter_by(id)
+    return jsonify(user), 200
+        
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 @api.route('/category', methods=['GET'])
@@ -40,6 +48,4 @@ def getProduct():
 def getAddresses():
     addresses_query = Addresses.query.all()
     return jsonify(addresses_query), 200 
-
-
-
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
