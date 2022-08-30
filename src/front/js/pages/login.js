@@ -5,12 +5,12 @@ import { Context } from "../store/appContext";
 
 export const Login = () => {
   const { store, actions } = useContext(Context);
-  const [ email, setEmail ] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  let navigate = useNavigate ();
-  
-  const handleClick =()=> {
-    actions.login (email,password);
+  let navigate = useNavigate();
+
+  const handleClick = () => {
+    actions.login(email, password);
     navigate("/")
   }
 
@@ -19,9 +19,9 @@ export const Login = () => {
     /* en caso que si tenemos token guardado en la sesión, renderizamos el mensaje que ya el usuaio se encuentra logeado */
     <>
       {!store.token ||
-      store.token === null ||
-      store.token === "" ||
-      store.token === undefined ? (
+        store.token === null ||
+        store.token === "" ||
+        store.token === undefined ? (
         <div className="p-3 border-0">
           <h1 className="text-center">Iniciar Sesión</h1>
           <div className="d-grid gap-2">
