@@ -2,6 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			message: null,
+			token: null,
 			demo: [
 				{
 					title: "FIRST",
@@ -20,6 +21,37 @@ const getState = ({ getStore, getActions, setStore }) => {
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
+
+			/* Función para optener token almacenado en sessionStorage */
+			getTokenFromSession: () => {
+				const token = sessionStorage.getItem("token");
+				if (token && token !== "" && token !== undefined)
+				  setStore({ token: token });
+			  },
+
+			login: async(email,password)=>{
+				const opts = {
+					method: "POST", 
+					headers: {"Content-Type":"aplication/json",},
+					body: JSON.stringify({email:email,password:password}),
+				};
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + "api/token", opts);
+					if (resp.status !== 200) {
+					  new Error("error from login in context");
+					  alert("usuario no registrado");
+					  return false;
+					}
+					const data = await resp.json();
+					sessionStorage.setItem("token", data.access_token);
+					setStore({ token: data.access_token });
+					return true;
+				  } catch (error) {
+					console.error(error);
+				  }
+
+			},
+
 
 			getMessage: async () => {
 				try{

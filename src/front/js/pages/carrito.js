@@ -1,7 +1,12 @@
 import React from "react";
+import { Navbar } from "../component/navbar";
 
 export const Carrito = () => {
     return (
-        <h1>Hola soy el Carrito</h1>
+        <div>
+            <Navbar />
+            <h1>Hola soy el Carrito</h1>
+
+        </div>
     )
 }
