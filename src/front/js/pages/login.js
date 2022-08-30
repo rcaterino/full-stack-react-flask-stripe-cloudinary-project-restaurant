@@ -52,7 +52,7 @@ export const Login = () => {
             </button>
             <div className="d-grid gap-2 text-center">
               <span>¿No tienes una cuenta?{"   "}</span>
-              <Link className="d-grid gap-2 text-center" to="/registro">
+              <Link className="d-grid gap-2 text-center" to="/register">
                 <button type="submit" className="btn btn-primary">
                   Regístrate
                 </button>
