@@ -53,7 +53,7 @@ class Product(db.Model):
     id_product = db.Column(db.Integer, unique=True, primary_key=True)
     name = db.Column(db.String(120), unique=False, nullable=False)
     price = db.Column(db.Float(precision=None, asdecimal=False, decimal_return_scale=None))
-    acitve = db.Column(db.Boolean, unique=False, nullable=False)
+    active = db.Column(db.Boolean, unique=False, nullable=False)
     category_id = db.Column(ForeignKey(Category.id))
 
     def __repr__(self):
@@ -64,7 +64,7 @@ class Product(db.Model):
             "id_product": self.id_product,
             "name": self.name,
             "price": self.price,
-            "active": self.acitve,
+            "active": self.active,
         }
 #---------------------------------------------------------------------------------
 
@@ -78,14 +78,14 @@ class Addresses(db.Model):
     country = db.Column(db.String(80), unique=False, nullable=False)
 
     def __repr__(self):
-        return f'<User {self.id_adress}>'
+        return f'<User {self.id_address}>'
 
     def serialize(self):
         return {
-            "id_adress": self.id_adress,
+            "id_address": self.id_address,
             "id_user": self.id_user,
-            "adress_number": self.address_name,
-            "adress": self.address,
+            "address_name": self.address_name,
+            "address": self.address,
             "postal_code": self.postal_code,
             "city": self.city,
             "country": self.country
