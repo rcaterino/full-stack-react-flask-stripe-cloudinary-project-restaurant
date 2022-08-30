@@ -7,6 +7,16 @@ from api.utils import generate_sitemap, APIException
 
 api = Blueprint('api', __name__)
 
+# Create a route to authenticate your users and return JWTs. The
+# create_access_token() function is used to actually generate the JWT.
+@api.route("/token", methods=["POST"])
+def create_token():
+    info_request = request.get_json()
+    query = User.query.filter_by(email = info_request['email'], password = info_request['password']).first()
+    user = query.serialize()
+    access_token = create_access_token(identity=user['email'])
+    return jsonify(access_token=access_token), 200
+
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 # get all the people
 @api.route('/users', methods=['GET'])
