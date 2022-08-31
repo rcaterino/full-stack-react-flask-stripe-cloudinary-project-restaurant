@@ -78,7 +78,7 @@ class Addresses(db.Model):
     country = db.Column(db.String(80), unique=False, nullable=False)
 
     def __repr__(self):
-        return f'<User {self.id_address}>'
+        return f'<Addresses {self.id_address}>'
 
     def serialize(self):
         return {
@@ -90,3 +90,16 @@ class Addresses(db.Model):
             "city": self.city,
             "country": self.country
         }        
+#---------------------------------------------------------------------------------        
+class Allergens (db.Model):
+    id_allergens = db.Column(db.Integer, primary_key=True)
+    description = db.Column(db.String(120), unique=True, nullable=False)
+
+    def __repr__(self):
+        return f'<Allergens {self.id_allergens}>'
+
+    def serialize(self):
+        return {
+            "id_allergens": self.id_allergens,
+            "description": self.description
+        }    
