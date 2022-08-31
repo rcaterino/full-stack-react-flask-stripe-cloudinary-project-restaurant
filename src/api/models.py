@@ -28,6 +28,7 @@ class User(db.Model):
             "lastname": self.lastname,
             "birthday": self.birthday,
             "phone": self.phone,
+            "address": list(map(lambda x: x.serialize(), self.addresses_relation))
             # do not serialize the password, its a security breach
         }
 #--------------------------------------------------------------------------------- 

@@ -53,6 +53,36 @@ def getProduct():
     products_query = Product.query.all()
     all_product = list(map(lambda x: x.serialize(), products_query))
     return jsonify(all_product), 200 
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
+# #get only one product in db
+@api.route('/product/<int:id>', methods=['GET'])
+def getoneProduct(id):
+    product_query = Product.query.get(id)
+    return jsonify(product_query.serialize())    
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
+#Post product
+@api.route('/newproduct', methods=['POST'])
+def newProduct():
+    info_request = request.get_json()
+    product1 = Product(name=info_request["name"], id=info_request["id"],price=info_request["price"], active=info_request["active"], category_id=info_request["category_id"])
+    db.session.add(product1)
+    db.session.commit()
+    return jsonify("Producto creada"), 200  
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#Editing a product by id
+@api.route("/editproduct/<int:id>", methods=["PUT"])
+def putproduct(id):
+    info_request = request.get_json()
+    product1 = Product.query.get(id)
+    if product1 is None:
+        raise APIException('Product not found', status_code=404)
+    if "name" in info_request:
+        product1.name = info_request["name"]    
+    db.session.commit()
+    return jsonify("producto editado"),200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 #Get all address
 @api.route('/addresses', methods=['GET'])
@@ -60,6 +90,22 @@ def getAddresses():
     addresses_query = Addresses.query.all()
     all_addresses = list(map(lambda x: x.serialize(), addresses_query))
     return jsonify(all_addresses), 200 
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
+# #get only one addresses in db
+@api.route('/addresses/<int:user_id>', methods=['GET'])
+def getoneAddresses(user_id):
+    addresses_query = Addresses.query.all(user_id)
+    return jsonify(addresses_query.serialize())    
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
+#Post addresses
+@api.route('/newaddresses', methods=['POST'])
+def newaddresses():
+    info_request = request.get_json()
+    addresses1 = Addresses(id=info_request["id"],user_id=info_request["user_id"], address_name=info_request["address_name"], address=info_request["address"], postal_code=info_request["postal_code"], city=info_request["city"], country=info_request["country"])
+    db.session.add(addresses1)
+    db.session.commit()
+    return jsonify("addresses creada"), 200      
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 #Get all category of menu
 @api.route('/category', methods=['GET'])
@@ -78,7 +124,7 @@ def getCategory(id):
 @api.route("/newcategory", methods=["POST"])
 def postCategory():
     info_request = request.get_json()
-    category1 = Category(name=info_request["name"], id=info_request["id"])
+    category1 = Category(name=info_request["name"], id=info_request["id"],)
     db.session.add(category1)
     db.session.commit()
     return jsonify("categoria creada"), 200
@@ -90,7 +136,7 @@ def putcategory(id):
     category1 = Category.query.get(id)
     print(category1)
     if category1 is None:
-        raise APIException('User not found', status_code=404)
+        raise APIException('category not found', status_code=404)
     if "name" in info_request:
         category1.name = info_request["name"]    
     db.session.commit()
@@ -124,7 +170,7 @@ def putallergen(id):
     info_request = request.get_json()
     allergen1 = Allergens.query.get(id)
     if allergen1 is None:
-        raise APIException('User not found', status_code=404)
+        raise APIException('allergen not found', status_code=404)
     if "description" in info_request:
         allergen1.description = info_request["description"]    
     db.session.commit()
