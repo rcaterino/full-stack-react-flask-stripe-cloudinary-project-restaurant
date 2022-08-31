@@ -10,6 +10,8 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 
+from flask_marshmallow import Marshmallow
+
 api = Blueprint('api', __name__)
 
 # Create a route to authenticate your users and return JWTs. The
@@ -21,7 +23,6 @@ def create_token():
     user = query.serialize()
     access_token = create_access_token(identity=user['email'])
     return jsonify(access_token=access_token), 200
-
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 # #create a new user in db
 @api.route('/register', methods=['POST'])
@@ -32,7 +33,6 @@ def createUser():
     db.session.commit()
     access_token = create_access_token(identity=info_request['email'])
     return jsonify(access_token=access_token), 200
-
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 # get all the people
 @api.route('/users', methods=['GET'])
@@ -40,7 +40,6 @@ def getUsers():
     people_query = User.query.all()
     all_people= list(map(lambda x: x.serialize(), people_query))
     return jsonify(all_people), 200
-
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 # #get only one user in db
 @api.route('/user/<int:id>', methods=['GET'])
@@ -129,7 +128,6 @@ def postCategory():
     db.session.add(category1)
     db.session.commit()
     return jsonify("categoria creada"), 200
-
 #----------------------------------------------------------------------------------------------------------------------------------------------------------  
 #Editing a category by id
 @api.route("/editcategory/<int:id>", methods=["PUT"])
@@ -150,17 +148,13 @@ def getAllergens():
     allergens_query = Allergens.query.all()
     all_allergens = list(map(lambda x: x.serialize(), allergens_query))
     return jsonify(all_allergens), 200
-
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
-
 # #get only one allergen in db
 @api.route('/allergens/<int:id>', methods=['GET'])
 def getoneAllergen(id):
     allergens_query = Allergens.query.get(id)
     return jsonify(allergens_query.serialize())    
-
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
-
 #Create new allergens
 @api.route("/newallergens", methods=["POST"])
 def postAllergens():
@@ -169,9 +163,7 @@ def postAllergens():
     db.session.add(newAllergens)
     db.session.commit()
     return jsonify("alergeno creado"), 200
-
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
-
 #Editing a allergen by id
 @api.route("/editallergen/<int:id>", methods=["PUT"])
 def putallergen(id):
@@ -183,8 +175,6 @@ def putallergen(id):
         allergen1.description = info_request["description"]    
     db.session.commit()
     return jsonify("alergeno editado"),200
-
-
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():

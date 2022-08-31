@@ -2,7 +2,7 @@ import os
 import sys
 from sqlalchemy import Column, ForeignKey, Integer, String
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, backref
 
 db = SQLAlchemy()
 
@@ -16,8 +16,7 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
-    addresses_relation = db.relationship("Addresses", backref='user', lazy=True)
-
+    addresses_relation = db.relationship('Addresses', backref='user', lazy=True)
     def __repr__(self):
         return f'<User {self.email}>'
 
@@ -30,7 +29,6 @@ class User(db.Model):
             "birthday": self.birthday,
             "phone": self.phone,
             "address": list(map(lambda x: x.serialize(), self.addresses_relation))
-            
             # do not serialize the password, its a security breach
         }
 #--------------------------------------------------------------------------------- 
@@ -80,7 +78,7 @@ class Product(db.Model):
     category_id = db.Column(db.Integer, db.ForeignKey("category.id"), nullable=False)
 
     def __repr__(self):
-        return f'<Product {self.id}>'
+        return f'<Product {self.name}>'
 
     def serialize(self):
         return{
