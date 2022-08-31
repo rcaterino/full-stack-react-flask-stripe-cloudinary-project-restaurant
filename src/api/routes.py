@@ -3,7 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 import os
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Category, Product, Addresses
+from api.models import db, User, Category, Product, Addresses, Allergens
 from api.utils import generate_sitemap, APIException
 
 from flask_jwt_extended import create_access_token
@@ -69,7 +69,7 @@ def getAllCategory():
     all_category = list(map(lambda x: x.serialize(), category_query))
     return jsonify(all_category), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
-# #get only one categori in db
+# #get only one category in db
 @api.route('/category/<int:id>', methods=['GET'])
 def getCategory(id):
     category_query = Category.query.get(id)
@@ -98,6 +98,46 @@ def putcategory(id):
     db.session.commit()
     return jsonify("categoria editada"),200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------  
+# get allergens
+@api.route('/allergens', methods=["GET"])
+def getAllergens():
+    allergens_query = Allergens.query.all()
+    all_allergens = list(map(lambda x: x.serialize(), allergens_query))
+    return jsonify(all_allergens), 200
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# #get only one allergen in db
+@api.route('/allergens/<int:id>', methods=['GET'])
+def getoneAllergen(id):
+    allergens_query = Allergens.query.get(id)
+    return jsonify(allergens_query.serialize())    
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#Create new allergens
+@api.route("/newallergens", methods=["POST"])
+def postAllergens():
+    info_request = request.get_json()
+    newAllergens = Allergens(name=info_request["name"], id=info_request["id"])
+    db.session.add(newAllergens)
+    db.session.commit()
+    return jsonify("alergeno creado"), 200
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#Editing a allergen by id
+@api.route("/editallergen/<int:id>", methods=["PUT"])
+def putallergen(id):
+    info_request = request.get_json()
+    allergen1 = Allergens.query.get(id)
+    if allergen1 is None:
+        raise APIException('User not found', status_code=404)
+    if "description" in info_request:
+        allergen1.description = info_request["description"]    
+    db.session.commit()
+    return jsonify("alergeno editado"),200
+
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 @api.route('/hello', methods=['POST', 'GET'])
@@ -108,3 +148,4 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
