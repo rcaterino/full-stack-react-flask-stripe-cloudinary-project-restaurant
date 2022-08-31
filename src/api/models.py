@@ -2,7 +2,7 @@ import os
 import sys
 from sqlalchemy import Column, ForeignKey, Integer, String
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, backref
 
 db = SQLAlchemy()
 
@@ -16,8 +16,7 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
-    addresses_relation = db.relationship("Addresses", backref='user', lazy=True)
-
+    addresses_relation = db.relationship('Addresses', backref='user', lazy=True)
     def __repr__(self):
         return f'<User {self.email}>'
 
@@ -29,8 +28,6 @@ class User(db.Model):
             "lastname": self.lastname,
             "birthday": self.birthday,
             "phone": self.phone,
-            "address": list(map(lambda x: x.serialize(), addresses_relation))
-            
             # do not serialize the password, its a security breach
         }
 #--------------------------------------------------------------------------------- 
@@ -40,7 +37,7 @@ class Addresses(db.Model):
     address_name = db.Column(db.String(120), unique=False, nullable=False)
     address = db.Column(db.String(120), unique=False, nullable=False)
     postal_code = db.Column(db.Integer, unique=False)
-    city = db.Column(db.String(120), unique=True, nullable=False)
+    city = db.Column(db.String(120), unique=False, nullable=False)
     country = db.Column(db.String(80), unique=False, nullable=False)
 
     def __repr__(self):
@@ -49,7 +46,7 @@ class Addresses(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "id_user": self.id_user,
+            "user_id": self.user_id,
             "address_name": self.address_name,
             "address": self.address,
             "postal_code": self.postal_code,
@@ -69,7 +66,7 @@ class Category(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "product": list(map(lambda x: x.serialize(), product_relation))
+            "product": list(map(lambda x: x.serialize(), self.product_relation))
         }    
 #---------------------------------------------------------------------------------
 class Product(db.Model):
@@ -80,7 +77,7 @@ class Product(db.Model):
     category_id = db.Column(db.Integer, db.ForeignKey("category.id"), nullable=False)
 
     def __repr__(self):
-        return f'<Product {self.id}>'
+        return f'<Product {self.name}>'
 
     def serialize(self):
         return{
