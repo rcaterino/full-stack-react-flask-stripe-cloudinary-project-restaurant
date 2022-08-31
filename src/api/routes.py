@@ -1,9 +1,14 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
+import os
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Category, Product, Addresses
 from api.utils import generate_sitemap, APIException
+
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
 
 api = Blueprint('api', __name__)
 
@@ -33,18 +38,15 @@ def createUser():
 @api.route('/users', methods=['GET'])
 def getUsers():
     people_query = User.query.all()
-    return jsonify(people_query), 200
+    all_people= list(map(lambda x: x.serialize(), people_query))
+    return jsonify(all_people), 200
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
-@api.route('/hello', methods=['POST', 'GET'])
-def handle_hello():
-
-    response_body = {
-        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
-    }
-
-    return jsonify(response_body), 200
-
+# #get only one user in db
+@api.route('/user/<int:id>', methods=['GET'])
+def getOneUser(id):
+    user_query = User.query.get(id)
+    return jsonify(user_query.serialize())
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 #Get all product
 @api.route('/product', methods=['GET'])
@@ -97,3 +99,12 @@ def putcategory(id):
     return jsonify("categoria editada"),200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------  
 
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
+@api.route('/hello', methods=['POST', 'GET'])
+def handle_hello():
+
+    response_body = {
+        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
+    }
+
+    return jsonify(response_body), 200

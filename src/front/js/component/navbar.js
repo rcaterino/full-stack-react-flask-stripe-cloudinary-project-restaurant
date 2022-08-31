@@ -44,7 +44,7 @@ export const Navbar = () => {
             <Link to="/">
               <span className="navbar-brand mb-0 h1">Home</span>
             </Link>
-            <Link to="/privada">
+            <Link to="/miperfil">
               <span className="navbar-brand mb-0 h1">Mi perfil</span>
             </Link>
             <div className="ml-auto">

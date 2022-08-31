@@ -33,14 +33,17 @@ const getState = ({ getStore, getActions, setStore }) => {
       login: async (email, password) => {
         const opts = {
           method: "POST",
-          headers: { "Content-Type": "aplication/json" },
-          body: JSON.stringify({ email: email, password: password }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password,
+          }),
         };
+        console.log(opts.body);
         try {
-          const resp = await fetch(
-            process.env.BACKEND_URL + "/api/token",
-            opts
-          );
+          const resp = await fetch(process.env.BACKEND_URL + "/api/token", opts);
           if (resp.status !== 200) {
             new Error("error from login in context");
             alert("usuario no registrado");
@@ -54,7 +57,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error(error);
         }
       },
-
       /** Función para deslogear al usuario, remueve el token del sessionStorage */
       logout: () => {
         sessionStorage.removeItem("token");
@@ -63,7 +65,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       /**Función para registrar o dar de alta en sistema un usuario (cliente) nuevo */
-      signup: async (nombre, apellidos, email, password) => {
+      signup: async (nombre, apellidos, birthday, phone, email, password) => {
         const opts = {
           method: "POST",
           headers: {
@@ -72,6 +74,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           body: JSON.stringify({
             name: nombre,
             lastname: apellidos,
+            birthday: birthday,
+            phone: phone,
             email: email,
             password: password,
             is_active: true,
