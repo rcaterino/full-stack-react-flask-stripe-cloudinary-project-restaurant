@@ -29,7 +29,7 @@ class User(db.Model):
             "lastname": self.lastname,
             "birthday": self.birthday,
             "phone": self.phone,
-            "address": list(map(lambda x: x.serialize(), addresses_relation))
+            "address": list(map(lambda x: x.serialize(), self.addresses_relation))
             
             # do not serialize the password, its a security breach
         }
@@ -40,7 +40,7 @@ class Addresses(db.Model):
     address_name = db.Column(db.String(120), unique=False, nullable=False)
     address = db.Column(db.String(120), unique=False, nullable=False)
     postal_code = db.Column(db.Integer, unique=False)
-    city = db.Column(db.String(120), unique=True, nullable=False)
+    city = db.Column(db.String(120), unique=False, nullable=False)
     country = db.Column(db.String(80), unique=False, nullable=False)
 
     def __repr__(self):
@@ -49,7 +49,7 @@ class Addresses(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "id_user": self.id_user,
+            "user_id": self.user_id,
             "address_name": self.address_name,
             "address": self.address,
             "postal_code": self.postal_code,
@@ -69,7 +69,7 @@ class Category(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "product": list(map(lambda x: x.serialize(), product_relation))
+            "product": list(map(lambda x: x.serialize(), self.product_relation))
         }    
 #---------------------------------------------------------------------------------
 class Product(db.Model):
