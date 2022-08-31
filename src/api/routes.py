@@ -18,6 +18,17 @@ def create_token():
     return jsonify(access_token=access_token), 200
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
+# #create a new user in db
+@api.route('/register', methods=['POST'])
+def createUser():
+    info_request = request.get_json()
+    newUser = User(name = info_request['name'], lastname = info_request['lastname'], birthday = info_request['birthday'], phone = info_request['phone'], email = info_request['email'], password = info_request['password'], is_active = info_request['is_active'])
+    db.session.add(newUser)
+    db.session.commit()
+    access_token = create_access_token(identity=info_request['email'])
+    return jsonify(access_token=access_token), 200
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
 # get all the people
 @api.route('/users', methods=['GET'])
 def getUsers():
@@ -34,34 +45,35 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
-
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
-
+#Get all product
 @api.route('/product', methods=['GET'])
 def getProduct():
     products_query = Product.query.all()
     all_product = list(map(lambda x: x.serialize(), products_query))
     return jsonify(all_product), 200 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
+#Get all address
 @api.route('/addresses', methods=['GET'])
 def getAddresses():
     addresses_query = Addresses.query.all()
     all_addresses = list(map(lambda x: x.serialize(), addresses_query))
     return jsonify(all_addresses), 200 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
+#Get all category of menu
 @api.route('/category', methods=['GET'])
 def getAllCategory():
     category_query = Category.query.all()
     all_category = list(map(lambda x: x.serialize(), category_query))
     return jsonify(all_category), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
-# #get only one user in db
+# #get only one categori in db
 @api.route('/category/<int:id>', methods=['GET'])
 def getCategory(id):
     category_query = Category.query.get(id)
     return jsonify(category_query.serialize())
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
-
+#Create new category
 @api.route("/newcategory", methods=["POST"])
 def postCategory():
     info_request = request.get_json()
@@ -71,7 +83,7 @@ def postCategory():
     return jsonify("categoria creada"), 200
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------  
-
+#Editing a category by id
 @api.route("/editcategory/<int:id>", methods=["PUT"])
 def putcategory(id):
     info_request = request.get_json()
