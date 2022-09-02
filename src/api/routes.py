@@ -110,6 +110,7 @@ def newaddresses():
 def getAllCategory():
     category_query = Category.query.all()
     all_category = list(map(lambda x: x.serialize(), category_query))
+    print(all_category)
     return jsonify(category= all_category), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 # #get only one category in db

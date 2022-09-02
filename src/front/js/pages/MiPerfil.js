@@ -29,6 +29,11 @@ export const Miperfil = () => {
           <p>Estás en tu página de perfil</p>
 
           <p>{store.user_data?.name}</p>
+          <p>{store.user_data?.lastname}</p>
+          <p>{store.user_data?.birtday}</p>
+          <p>{store.user_data?.phone}</p>
+          <p>{store.address?.address}</p>
+
         </div>
       )}
     </>
