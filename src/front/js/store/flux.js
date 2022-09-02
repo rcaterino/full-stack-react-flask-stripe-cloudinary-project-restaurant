@@ -3,6 +3,8 @@ const getState = ({ getStore, getActions, setStore }) => {
     store: {
       message: null,
       token: null,
+      user_data: [],
+      user_address: [],
       demo: [
         {
           title: "FIRST",
@@ -29,6 +31,15 @@ const getState = ({ getStore, getActions, setStore }) => {
           setStore({ token: token });
       },
 
+      getUserDataFromSession: () => {
+        const user_data = sessionStorage.getItem("user_data");
+        if (user_data && user_data !== "" && user_data !== undefined)
+          setStore({
+            user_data: user_data,
+            /*user_address: user_data.user_address,*/
+          });
+      },
+
       /**Función para iniciar sesión del usuario */
       login: async (email, password) => {
         const opts = {
@@ -41,9 +52,11 @@ const getState = ({ getStore, getActions, setStore }) => {
             password: password,
           }),
         };
-        console.log(opts.body);
         try {
-          const resp = await fetch(process.env.BACKEND_URL + "/api/token", opts);
+          const resp = await fetch(
+            process.env.BACKEND_URL + "/api/token",
+            opts
+          );
           if (resp.status !== 200) {
             new Error("error from login in context");
             alert("usuario no registrado");
@@ -51,7 +64,14 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
           const data = await resp.json();
           sessionStorage.setItem("token", data.access_token);
-          setStore({ token: data.access_token });
+          setStore({
+            token: data.access_token,
+            user_data: data.user_data,
+            user_address: data.user_data.address,
+          });
+
+          console.log(data.user_data);
+          console.log(data.user_data.address);
           return true;
         } catch (error) {
           console.error(error);

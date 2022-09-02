@@ -20,6 +20,7 @@ export const Home = () => {
       store.token === undefined ? (
         <div className="text-center mt-5">
           <h1 className="text-center">Bienvenido al Home Page</h1>
+          
         </div>
       ) : (
         /* En caso que el usuario esté logeado, se renderiza el contenido a continuación */

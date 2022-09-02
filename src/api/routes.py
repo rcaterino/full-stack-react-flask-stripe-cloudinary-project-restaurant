@@ -10,8 +10,6 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 
-from flask_marshmallow import Marshmallow
-
 api = Blueprint('api', __name__)
 
 # Create a route to authenticate your users and return JWTs. The
@@ -22,7 +20,7 @@ def create_token():
     query = User.query.filter_by(email = info_request['email'], password = info_request['password']).first()
     user = query.serialize()
     access_token = create_access_token(identity=user['email'])
-    return jsonify(access_token=access_token), 200
+    return jsonify(access_token=access_token, user_data = user), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 # #create a new user in db
 @api.route('/register', methods=['POST'])
@@ -112,7 +110,7 @@ def newaddresses():
 def getAllCategory():
     category_query = Category.query.all()
     all_category = list(map(lambda x: x.serialize(), category_query))
-    return jsonify(all_category), 200
+    return jsonify(category= all_category), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 # #get only one category in db
 @api.route('/category/<int:id>', methods=['GET'])
