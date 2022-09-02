@@ -1,6 +1,7 @@
 import React, { useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
+import { Menu } from "../component/menu";
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
@@ -20,12 +21,14 @@ export const Home = () => {
       store.token === undefined ? (
         <div className="text-center mt-5">
           <h1 className="text-center">Bienvenido al Home Page</h1>
+          <Menu/>
           
         </div>
       ) : (
         /* En caso que el usuario esté logeado, se renderiza el contenido a continuación */
         <div className="text-center mt-5">
           <h1 className="text-center">Bienvenido al Home Page</h1>
+          <Menu/>
         </div>
       )}
     </>

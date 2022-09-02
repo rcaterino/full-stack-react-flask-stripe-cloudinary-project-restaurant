@@ -5,6 +5,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       token: null,
       user_data: [],
       user_address: [],
+      category: [],
+      products: [],
       demo: [
         {
           title: "FIRST",
@@ -117,6 +119,41 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (error) {
           console.error(error);
         }
+      },
+      /**Función para optener del backend la lista de productos y categorías de la carta */
+      getCarta: async () => {
+        const opts = {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+        try {
+          const resp = await fetch(
+            process.env.BACKEND_URL + "/api/category",
+            opts
+          );
+          if (resp.status !== 200) {
+            new Error("error");
+            alert("no existgen categorias");
+            return false;
+          }
+          const data = await resp.json();
+          console.log(data);
+          setStore({
+            category: data.category,
+            products: data.category.product,
+          });
+          return true;
+        } catch (error) {
+          console.error(error);
+        }
+      },
+      /** Función para deslogear al usuario, remueve el token del sessionStorage */
+      logout: () => {
+        sessionStorage.removeItem("token");
+        setStore({ token: null });
+        return true;
       },
 
       getMessage: async () => {
