@@ -26,8 +26,11 @@ export const Menu = () => {
               <div>
                 <h1>Categoría:{item.name}</h1>
                 <div>
-                  {store.category.map((item) => (
-                    <h1>Productos:{item.product[0].name}</h1>
+                  {store.products.map((item) => (
+                    <>
+                      <h1>Productos:{item.name}</h1>
+                      <h1>Precio:{item.price}</h1>
+                    </>
                   ))}
                 </div>
               </div>

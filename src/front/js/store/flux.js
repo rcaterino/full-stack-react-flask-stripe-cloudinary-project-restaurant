@@ -139,10 +139,11 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await resp.json();
-          console.log(data);
+          console.log(data.category);
+          console.log(data.products);
           setStore({
             category: data.category,
-            products: data.category.product,
+            products: data.products,
           });
           return true;
         } catch (error) {
