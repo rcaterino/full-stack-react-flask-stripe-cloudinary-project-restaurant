@@ -65,15 +65,13 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await resp.json();
+          console.log(data);
           sessionStorage.setItem("token", data.access_token);
           setStore({
             token: data.access_token,
             user_data: data.user_data,
             user_address: data.user_data.address,
           });
-
-          console.log(data.user_data);
-          console.log(data.user_data.address);
           return true;
         } catch (error) {
           console.error(error);
