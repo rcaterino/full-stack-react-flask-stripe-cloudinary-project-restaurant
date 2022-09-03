@@ -10,34 +10,24 @@ export const Menu = () => {
 
   return (
     <>
-      {!store.category ||
-      store.category === null ||
-      store.category === "" ||
-      store.category === undefined ? (
-        <div>
-          <h1>Hola soy el menú</h1>
-          <p>No existen categorías asociadas al menú</p>
-        </div>
-      ) : (
-        <div>
-          <h1>Hola soy el menú</h1>
-          <p>
-            {store.category.map((item) => (
+      <div>
+        <h1>Hola soy el menú</h1>
+        <p>
+          {store.category.map((item) => (
+            <div>
+              <h1>Categoría:{item.name}</h1>
               <div>
-                <h1>Categoría:{item.name}</h1>
-                <div>
-                  {store.products.map((item) => (
-                    <>
-                      <h1>Productos:{item.name}</h1>
-                      <h1>Precio:{item.price}</h1>
-                    </>
-                  ))}
-                </div>
+                {store.products.map((item) => (
+                  <>
+                    <h3>Productos:{item.name}</h3>
+                    <h5>Precio:{item.price}</h5>
+                  </>
+                ))}
               </div>
-            ))}
-          </p>
-        </div>
-      )}
+            </div>
+          ))}
+        </p>
+      </div>
     </>
   );
 };
