@@ -110,10 +110,7 @@ def newaddresses():
 def getAllCategory():
     category_query = Category.query.all()
     all_category = list(map(lambda x: x.serialize(), category_query))
-    products_query = Product.query.all()
-    all_product = list(map(lambda x: x.serialize(), products_query))
-    print(all_category)
-    return jsonify(category= all_category, products= all_product), 200
+    return jsonify( all_category), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 # #get only one category in db
 @api.route('/category/<int:id>', methods=['GET'])

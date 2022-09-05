@@ -9,13 +9,13 @@ export const Menu = () => {
         <>
             <div>
                 <h1>Hola soy el menú</h1>
-                {store.categories.map((category) => (
+                {store.categories?.map((category) => (
                 <div>
-                        <h1>Categoría:{category.name}</h1>
+                        <h1>Categoría:{category?.name}</h1>
                      <div>    
-                         {category.product.map((producto) => (
+                         {category.product?.map((producto) => (
                 <>
-                <h3>Productos:{producto.name}</h3>
+                <h3>Productos:{producto?.name}</h3>
                 </>
                             ))}
                     </div>
