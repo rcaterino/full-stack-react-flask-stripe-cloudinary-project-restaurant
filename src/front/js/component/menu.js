@@ -1,33 +1,28 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
 
 export const Menu = () => {
-  const { store, actions } = useContext(Context);
+    const { store, actions } = useContext(Context);
 
-  useEffect(() => {
-    actions.getCarta();
-  }, []);
 
-  return (
-    <>
-      <div>
-        <h1>Hola soy el menú</h1>
-        <p>
-          {store.category.map((item) => (
+    return (
+        <>
             <div>
-              <h1>Categoría:{item.name}</h1>
-              <div>
-                {store.products.map((item) => (
-                  <>
-                    <h3>Productos:{item.name}</h3>
-                    <h5>Precio:{item.price}</h5>
-                  </>
+                <h1>Hola soy el menú</h1>
+                {store.categories.map((category) => (
+                <div>
+                        <h1>Categoría:{category.name}</h1>
+                     <div>    
+                         {category.product.map((producto) => (
+                <>
+                <h3>Productos:{producto.name}</h3>
+                </>
+                            ))}
+                    </div>
+                </div>
                 ))}
-              </div>
+
             </div>
-          ))}
-        </p>
-      </div>
-    </>
-  );
+        </>
+    );
 };
