@@ -15,6 +15,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({categories: categories})
 				})
 			},
+      
       // getAllProduct: () => {
 			// 	fetch ('https://3001-rcaterino-easyrestauran-x2j88jm3ue6.ws-eu63.gitpod.io/api/product')
 			// 	.then (res => res.json()

@@ -7,8 +7,7 @@ export const Menu = () => {
 
     return (
         <>
-            <div>
-                <h1>Hola soy el menú</h1>
+            <h1>Hola soy el menú</h1>
                 {store.categories?.map((category) => (
                 <div>
                         <h1>Categoría:{category?.name}</h1>
@@ -21,8 +20,11 @@ export const Menu = () => {
                     </div>
                 </div>
                 ))}
-
-            </div>
         </>
     );
 };
+
+
+                
+
+   
