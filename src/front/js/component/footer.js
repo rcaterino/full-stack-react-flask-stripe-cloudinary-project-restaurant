@@ -2,7 +2,7 @@ import React from "react";
 import { FaPizzaSlice } from "react-icons/fa";
 export const Footer = () => {
   return (
-    <footer className="footer mt-auto py-3 text-center">
+    <footer className=" mt-auto py-3 text-center">
       <section className="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
         <div className="me-5 d-none d-lg-block">
           <span>Get connected with us on social networks:</span>

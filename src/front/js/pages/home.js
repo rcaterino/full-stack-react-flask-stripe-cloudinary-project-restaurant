@@ -23,8 +23,8 @@ export const Home = () => {
         store.token === "" ||
         store.token === undefined ? (
         <div className="text-center mt-5">
-          <h1 className="text-center">Bienvenido al Home Page</h1>
-          <Menu />
+          <h1 className="text-center">Bienvenido a Portal 10</h1>
+          <Menu/>
         </div>
       ) : (
         /* En caso que el usuario esté logeado, se renderiza el contenido a continuación */
