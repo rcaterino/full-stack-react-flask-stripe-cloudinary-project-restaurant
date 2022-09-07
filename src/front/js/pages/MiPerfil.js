@@ -96,34 +96,12 @@ export const Miperfil = () => {
             />
           </div>
         </div>
-        {/* <div className="mb-3">
-        <label className="col-sm-2 col-form-label">Contraseña</label>
-        <div className="d-grid gap-2">
-          <input
-            type="password"
-            className="form-control"
-            placeholder="Por favor, escriba su contraseña"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-          />
-        </div>
-      </div> */}
         <div className="d-grid gap-2">
           <button type="submit" className="btn btn-primary">
             Guardar
           </button>
         </div>
       </div>
-
-      {/* //   <p>{store.user_data?.name}</p>
-        //   <p>{store.user_data?.lastname}</p>
-        //   <p>{store.user_data?.birtday}</p>
-        //   <p>{store.user_data?.phone}</p>
-        //   <p>{store.address?.address}</p>
-
-        //  */}
     </div>
   );
 };
