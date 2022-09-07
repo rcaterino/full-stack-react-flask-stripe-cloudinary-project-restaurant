@@ -3,32 +3,12 @@ const getState = ({ getStore, getActions, setStore }) => {
     store: {
       message: null,
       token: null,
-      categories:[],
-      products:[]
+      user_data: [],
+      user_address: [],
+      category: [],
+      // products: [],
     },
     actions: {
-      getAllCategories: () => {
-				fetch ('https://3001-rcaterino-easyrestauran-x2j88jm3ue6.ws-eu63.gitpod.io/api/category')
-				.then (res => res.json()
-				)
-				.then (categories=> {
-					setStore({categories: categories})
-				})
-			},
-      
-      // getAllProduct: () => {
-			// 	fetch ('https://3001-rcaterino-easyrestauran-x2j88jm3ue6.ws-eu63.gitpod.io/api/product')
-			// 	.then (res => res.json()
-			// 	)
-			// 	.then (products=> {
-			// 		setStore({products: products})
-			// 	})
-			// },
-      // Use getActions to call a function within a fuction
-      exampleFunction: () => {
-        getActions().changeColor(0, "green");
-      },
-
       /* Función para optener token almacenado en sessionStorage */
       getTokenFromSession: () => {
         const token = sessionStorage.getItem("token");
@@ -80,6 +60,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error(error);
         }
       },
+
       /** Función para deslogear al usuario, remueve el token del sessionStorage */
       logout: () => {
         sessionStorage.removeItem("token");
@@ -121,6 +102,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error(error);
         }
       },
+
       /**Función para optener del backend la lista de productos y categorías de la carta */
       getCarta: async () => {
         const opts = {
@@ -140,49 +122,21 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await resp.json();
-          console.log(data.category);
-          console.log(data.products);
           setStore({
             category: data.category,
-            products: data.products,
+            // products: data.products,
           });
           return true;
         } catch (error) {
           console.error(error);
         }
       },
+
       /** Función para deslogear al usuario, remueve el token del sessionStorage */
       logout: () => {
         sessionStorage.removeItem("token");
         setStore({ token: null });
         return true;
-      },
-
-      getMessage: async () => {
-        try {
-          // fetching data from the backend
-          const resp = await fetch(process.env.BACKEND_URL + "/api/hello");
-          const data = await resp.json();
-          setStore({ message: data.message });
-          // don't forget to return something, that is how the async resolves
-          return data;
-        } catch (error) {
-          console.log("Error loading message from backend", error);
-        }
-      },
-      changeColor: (index, color) => {
-        //get the store
-        const store = getStore();
-
-        //we have to loop the entire demo array to look for the respective index
-        //and change its color
-        const demo = store.demo.map((elm, i) => {
-          if (i === index) elm.background = color;
-          return elm;
-        });
-
-        //reset the global store
-        setStore({ demo: demo });
       },
     },
   };
