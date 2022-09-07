@@ -8,26 +8,13 @@ const getState = ({ getStore, getActions, setStore }) => {
     },
     actions: {
       getAllCategories: () => {
-				fetch ('https://3001-rcaterino-easyrestauran-x2j88jm3ue6.ws-eu63.gitpod.io/api/category')
+				fetch (process.env.BACKEND_URL +"/api/category")
 				.then (res => res.json()
 				)
 				.then (categories=> {
 					setStore({categories: categories})
 				})
 			},
-      
-      // getAllProduct: () => {
-			// 	fetch ('https://3001-rcaterino-easyrestauran-x2j88jm3ue6.ws-eu63.gitpod.io/api/product')
-			// 	.then (res => res.json()
-			// 	)
-			// 	.then (products=> {
-			// 		setStore({products: products})
-			// 	})
-			// },
-      // Use getActions to call a function within a fuction
-      exampleFunction: () => {
-        getActions().changeColor(0, "green");
-      },
 
       /* Función para optener token almacenado en sessionStorage */
       getTokenFromSession: () => {
