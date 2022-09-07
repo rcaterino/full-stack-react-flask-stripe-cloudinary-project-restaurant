@@ -13,7 +13,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 				)
 				.then (categories=> {
 					setStore({categories: categories})
-				})
+				}).catch((error) => {
+          console.error('Error:', error);
+        });
 			},
 
       /* Función para optener token almacenado en sessionStorage */
