@@ -3,8 +3,9 @@ const getState = ({ getStore, getActions, setStore }) => {
     store: {
       message: null,
       token: null,
+      user_data: [],
+      user_address: [],
       categories:[],
-      products:[]
     },
     actions: {
       getAllCategories: () => {
@@ -57,7 +58,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await resp.json();
-          console.log(data);
           sessionStorage.setItem("token", data.access_token);
           setStore({
             token: data.access_token,
@@ -69,6 +69,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error(error);
         }
       },
+
       /** Función para deslogear al usuario, remueve el token del sessionStorage */
       logout: () => {
         sessionStorage.removeItem("token");
@@ -110,6 +111,40 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error(error);
         }
       },
+      /**Función para modificar los datos personales del usuario */
+      putuser: async (nombre, apellidos, birthday, phone, email) => {
+        const opts = {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: nombre,
+            lastname: apellidos,
+            birthday: birthday,
+            phone: phone,
+            email: email,
+          }),
+        };
+        try {
+          let resp = await fetch(
+            process.env.BACKEND_URL + '/api/edituser/'+ getStore().user_data.id,
+            opts
+          );
+          if (resp.status !== 200) {
+            new Error("there has been an error");
+            return false;
+          }
+          let data = await resp.json();
+          setStore({
+            user_data: data.user_data,
+            user_address: data.user_data.address,})          
+          return true;
+        } catch (error) {
+          console.error(error);
+        }
+      },
+
       /**Función para optener del backend la lista de productos y categorías de la carta */
       getCarta: async () => {
         const opts = {
@@ -129,49 +164,21 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await resp.json();
-          console.log(data.category);
-          console.log(data.products);
           setStore({
             category: data.category,
-            products: data.products,
+            // products: data.products,
           });
           return true;
         } catch (error) {
           console.error(error);
         }
       },
+
       /** Función para deslogear al usuario, remueve el token del sessionStorage */
       logout: () => {
         sessionStorage.removeItem("token");
         setStore({ token: null });
         return true;
-      },
-
-      getMessage: async () => {
-        try {
-          // fetching data from the backend
-          const resp = await fetch(process.env.BACKEND_URL + "/api/hello");
-          const data = await resp.json();
-          setStore({ message: data.message });
-          // don't forget to return something, that is how the async resolves
-          return data;
-        } catch (error) {
-          console.log("Error loading message from backend", error);
-        }
-      },
-      changeColor: (index, color) => {
-        //get the store
-        const store = getStore();
-
-        //we have to loop the entire demo array to look for the respective index
-        //and change its color
-        const demo = store.demo.map((elm, i) => {
-          if (i === index) elm.background = color;
-          return elm;
-        });
-
-        //reset the global store
-        setStore({ demo: demo });
       },
     },
   };

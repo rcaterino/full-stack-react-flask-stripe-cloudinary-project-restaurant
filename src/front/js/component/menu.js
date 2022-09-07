@@ -2,12 +2,15 @@ import React, { useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
 
 export const Menu = () => {
-    const { store, actions } = useContext(Context);
+  const { store, actions } = useContext(Context);
 
+  useEffect(() => {
+    actions.getAllCategories();
+  }, []);
 
-    return (
-        <>
-            {store.categories.map((category) => (
+  return (
+    <>
+      {store.categories.map((category) => (
                 <div >
                     <button data-text="Awesome" class="button">
                         <span class="actual-text">{category.name}</span>
@@ -36,11 +39,6 @@ export const Menu = () => {
                     </div>
                 </div>
             ))}
-        </>
-    );
+    </>
+  );
 };
-
-
-                
-
-   

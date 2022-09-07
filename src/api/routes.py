@@ -31,6 +31,25 @@ def createUser():
     db.session.commit()
     access_token = create_access_token(identity=info_request['email'])
     return jsonify(access_token=access_token), 200
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
+#Edit and save user
+@api.route("/edituser/<int:id>", methods=["PUT"])
+def putuser(id):
+    info_request = request.get_json()
+    user1 = User.query.get(id)
+    if user1 is None:
+        raise APIException('User not found', status_code=404)
+    if "name" in info_request:
+        user1.name = info_request["name"]
+        user1.lastname = info_request["lastname"]
+        user1.birthday = info_request["birthday"]
+        user1.phone = info_request["phone"]
+        user1.email = info_request["email"]
+    db.session.commit()
+    user_query = User.query.get(id)
+    return jsonify(user_data= user_query.serialize())
+
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 # get all the people
 @api.route('/users', methods=['GET'])

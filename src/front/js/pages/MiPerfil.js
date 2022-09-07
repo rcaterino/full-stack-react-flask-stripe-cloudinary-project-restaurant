@@ -1,5 +1,6 @@
 import React, { useEffect, useContext, useState } from "react";
 import { Context } from "../store/appContext";
+import { Link, useNavigate } from "react-router-dom";
 import "../../styles/home.css";
 import UserNavBar from "../component/usernavbar";
 
@@ -10,11 +11,17 @@ export const Miperfil = () => {
   const [birthday, setBirthday] = useState(store.user_data?.birthday);
   const [phone, setPhone] = useState(store.user_data?.phone);
   const [email, setEmail] = useState(store.user_data?.email);
+  let navigate = useNavigate();
 
   /* utilizamos useEffect para optener del actions en flux.js el token del usuario con la función getTokenFromSession*/
   useEffect(() => {
     actions.getTokenFromSession();
   }, []);
+
+  const handleClick = () => {
+    actions.putuser(nombre, apellidos, birthday, phone, email);
+    navigate("/miperfil");
+  };
 
   return (
     <div>
@@ -96,34 +103,16 @@ export const Miperfil = () => {
             />
           </div>
         </div>
-        {/* <div className="mb-3">
-        <label className="col-sm-2 col-form-label">Contraseña</label>
         <div className="d-grid gap-2">
-          <input
-            type="password"
-            className="form-control"
-            placeholder="Por favor, escriba su contraseña"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-          />
-        </div>
-      </div> */}
-        <div className="d-grid gap-2">
-          <button type="submit" className="btn btn-primary">
+          <button
+            type="submit"
+            className="btn btn-primary"
+            onClick={handleClick}
+          >
             Guardar
           </button>
         </div>
       </div>
-
-      {/* //   <p>{store.user_data?.name}</p>
-        //   <p>{store.user_data?.lastname}</p>
-        //   <p>{store.user_data?.birtday}</p>
-        //   <p>{store.user_data?.phone}</p>
-        //   <p>{store.address?.address}</p>
-
-        //  */}
     </div>
   );
 };
