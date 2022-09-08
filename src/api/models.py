@@ -1,5 +1,6 @@
 import os
 import sys
+import datetime
 from sqlalchemy import Column, ForeignKey, Integer, String
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship, backref
@@ -26,7 +27,7 @@ class User(db.Model):
             "email": self.email,
             "name": self.name,
             "lastname": self.lastname,
-            "birthday": self.birthday,
+            "birthday": datetime.date.isoformat(self.birthday),
             "phone": self.phone,
             "address": list(map(lambda x: x.serialize(), self.addresses_relation))
             # do not serialize the password, its a security breach

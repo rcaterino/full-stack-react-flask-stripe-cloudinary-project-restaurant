@@ -16,6 +16,9 @@ export const Menu = () => {
             })
     }, []);
 
+  useEffect(() => {
+    actions.getAllCategories();
+  }, []);
 
     const handlePress = (e) => {
         e.preventDefault();
@@ -92,6 +95,6 @@ export const Menu = () => {
                     </div>
                 </div>
             ))}
-        </>
-    );
+    </>
+  );
 };

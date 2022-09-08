@@ -75,8 +75,10 @@
 	"dependencies": {
 		"@fortawesome/free-solid-svg-icons": "^6.1.2",
 		"@fortawesome/react-fontawesome": "^0.2.0",
+		"bootstrap": "^5.2.1",
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",
+		"react-bootstrap": "^2.5.0",
 		"react-dom": "^16.8.4",
 		"react-icons": "^4.4.0",
 		"react-polyfills": "0.0.1",

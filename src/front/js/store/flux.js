@@ -3,31 +3,22 @@ const getState = ({ getStore, getActions, setStore }) => {
     store: {
       message: null,
       token: null,
+      user_data: [],
+      user_address: [],
       categories:[],
-      products:[],
       carrito:[]
     },
     actions: {
       getAllCategories: () => {
-				fetch ('https://3001-rcaterino-easyrestauran-x2j88jm3ue6.ws-eu63.gitpod.io/api/category')
+				fetch (process.env.BACKEND_URL +"/api/category")
 				.then (res => res.json()
 				)
 				.then (categories=> {
 					setStore({categories: categories})
-				})
+				}).catch((error) => {
+          console.error('Error:', error);
+        });
 			},
-      // getAllProduct: () => {
-			// 	fetch ('https://3001-rcaterino-easyrestauran-x2j88jm3ue6.ws-eu63.gitpod.io/api/product')
-			// 	.then (res => res.json()
-			// 	)
-			// 	.then (products=> {
-			// 		setStore({products: products})
-			// 	})
-			// },
-      // Use getActions to call a function within a fuction
-      exampleFunction: () => {
-        getActions().changeColor(0, "green");
-      },
 
       setCarrito:(newProduct) => {
         console.log("Entrando...")
@@ -39,6 +30,15 @@ const getState = ({ getStore, getActions, setStore }) => {
         const token = sessionStorage.getItem("token");
         if (token && token !== "" && token !== undefined)
           setStore({ token: token });
+      },
+
+      getUserDataFromSession: () => {
+        const user_data = sessionStorage.getItem("user_data");
+        if (user_data && user_data !== "" && user_data !== undefined)
+          setStore({
+            user_data: user_data,
+            /*user_address: user_data.user_address,*/
+          });
       },
 
       /**Función para iniciar sesión del usuario */
@@ -53,9 +53,11 @@ const getState = ({ getStore, getActions, setStore }) => {
             password: password,
           }),
         };
-        console.log(opts.body);
         try {
-          const resp = await fetch(process.env.BACKEND_URL + "/api/token", opts);
+          const resp = await fetch(
+            process.env.BACKEND_URL + "/api/token",
+            opts
+          );
           if (resp.status !== 200) {
             new Error("error from login in context");
             alert("usuario no registrado");
@@ -63,12 +65,17 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
           const data = await resp.json();
           sessionStorage.setItem("token", data.access_token);
-          setStore({ token: data.access_token });
+          setStore({
+            token: data.access_token,
+            user_data: data.user_data,
+            user_address: data.user_data.address,
+          });
           return true;
         } catch (error) {
           console.error(error);
         }
       },
+
       /** Función para deslogear al usuario, remueve el token del sessionStorage */
       logout: () => {
         sessionStorage.removeItem("token");
@@ -110,32 +117,74 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error(error);
         }
       },
-
-      getMessage: async () => {
+      /**Función para modificar los datos personales del usuario */
+      putuser: async (nombre, apellidos, birthday, phone, email) => {
+        const opts = {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: nombre,
+            lastname: apellidos,
+            birthday: birthday,
+            phone: phone,
+            email: email,
+          }),
+        };
         try {
-          // fetching data from the backend
-          const resp = await fetch(process.env.BACKEND_URL + "/api/hello");
-          const data = await resp.json();
-          setStore({ message: data.message });
-          // don't forget to return something, that is how the async resolves
-          return data;
+          let resp = await fetch(
+            process.env.BACKEND_URL + '/api/edituser/'+ getStore().user_data.id,
+            opts
+          );
+          if (resp.status !== 200) {
+            new Error("there has been an error");
+            return false;
+          }
+          let data = await resp.json();
+          setStore({
+            user_data: data.user_data,
+            user_address: data.user_data.address,})          
+          return true;
         } catch (error) {
-          console.log("Error loading message from backend", error);
+          console.error(error);
         }
       },
-      changeColor: (index, color) => {
-        //get the store
-        const store = getStore();
 
-        //we have to loop the entire demo array to look for the respective index
-        //and change its color
-        const demo = store.demo.map((elm, i) => {
-          if (i === index) elm.background = color;
-          return elm;
-        });
+      /**Función para optener del backend la lista de productos y categorías de la carta */
+      getCarta: async () => {
+        const opts = {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+        try {
+          const resp = await fetch(
+            process.env.BACKEND_URL + "/api/category",
+            opts
+          );
+          if (resp.status !== 200) {
+            new Error("error");
+            alert("no existgen categorias");
+            return false;
+          }
+          const data = await resp.json();
+          setStore({
+            category: data.category,
+            // products: data.products,
+          });
+          return true;
+        } catch (error) {
+          console.error(error);
+        }
+      },
 
-        //reset the global store
-        setStore({ demo: demo });
+      /** Función para deslogear al usuario, remueve el token del sessionStorage */
+      logout: () => {
+        sessionStorage.removeItem("token");
+        setStore({ token: null });
+        return true;
       },
     },
   };
