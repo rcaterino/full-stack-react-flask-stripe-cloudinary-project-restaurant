@@ -70,7 +70,7 @@ def getProduct():
     products_query = Product.query.all()
     all_product = list(map(lambda x: x.serialize(), products_query))
     return jsonify(all_product), 200 
-
+    
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 # #get only one product in db
 @api.route('/product/<int:id>', methods=['GET'])
@@ -83,7 +83,7 @@ def getoneProduct(id):
 @api.route('/newproduct', methods=['POST'])
 def newProduct():
     info_request = request.get_json()
-    product1 = Product(name=info_request["name"], id=info_request["id"],price=info_request["price"], active=info_request["active"], category_id=info_request["category_id"])
+    product1 = Product(name=info_request["name"], description=info_request["description"], id=info_request["id"],price=info_request["price"], active=info_request["active"], category_id=info_request["category_id"])
     db.session.add(product1)
     db.session.commit()
     return jsonify("Producto creada"), 200  

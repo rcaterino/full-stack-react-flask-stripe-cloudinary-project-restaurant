@@ -15,7 +15,7 @@ export const Home = () => {
     /* utilizando el operador ternario, evaluamos si la variable token dentro de store está vacía, nula o indefinida para renderizar el componente de login */
     /* en caso que si tenemos token guardado en la sesión, renderizamos página de inicio personalizada */
     <>
-        <div className="text-center mt-5">
+        <div className="container col align-items-center text-center mt-5">
           <h1 className="text-center">Bienvenido a Portal 10</h1>
           <Menu />
         </div>

@@ -1,12 +1,10 @@
 import React from "react";
 import { FaPizzaSlice } from "react-icons/fa";
+
 export const Footer = () => {
   return (
-    <footer className=" mt-auto py-3 text-center">
-      <section className="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
-        <div className="me-5 d-none d-lg-block">
-          <span>Get connected with us on social networks:</span>
-        </div>
+    <footer className="py-3 text-center align-items-center">
+      <section className="d-flex justify-content-center  p-4 border-bottom">
         <div>
           <a href="" className="me-4 text-reset">
             <i className="fab fa-facebook-f"></i>
@@ -69,7 +67,7 @@ export const Footer = () => {
         className="text-center p-4"
         style={{ background: "rgba(0, 0, 0, 0.05)" }}
       >
-        © 2022 Copyright:
+        © 2022 Copyright:{" "}
         <a className="text-reset fw-bold" href="/">
           Portal 10
         </a>

@@ -5,19 +5,20 @@ const getState = ({ getStore, getActions, setStore }) => {
       token: null,
       user_data: [],
       user_address: [],
-      categories:[],
+      user_allergens: [],
+      categories: [],
     },
     actions: {
       getAllCategories: () => {
-				fetch (process.env.BACKEND_URL +"/api/category")
-				.then (res => res.json()
-				)
-				.then (categories=> {
-					setStore({categories: categories})
-				}).catch((error) => {
-          console.error('Error:', error);
-        });
-			},
+        fetch(process.env.BACKEND_URL + "/api/category")
+          .then((res) => res.json())
+          .then((categories) => {
+            setStore({ categories: categories });
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      },
 
       /* Función para optener token almacenado en sessionStorage */
       getTokenFromSession: () => {
@@ -63,6 +64,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             token: data.access_token,
             user_data: data.user_data,
             user_address: data.user_data.address,
+            user_allergens: data.user_data.allergens,
           });
           return true;
         } catch (error) {
@@ -128,7 +130,9 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
         try {
           let resp = await fetch(
-            process.env.BACKEND_URL + '/api/edituser/'+ getStore().user_data.id,
+            process.env.BACKEND_URL +
+              "/api/edituser/" +
+              getStore().user_data.id,
             opts
           );
           if (resp.status !== 200) {
@@ -138,7 +142,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           let data = await resp.json();
           setStore({
             user_data: data.user_data,
-            user_address: data.user_data.address,})          
+            user_address: data.user_data.address,
+          });
           return true;
         } catch (error) {
           console.error(error);
