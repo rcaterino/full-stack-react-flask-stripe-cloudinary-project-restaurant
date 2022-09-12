@@ -191,13 +191,13 @@ def postAllergensuser():
     return jsonify("alergeno asignado al usuario"), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 #delete allergens
-@api.route("/allegensuser/{id}", methods=["DELETE"])
+@api.route("/allergensuserdelete/<int:id>", methods=["DELETE"])
 def deleteAllergensuser(id):
-   allergenObj = Allergens.query.get(id)
+   allergenObj = Allergens_Users.query.get(id)
    
    db.session.delete(allergenObj)
    db.session.commit()
-   return jsonify("alergeno eliminado"), 404
+   return jsonify("alergeno eliminado"), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 #Editing a allergen by id
