@@ -8,6 +8,7 @@ import { Miperfil } from "./pages/MiPerfil";
 import { Login } from "./pages/login";
 import { Register } from "./pages/register";
 import injectContext from "./store/appContext";
+import  {Allergens} from "./pages/alergeno";
 
 import { Footer } from "./component/footer";
 import { Navbar } from "./component/navbar";
@@ -29,6 +30,7 @@ const Layout = () => {
             <Route element={<Register />} path="/register" />
             <Route element={<Miperfil />} path="/miperfil" />
             <Route element={<QuienesSomos />} path="/quienessomos" />
+            <Route element={<Allergens />} path="/alergeno" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
           <Footer />

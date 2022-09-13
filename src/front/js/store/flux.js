@@ -6,8 +6,47 @@ const getState = ({ getStore, getActions, setStore }) => {
       user_data: [],
       user_address: [],
       categories:[],
+      alergenos:[],
     },
     actions: {
+      getAllAllergens: () => {
+				fetch (process.env.BACKEND_URL +"/api/allergens")
+				.then (res => res.json()
+				)
+				.then (allergens=> {
+					setStore({alergenos: allergens})
+				}).catch((error) => {
+          console.error('Error:', error);
+        });
+			},
+
+      signup: async (allergens_id, user_id) => {
+        const opts = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            allergens_id: id_alergeno,
+            user_id: id_usuario,
+            is_active: true,
+          }),
+        };
+        try {
+          let resp = await fetch(
+            process.env.BACKEND_URL + "/api/register",
+            opts
+          );
+          if (resp.status !== 200) {
+            new Error("there has been an error");
+            return false;
+          }
+          return true;
+        } catch (error) {
+          console.error(error);
+        }
+      },
+
       getAllCategories: () => {
 				fetch (process.env.BACKEND_URL +"/api/category")
 				.then (res => res.json()

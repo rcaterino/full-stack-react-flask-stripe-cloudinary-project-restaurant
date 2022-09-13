@@ -13,8 +13,8 @@ const UserNavBar = () => {
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">
-          <Link to="/">
+        <a class="nav-link active" href="#">
+          <Link to="/alergeno">
             <span>Mis alérgenos</span>
           </Link>
         </a>
