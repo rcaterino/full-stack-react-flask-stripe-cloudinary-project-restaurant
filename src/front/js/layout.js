@@ -7,12 +7,11 @@ import { QuienesSomos } from "./pages/QuienesSomos";
 import { Miperfil } from "./pages/MiPerfil";
 import { Login } from "./pages/login";
 import { Register } from "./pages/register";
-import injectContext from "./store/appContext";
-
-import { Footer } from "./component/footer";
-import { Navbar } from "./component/navbar";
 import { Cocina } from "./pages/cocina";
 import { LoginAdmin } from "./pages/loginAdmin";
+
+import injectContext from "./store/appContext";
+
 
 //create your first component
 const Layout = () => {

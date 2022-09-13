@@ -26,7 +26,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         const token = sessionStorage.getItem("token");
         if (token && token !== "" && token !== undefined)
           setStore({ token: token });
-        console.log(token);
       },
 
       getUserDataFromSession: () => {
@@ -62,6 +61,9 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
           const data = await resp.json();
           sessionStorage.setItem("token", data.access_token);
+          sessionStorage.setItem("user_data", data.user_data);
+          sessionStorage.setItem("user_address", data.user_address);
+          sessionStorage.setItem("user_allergens", data.user_allergens);
           setStore({
             token: data.access_token,
             user_data: data.user_data,
@@ -77,10 +79,14 @@ const getState = ({ getStore, getActions, setStore }) => {
       /** Función para deslogear al usuario, remueve el token del sessionStorage */
       logout: () => {
         sessionStorage.removeItem("token");
+        sessionStorage.removeItem("user_data");
+        sessionStorage.removeItem("user_address");
+        sessionStorage.removeItem("user_allergens");
         setStore({
           token: null,
           user_data: [],
           user_address: [],
+          user_allergens:[],
         });
         return true;
       },
@@ -111,7 +117,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             new Error("there has been an error");
             return false;
           }
-          let data = await resp.json();
+          const data = await resp.json();
           sessionStorage.setItem("token", data.access_token);
           setStore({
             token: data.access_token,
@@ -150,7 +156,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             new Error("there has been an error");
             return false;
           }
-          let data = await resp.json();
+          const data = await resp.json();
           setStore({
             user_data: data.user_data,
             user_address: data.user_data.address,
@@ -160,13 +166,41 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error(error);
         }
       },
+      /**Función para dar por terminada una orden de preparación */
+      orderToDelete: async (orderId) => {
+        const opts = {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            order_status: true,
+          }),
+        };
+        try {
+          let resp = await fetch(
+            process.env.BACKEND_URL +
+              "/api/endingorder/" +
+              orderId,
+            opts
+          );
+          if (resp.status !== 200) {
+            new Error("there has been an error");
+            return false;
+          }
+          const data = await resp.json();
+          return true;
+        } catch (error) {
+          console.error(error);
+        }
+      },
       /**Función para optener del backend la lista de productos y categorías de la carta */
       getCarta: async () => {
         const opts = {
           method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          // headers: {
+          //   "Content-Type": "application/json",
+          // },
         };
         try {
           const resp = await fetch(
@@ -181,20 +215,20 @@ const getState = ({ getStore, getActions, setStore }) => {
           const data = await resp.json();
           setStore({
             category: data.category,
-            // products: data.products,
           });
           return true;
         } catch (error) {
           console.error(error);
         }
       },
+      
       /**Función para optener las ordenes en preparación */
       getOrder: async () => {
         const opts = {
           method: "GET",
-          headers: {
-            "conten-Type": "aplication/json",
-          },
+          // headers: {
+          //   "conten-Type": "aplication/json",
+          // },
         };
         try {
           const resp = await fetch(
@@ -203,15 +237,12 @@ const getState = ({ getStore, getActions, setStore }) => {
           );
           if (resp.status !== 200) {
             new Error("error");
-            alert("no existgen pedidos para preparar");
+            alert("no existen pedidos para preparar");
             return false;
           }
-          let data = await resp.json();
-          setStore({
-            order: data,
-          });
-          console.log(data);
-          console.log(order);
+          const data = await resp.json();
+          setStore({order: data});
+          console.log("me estoy actualizando")
           return true;
         } catch (error) {
           console.error(error);

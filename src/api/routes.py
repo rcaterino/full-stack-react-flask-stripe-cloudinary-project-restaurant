@@ -250,7 +250,7 @@ def putCorrelative(id):
 # get all correlatives
 @api.route('/allorders', methods=['GET'])
 def getAllOrders():
-    orders_query = Order.query.all()
+    orders_query = Order.query.filter_by(order_status=False)
     all_orders= list(map(lambda x: x.serialize(), orders_query))
     return jsonify(all_orders), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -277,6 +277,21 @@ def newOrderDetail(order_id):
         db.session.add(orderDetail)
     db.session.commit()
     return jsonify("detalle de pedido incluido con exito"), 200  
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
+#Ending a order
+@api.route("/endingorder/<int:id>", methods=["PUT"])
+def putEndOrder(id):
+    info_request = request.get_json()
+    print(info_request)
+    orderToEnd = Order.query.get(id)
+    print(orderToEnd)
+    if orderToEnd is None:
+        raise APIException('Order not found', status_code=404)
+    if "order_status" in info_request:
+        orderToEnd.order_status = info_request["order_status"]
+    db.session.commit()
+    order_query = Order.query.get(id)
+    return jsonify(orderEnded= order_query.serialize())
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():

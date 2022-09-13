@@ -4,43 +4,29 @@ import { Link, useNavigate } from "react-router-dom";
 
 const UserNavBar = () => {
   return (
-    <ul class="nav nav-tabs">
-      <li class="nav-item">
-        <a class="nav-link active" href="#">
+    <ul className="nav nav-tabs">
+      <li className="nav-item">
+        <a className="nav-link active" href="#">
           <Link to="/miperfil">
             <span>Mi perfil</span>
           </Link>
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">
+      <li className="nav-item">
+        <a className="nav-link" href="#">
           <Link to="/">
             <span>Mis alérgenos</span>
           </Link>
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">
+      <li className="nav-item">
+        <a className="nav-link" href="#">
           <Link to="/quienessomos">
             <span>Mis direcciones</span>
           </Link>
         </a>
       </li>
     </ul>
-
-    // <Nav variant="tabs" defaultActiveKey="/miperfil">
-    //   <Nav.Item>
-    //     <Nav.Link href="/miperfil"></Nav.Link>
-    //   </Nav.Item>
-    //   <Nav.Item>
-    //     <Nav.Link eventKey="link-1">Mis alergenos</Nav.Link>
-    //   </Nav.Item>
-    //   <Nav.Item>
-    //     <Nav.Link eventKey="disabled">
-    //       Mis direcciones
-    //     </Nav.Link>
-    //   </Nav.Item>
-    // </Nav>
   );
 };
 

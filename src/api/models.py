@@ -165,13 +165,14 @@ class Order(db.Model):
         return {
             "order_id": self.id,
             "user_id": self.user_id,
+            "client": User.query.get(self.user_id).name,
             "order_number": self.order_number,
             "order_comments": self.order_comments,
             "order_date": datetime.date.isoformat(self.order_date),
             "order_subtotal": self.order_subtotal,
             "tax_total": self.tax_total,
             "order_total": self.order_total,
-            "client": User.query.get(self.user_id).name,
+            "order_status": self.order_status,
             "order_detail": list(map(lambda x: x.serialize(), self.order_detail_relation))
         }
 #---------------------------------------------------------------------------------

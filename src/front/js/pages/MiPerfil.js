@@ -22,7 +22,6 @@ export const Miperfil = () => {
 
   const handleClick = () => {
     actions.putuser(nombre, apellidos, birthday, phone, email);
-    navigate("/miperfil");
   };
 
   return (
