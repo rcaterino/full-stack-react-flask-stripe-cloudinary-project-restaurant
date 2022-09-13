@@ -3,6 +3,8 @@ import { Context } from "../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
 import "../../styles/home.css";
 import UserNavBar from "../component/usernavbar";
+import { Navbar } from "../component/navbar";
+import { Footer } from "../component/footer";
 
 export const Miperfil = () => {
   const { store, actions } = useContext(Context);
@@ -25,6 +27,7 @@ export const Miperfil = () => {
 
   return (
     <div>
+      <Navbar />
       <UserNavBar />
       <div className="p-3 border-0">
         <h1 className="text-center">Formulario de Registro</h1>
@@ -113,6 +116,7 @@ export const Miperfil = () => {
           </button>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

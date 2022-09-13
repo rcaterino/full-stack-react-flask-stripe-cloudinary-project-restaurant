@@ -3,7 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 import os
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Category, Product, Addresses, Allergens
+from api.models import db, Allergens_Users, User, Category, Product, Addresses, Allergens, Order, Order_Detail, Correlatives
 from api.utils import generate_sitemap, APIException
 
 from flask_jwt_extended import create_access_token
@@ -129,7 +129,7 @@ def newaddresses():
 def getAllCategory():
     category_query = Category.query.all()
     all_category = list(map(lambda x: x.serialize(), category_query))
-    return jsonify( all_category), 200
+    return jsonify(all_category), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 # #get only one category in db
 @api.route('/category/<int:id>', methods=['GET'])
@@ -159,14 +159,14 @@ def putcategory(id):
     db.session.commit()
     return jsonify("categoria editada"),200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------  
-# get allergens
+# get all allergens
 @api.route('/allergens', methods=["GET"])
 def getAllergens():
     allergens_query = Allergens.query.all()
     all_allergens = list(map(lambda x: x.serialize(), allergens_query))
     return jsonify(all_allergens), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
-# #get only one allergen in db
+# #get only one allergen by id
 @api.route('/allergens/<int:id>', methods=['GET'])
 def getoneAllergen(id):
     allergens_query = Allergens.query.get(id)
@@ -176,7 +176,7 @@ def getoneAllergen(id):
 @api.route("/newallergens", methods=["POST"])
 def postAllergens():
     info_request = request.get_json()
-    newAllergens = Allergens(name=info_request["name"], id=info_request["id"])
+    newAllergens = Allergens(description=info_request["description"])
     db.session.add(newAllergens)
     db.session.commit()
     return jsonify("alergeno creado"), 200
@@ -192,6 +192,91 @@ def putallergen(id):
         allergen1.description = info_request["description"]    
     db.session.commit()
     return jsonify("alergeno editado"),200
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
+# get all user allergens
+@api.route('/allallergenuser', methods=['GET'])
+def getAllAllergenUser():
+    allergen_user_query = Allergens_Users.query.all()
+    all_allergen_user= list(map(lambda x: x.serialize(), allergen_user_query))
+    return jsonify(all_allergen_user), 200
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
+#Create new allergens for user
+@api.route("/newuserallergen", methods=["POST"])
+def postUserAllergen():
+    info_requests = request.get_json()
+    for info_request in info_requests:
+        newAllergensUser = Allergens_Users(user_id=info_request["user_id"], allergen_id=info_request['allergen_id'])
+        db.session.add(newAllergensUser)
+    db.session.commit()
+    return jsonify("alergeno registrado en usuario"), 200
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
+# get all correlatives
+@api.route('/correlatives', methods=['GET'])
+def getCorrelatives():
+    correlatives_query = Correlatives.query.all()
+    all_correlatives= list(map(lambda x: x.serialize(), correlatives_query))
+    return jsonify(all_correlatives), 200
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
+# #get only one correlative in db
+@api.route('/correlative/<int:id>', methods=['GET'])
+def getOneCorrelative(id):
+    correlative_query = Correlatives.query.get(id)
+    return jsonify(correlative_query.serialize())
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
+#Create new correlative
+@api.route('/newcorrelative', methods=['POST'])
+def newCorrelative():
+    info_request = request.get_json()
+    correlative1 = Correlatives(correlative_description=info_request["correlative_description"], correlative_counter=info_request["correlative_counter"])
+    db.session.add(correlative1)
+    db.session.commit()
+    return jsonify("Correlativo creado"), 200  
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
+#Editing a correlative by id
+@api.route("/editcorrelative/<int:id>", methods=["PUT"])
+def putCorrelative(id):
+    info_request = request.get_json()
+    correlative1 = Correlatives.query.get(id)
+    if correlative1 is None:
+        raise APIException('correlative not found', status_code=404)
+    if "correlative_description" in info_request:
+        correlative1.correlative_description = info_request["correlative_description"]  
+    if "correlative_counter" in info_request:
+        correlative1.correlative_counter = info_request["correlative_counter"]
+    db.session.commit()
+    return jsonify("correlativo editado"),200
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
+# get all correlatives
+@api.route('/allorders', methods=['GET'])
+def getAllOrders():
+    orders_query = Order.query.all()
+    all_orders= list(map(lambda x: x.serialize(), orders_query))
+    return jsonify(all_orders), 200
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
+#Create new order
+@api.route('/neworder/<int:id>', methods=['POST'])
+def newOrder(id):
+    info_request = request.get_json()
+    correlative1 = Correlatives.query.get(id)
+    correlative = Correlatives.query.get(id).correlative_counter
+    order1 = Order(user_id=info_request["user_id"], correlative_id=info_request['correlative_id'], order_number=correlative, order_comments=info_request['order_comments'], order_date=info_request['order_date'], order_subtotal=info_request['order_subtotal'], tax_total=info_request['tax_total'], order_total=info_request['order_total'], pay_method=info_request['pay_method'], order_status=info_request['order_status'])
+    db.session.add(order1)
+    db.session.commit()
+    correlative1 = Correlatives.query.get(id)
+    correlative1.correlative_counter = correlative + 1 
+    db.session.commit()
+    return jsonify(order_number= correlative, mensaje="orden de preparación creada"), 200  
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
+#Create new order detail
+@api.route('/neworderdetail/<int:order_id>', methods=['POST'])
+def newOrderDetail(order_id):
+    info_requests = request.get_json()
+    for info_request in info_requests:
+        orderDetail = Order_Detail(order_id=info_request['order_id'], product_id=info_request['product_id'], units=info_request['units'], unit_price=info_request['unit_price'], tax_base=info_request['tax_base'], tax_total=info_request['tax_total'], subtotal=info_request['subtotal'])
+        db.session.add(orderDetail)
+    db.session.commit()
+    return jsonify("detalle de pedido incluido con exito"), 200  
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():

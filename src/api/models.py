@@ -6,7 +6,6 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship, backref
 
 db = SQLAlchemy()
-
 #---------------------------------------------------------------------------------
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -19,6 +18,7 @@ class User(db.Model):
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
     addresses_relation = db.relationship('Addresses', backref='user', lazy=True)
     order_relation = db.relationship('Order', backref='user', lazy=True)
+    allergen_relation = db.relationship('Allergens_Users', backref='user')
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -33,6 +33,7 @@ class User(db.Model):
             "phone": self.phone,
             "address": list(map(lambda x: x.serialize(), self.addresses_relation)),
             "orders": list(map(lambda x: x.serialize(), self.order_relation)),
+            "allergen": list(map(lambda x: x.serialize(), self.allergen_relation)),
             # do not serialize the password, its a security breach
         }
 #--------------------------------------------------------------------------------- 
@@ -100,7 +101,8 @@ class Product(db.Model):
 class Allergens (db.Model):
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String(120), unique=True, nullable=False)
-
+    allergen_user_relation = db.relationship("Allergens_Users", backref='allergens')
+    
     def __repr__(self):
         return f'<Allergens {self.description}>'
 
@@ -110,29 +112,66 @@ class Allergens (db.Model):
             "description": self.description
         }    
 #---------------------------------------------------------------------------------
+class Allergens_Users(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    allergen_id = db.Column(db.Integer, db.ForeignKey("allergens.id"), nullable=False)
+
+    def __repr__(self):
+        return f'<Allergens_Users {self.id}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "allergen": Allergens.query.get(self.allergen_id).description
+
+        }
+#---------------------------------------------------------------------------------
+class Correlatives(db.Model):
+    id = db.Column(db.Integer , primary_key=True)
+    correlative_description = db.Column(db.String(100), unique=False, nullable=False)
+    correlative_counter = db.Column(db.Integer, unique=False, nullable=False)
+    order_relation = db.relationship("Order", backref='correlative', lazy=True)
+    def __repr__(self):
+      return f'<Correlatives {self.correlative_description}>'
+
+    def serialize(self):
+      return {
+        "id": self.id,
+        "description": self.correlative_description,
+        "correlative": self.correlative_counter,
+        }    
+
+#---------------------------------------------------------------------------------
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    correlative_id = db.Column(db.Integer, db.ForeignKey('correlatives.id'))
+    order_number = db.Column(db.Integer, unique=True)
     order_comments = db.Column(db.String(150), unique=False, nullable=False)
     order_date = db.Column(db.Date, unique=False, nullable=False)
     order_subtotal = db.Column(db.Float, unique=False)
-    tax_base = db.Column(db.Float, unique=False)
     tax_total = db.Column(db.Float, unique=False)
     order_total = db.Column(db.Float, unique=False)
+    pay_method = db.Column(db.String(150), unique=False, nullable=False)
+    order_status =db.Column(db.Boolean, unique=False, nullable=False)
+    user_relation = db.relationship('User', backref='order, Lazy=True')
     order_detail_relation = db.relationship("Order_Detail", backref='order', lazy=True)
+    
     def __repr__(self):
         return f'<Order {self.id}>'
 
     def serialize(self):
         return {
-            "id": self.id,
+            "order_id": self.id,
             "user_id": self.user_id,
+            "order_number": self.order_number,
             "order_comments": self.order_comments,
             "order_date": datetime.date.isoformat(self.order_date),
             "order_subtotal": self.order_subtotal,
-            "tax_base": self.tax_base,
             "tax_total": self.tax_total,
             "order_total": self.order_total,
+            "client": User.query.get(self.user_id).name,
             "order_detail": list(map(lambda x: x.serialize(), self.order_detail_relation))
         }
 #---------------------------------------------------------------------------------
@@ -148,7 +187,7 @@ class Order_Detail(db.Model):
     
     
     def __repr__(self):
-        return f'<Order_Detail {self.id}>'
+        return f'<Order_Detail {self.order_id}>'
     
     def serialize(self):
         return {

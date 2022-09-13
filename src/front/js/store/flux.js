@@ -7,6 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       user_address: [],
       user_allergens: [],
       categories: [],
+      order: [],
     },
     actions: {
       getAllCategories: () => {
@@ -25,6 +26,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         const token = sessionStorage.getItem("token");
         if (token && token !== "" && token !== undefined)
           setStore({ token: token });
+        console.log(token);
       },
 
       getUserDataFromSession: () => {
@@ -75,7 +77,11 @@ const getState = ({ getStore, getActions, setStore }) => {
       /** Función para deslogear al usuario, remueve el token del sessionStorage */
       logout: () => {
         sessionStorage.removeItem("token");
-        setStore({ token: null });
+        setStore({
+          token: null,
+          user_data: [],
+          user_address: [],
+        });
         return true;
       },
 
@@ -107,7 +113,12 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
           let data = await resp.json();
           sessionStorage.setItem("token", data.access_token);
-          setStore({ token: data.access_token });
+          setStore({
+            token: data.access_token,
+            user_data: data.user_data,
+            user_address: data.user_data.address,
+            user_allergens: data.user_data.allergens,
+          });
           return true;
         } catch (error) {
           console.error(error);
@@ -149,7 +160,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error(error);
         }
       },
-
       /**Función para optener del backend la lista de productos y categorías de la carta */
       getCarta: async () => {
         const opts = {
@@ -178,12 +188,34 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error(error);
         }
       },
-
-      /** Función para deslogear al usuario, remueve el token del sessionStorage */
-      logout: () => {
-        sessionStorage.removeItem("token");
-        setStore({ token: null });
-        return true;
+      /**Función para optener las ordenes en preparación */
+      getOrder: async () => {
+        const opts = {
+          method: "GET",
+          headers: {
+            "conten-Type": "aplication/json",
+          },
+        };
+        try {
+          const resp = await fetch(
+            process.env.BACKEND_URL + "/api/allorders",
+            opts
+          );
+          if (resp.status !== 200) {
+            new Error("error");
+            alert("no existgen pedidos para preparar");
+            return false;
+          }
+          let data = await resp.json();
+          setStore({
+            order: data,
+          });
+          console.log(data);
+          console.log(order);
+          return true;
+        } catch (error) {
+          console.error(error);
+        }
       },
     },
   };

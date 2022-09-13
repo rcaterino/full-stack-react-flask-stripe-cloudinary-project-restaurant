@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 4f00a2497a86
+Revision ID: 2b5f8b72ec71
 Revises: 
-Create Date: 2022-09-09 17:25:35.308901
+Create Date: 2022-09-12 12:35:01.510604
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '4f00a2497a86'
+revision = '2b5f8b72ec71'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -27,6 +27,12 @@ def upgrade():
     op.create_table('category',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=120), nullable=False),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('correlatives',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('correlative_description', sa.String(length=100), nullable=False),
+    sa.Column('correlative_counter', sa.Integer(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('user',
@@ -52,17 +58,30 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_table('allergens__users',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('allergen_id', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['allergen_id'], ['allergens.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
     op.create_table('order',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.Column('correlative_id', sa.Integer(), nullable=True),
+    sa.Column('order_number', sa.Integer(), nullable=True),
     sa.Column('order_comments', sa.String(length=150), nullable=False),
     sa.Column('order_date', sa.Date(), nullable=False),
     sa.Column('order_subtotal', sa.Float(), nullable=True),
-    sa.Column('tax_base', sa.Float(), nullable=True),
     sa.Column('tax_total', sa.Float(), nullable=True),
     sa.Column('order_total', sa.Float(), nullable=True),
+    sa.Column('pay_method', sa.String(length=150), nullable=False),
+    sa.Column('order_status', sa.Boolean(), nullable=False),
+    sa.ForeignKeyConstraint(['correlative_id'], ['correlatives.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('order_number')
     )
     op.create_table('product',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -95,8 +114,10 @@ def downgrade():
     op.drop_table('order__detail')
     op.drop_table('product')
     op.drop_table('order')
+    op.drop_table('allergens__users')
     op.drop_table('addresses')
     op.drop_table('user')
+    op.drop_table('correlatives')
     op.drop_table('category')
     op.drop_table('allergens')
     # ### end Alembic commands ###

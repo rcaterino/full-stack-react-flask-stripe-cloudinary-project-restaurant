@@ -82,6 +82,7 @@
 		"react-dom": "^16.8.4",
 		"react-icons": "^4.4.0",
 		"react-polyfills": "0.0.1",
-		"react-router-dom": "^6.3.0"
+		"react-router-dom": "^6.3.0",
+		"uuid": "^9.0.0"
 	}
 }

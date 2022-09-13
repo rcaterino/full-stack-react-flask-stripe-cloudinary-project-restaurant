@@ -12,9 +12,9 @@ export const Menu = () => {
     <>
       {store.categories.map((category) => (
                 <div >
-                    <button data-text="Awesome" class="button">
-                        <span class="actual-text">{category.name}</span>
-                        <span class="hover-text" aria-hidden="true">{category.name}</span>
+                    <button data-text="Awesome" className="button">
+                        <span className="actual-text">{category.name}</span>
+                        <span className="hover-text" aria-hidden="true">{category.name}</span>
                     </button>
                     <div className="text-center mt-5 d-flex overflow-scroll" style={{ overflow: 'auto', whiteSpace: 'nowrap' }}>
                         {category.product.map((producto) => (
@@ -22,9 +22,9 @@ export const Menu = () => {
                                 <div className="card-img"></div>
                                 <div className="card-info">
                                     <p className="text-title">{producto.name}</p>
-                                    <p class="text-body">Product description and details</p>
+                                    <p className="text-body">Product description and details</p>
                                 </div>
-                                <div class="card-footer">
+                                <div className="card-footer">
                                     <span className="text-title">${producto.price}</span>
                                     <div className="card-button">
                                         <svg className="svg-icon" viewBox="0 0 20 20">
