@@ -272,6 +272,7 @@ def newOrder(id):
 @api.route('/neworderdetail/<int:order_id>', methods=['POST'])
 def newOrderDetail(order_id):
     info_requests = request.get_json()
+    print(info_requests)
     for info_request in info_requests:
         orderDetail = Order_Detail(order_id=info_request['order_id'], product_id=info_request['product_id'], units=info_request['units'], unit_price=info_request['unit_price'], tax_base=info_request['tax_base'], tax_total=info_request['tax_total'], subtotal=info_request['subtotal'])
         db.session.add(orderDetail)

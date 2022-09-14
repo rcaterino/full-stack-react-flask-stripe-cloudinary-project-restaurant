@@ -86,7 +86,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           token: null,
           user_data: [],
           user_address: [],
-          user_allergens:[],
+          user_allergens: [],
         });
         return true;
       },
@@ -179,9 +179,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
         try {
           let resp = await fetch(
-            process.env.BACKEND_URL +
-              "/api/endingorder/" +
-              orderId,
+            process.env.BACKEND_URL + "/api/endingorder/" + orderId,
             opts
           );
           if (resp.status !== 200) {
@@ -221,7 +219,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error(error);
         }
       },
-      
+
       /**Función para optener las ordenes en preparación */
       getOrder: async () => {
         const opts = {
@@ -241,8 +239,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await resp.json();
-          setStore({order: data});
-          console.log("me estoy actualizando")
+          setStore({ order: data });
           return true;
         } catch (error) {
           console.error(error);

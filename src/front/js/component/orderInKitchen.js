@@ -3,6 +3,8 @@ import { Context } from "../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import ListGroup from "react-bootstrap/ListGroup";
+import Alert from "react-bootstrap/Alert";
 
 export const OrderInKitchen = () => {
   const { store, actions } = useContext(Context);
@@ -24,27 +26,52 @@ export const OrderInKitchen = () => {
       store.order === null ||
       store.order === "" ||
       store.order === undefined ? (
-        <div className="container mt-3">
-          <div className="alert alert-warning" role="alert">
-            Sin pedidos
-          </div>
-        </div>
+        <Alert variant="danger">
+          <Alert.Heading>
+            Oh no, ¡en este momento no tenemos pedidos para preparar!
+          </Alert.Heading>
+          <hr />
+          <h6 className="mb-0">
+            Aprovecha para tomarte un respiro, hidratarte y de ser posible,
+            poner en orden, limpiar y reabastecer de material tu espacio de
+            trabajo
+          </h6>
+        </Alert>
       ) : (
         <div className="container">
           <div className="row">
             {store.order.map((order) => (
-              <Card style={{ width: "18rem" }} className="col-sm-4 mb-3 m-auto">
+              <Card
+                style={{ width: "30rem", height: "100%" }}
+                className="col-sm-4 mb-3 m-auto bg-warning"
+              >
                 <Card.Body>
-                  <Card.Title>{order.order_number}</Card.Title>
-                  <Card.Text>{order.order_comments}</Card.Text>
+                  <Card.Title>
+                    <h1>Pedido Número: {order.order_number}</h1>
+                  </Card.Title>
+                  <Card.Text>
+                    <ListGroup>
+                      {order.order_detail.map((item) => (
+                        <>
+                          <ListGroup.Item className="bg-danger text-white">
+                            <p>{item.product_name}</p>
+                          </ListGroup.Item>
+                        </>
+                      ))}
+                      ,
+                    </ListGroup>
+                    <h3>Detalles del pedido: </h3>
+                    <h4>{order.order_comments}</h4>
+                  </Card.Text>
                   <Button
-                    variant="primary"
+                    className="p-3"
+                    variant="success"
                     onClick={(e) => {
                       const orderToDelete = order.order_id;
                       endOrder(orderToDelete);
                     }}
                   >
-                    Entregar pedido
+                    <h6>Entregar pedido</h6>
                   </Button>
                 </Card.Body>
               </Card>
