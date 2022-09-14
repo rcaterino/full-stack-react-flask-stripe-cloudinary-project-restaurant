@@ -4,7 +4,6 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { v4 as uuidv4 } from "uuid";
 import { Carrito } from "../pages/carrito";
-import { v4 as uuidv4 } from 'uuid';
 
 
 
