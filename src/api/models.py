@@ -105,7 +105,7 @@ class Ingredients(db.Model):
     is_extra = db.Column(db.Boolean, unique=False, nullable=False)
     is_removable = db.Column(db.Boolean, unique=False, nullable=False)
     price = db.Column(db.Float, unique=False)
-
+    
     def __repr__(self):
         return f'<Product {self.name}>'
     
