@@ -26,7 +26,7 @@
  }
  
  .card-img {
-  background-color: #fd4531;
+  background-color: #000000;
   height: 40%;
   width: 100%;
   border-radius: .5rem;
@@ -124,4 +124,17 @@
 .button:hover .hover-text {
   width: 100%;
   filter: drop-shadow(0 0 23px var(--animation-color))
+}
+
+.BotonCarrito{
+  margin-top: 5rem;
+  margin-left: 40rem;
+}
+
+.container {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  height: 100%;
+  text-align: center;
 }

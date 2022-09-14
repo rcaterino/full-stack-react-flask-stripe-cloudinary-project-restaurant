@@ -22,18 +22,21 @@ export const Navbar = () => {
     /* en caso que si tenemos token guardado en la sesión, renderizamos navbar personalizado con home, Mi perfil y LogOut */
     <>
       {!store.token ||
-      store.token === null ||
-      store.token === "" ||
-      store.token === undefined ? (
+        store.token === null ||
+        store.token === "" ||
+        store.token === undefined ? (
         <nav className="navbar navbar-light bg-light">
           <div className="container">
             <Link to="/">
               <span className="navbar-brand mb-0 h1">Home</span>
             </Link>
             <div className="ml-auto">
-            <Link to="/login">
-              <span className="navbar-brand mb-0 h1">Login</span>
-            </Link>
+              <Link to="/login">
+                <span className="navbar-brand mb-0 h1">Login</span>
+              </Link>
+              <Link to="/Carrito">
+                <span className="fas fa-shopping-cart"></span>
+              </Link>
             </div>
           </div>
         </nav>
@@ -46,6 +49,9 @@ export const Navbar = () => {
             </Link>
             <Link to="/miperfil">
               <span className="navbar-brand mb-0 h1">Mi perfil</span>
+            </Link>
+            <Link to="/Carrito">
+              <span className="fas fa-shopping-cart"></span>
             </Link>
             <div className="ml-auto">
               <button

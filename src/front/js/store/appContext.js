@@ -28,6 +28,9 @@ const injectContext = (PassedComponent) => {
        * you should do your ajax requests or fetch api requests here. Do not use setState() to save data in the
        * store, instead use actions, like this:
        **/
+      
+      let carrito2 = JSON.parse(localStorage.getItem("carritoStr"))
+      state.store.carrito=carrito2 ? carrito2:[];
       state.actions.getTokenFromSession(); // <---- calling this function from the flux.js actions
     }, []);
 
