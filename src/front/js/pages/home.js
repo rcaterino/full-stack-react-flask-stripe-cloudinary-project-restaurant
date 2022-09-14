@@ -22,7 +22,6 @@ export const Home = () => {
           <h1 className="text-center">Bienvenido a Portal 10</h1>
           <Menu />
         </div>
-
       <Footer />
     </>
   );

@@ -3,6 +3,7 @@ import React, { useEffect, useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import { Navbar } from "../component/navbar";
 
 export const Carrito = () => {
   const { store, actions } = useContext(Context);
@@ -25,6 +26,7 @@ export const Carrito = () => {
 
   return (
     <div>
+      <Navbar/>
     <div className="text-center mt-5 d-flex overflow-scroll" style={{ overflow: 'auto', whiteSpace: 'nowrap'}}>
         <>
         {store.carrito.length>0 && store.carrito.map((item, k) => {
