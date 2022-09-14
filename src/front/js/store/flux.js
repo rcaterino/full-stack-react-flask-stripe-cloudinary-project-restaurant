@@ -187,6 +187,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await resp.json();
+          setStore({ order: data.orders });
           return true;
         } catch (error) {
           console.error(error);
@@ -214,6 +215,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           setStore({
             category: data.category,
           });
+          getActions().getOrder;
           return true;
         } catch (error) {
           console.error(error);
@@ -239,7 +241,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await resp.json();
-          setStore({ order: data });
+          setStore({ order: data.orders });
           return true;
         } catch (error) {
           console.error(error);

@@ -97,6 +97,26 @@ class Product(db.Model):
             "category_id": self.category_id,
             "category": Category.query.get(self.category_id).name
         }
+
+ #---------------------------------------------------------------------------------
+class Ingredients(db.Model): 
+    id = db.Column(db.Integer, primary_key=True)
+    description = db.Column(db.String(120), unique=False, nullable=False)
+    is_extra = db.Column(db.Boolean, unique=False, nullable=False)
+    is_removable = db.Column(db.Boolean, unique=False, nullable=False)
+    price = db.Column(db.Float, unique=False)
+
+    def __repr__(self):
+        return f'<Product {self.name}>'
+    
+    def serialize(self):
+        return{
+            "id": self.id,
+            "description": self.description,
+            "is_extra": self.is_extra,
+            "is_removable": self.is_removable,
+            "price": self.price,
+        }
 #---------------------------------------------------------------------------------
 class Allergens (db.Model):
     id = db.Column(db.Integer, primary_key=True)

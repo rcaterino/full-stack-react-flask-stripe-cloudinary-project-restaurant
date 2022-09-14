@@ -1,19 +1,22 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 import Alert from "react-bootstrap/Alert";
+import Toast from "react-bootstrap/Toast";
+import getState from "../store/flux";
 
 export const OrderInKitchen = () => {
   const { store, actions } = useContext(Context);
   let navigate = useNavigate();
 
   useEffect(() => {
+    store.order;
     setInterval(() => {
       actions.getOrder();
-    }, 5000);
+    }, 10000);
   }, []);
 
   function endOrder(id) {
@@ -23,9 +26,9 @@ export const OrderInKitchen = () => {
   return (
     <>
       {!store.order ||
-      store.order === null ||
-      store.order === "" ||
-      store.order === undefined ? (
+      store.order == null ||
+      store.order == "" ||
+      store.order == undefined ? (
         <Alert variant="danger">
           <Alert.Heading>
             Oh no, ¡en este momento no tenemos pedidos para preparar!
@@ -38,12 +41,12 @@ export const OrderInKitchen = () => {
           </h6>
         </Alert>
       ) : (
-        <div className="container">
+        <div className="container-fluid">
           <div className="row">
             {store.order.map((order) => (
               <Card
-                style={{ width: "30rem", height: "100%" }}
-                className="col-sm-4 mb-3 m-auto bg-warning"
+                style={{ width: "100%", height: "100%" }}
+                className="col-sm-6 mb-3 m-auto bg-warning"
               >
                 <Card.Body>
                   <Card.Title>

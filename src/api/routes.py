@@ -252,7 +252,7 @@ def putCorrelative(id):
 def getAllOrders():
     orders_query = Order.query.filter_by(order_status=False)
     all_orders= list(map(lambda x: x.serialize(), orders_query))
-    return jsonify(all_orders), 200
+    return jsonify(orders=all_orders), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 #Create new order
 @api.route('/neworder/<int:id>', methods=['POST'])
@@ -291,8 +291,9 @@ def putEndOrder(id):
     if "order_status" in info_request:
         orderToEnd.order_status = info_request["order_status"]
     db.session.commit()
-    order_query = Order.query.get(id)
-    return jsonify(orderEnded= order_query.serialize())
+    orders_query = Order.query.filter_by(order_status=False)
+    all_orders= list(map(lambda x: x.serialize(), orders_query))
+    return jsonify(orders=all_orders), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
