@@ -12,6 +12,9 @@ import { LoginAdmin } from "./pages/loginAdmin";
 
 import injectContext from "./store/appContext";
 
+import { Footer } from "./component/footer";
+import { Navbar } from "./component/navbar";
+import { Carrito } from "./pages/carrito";
 
 //create your first component
 const Layout = () => {
@@ -32,6 +35,7 @@ const Layout = () => {
             <Route element={<QuienesSomos />} path="/quienessomos" />
             <Route element={<LoginAdmin />} path="/loginadmin" />
             <Route element={<Cocina />} path="/cocina" />
+            <Route element={<Carrito />} path="/Carrito" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
           
