@@ -5,8 +5,11 @@ const getState = ({ getStore, getActions, setStore }) => {
       token: null,
       user_data: [],
       user_address: [],
+      user_alergenos:[],
       categories:[],
-      alergenos:[],
+      alergenos:[]
+
+      
     },
     actions: {
       getAllAllergens: () => {
@@ -15,10 +18,40 @@ const getState = ({ getStore, getActions, setStore }) => {
 				)
 				.then (allergens=> {
 					setStore({alergenos: allergens})
+          console.log("lista de alergenos")
+          console.log(getStore().alergenos)
 				}).catch((error) => {
           console.error('Error:', error);
         });
 			},
+
+      addAllergen: async (userAllergens) => {
+        const opts = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            allergen_id: id_alergeno,
+            user_id: id_usuario,
+            is_active: true,
+          }),
+        };
+        try {
+          let resp = await fetch(
+            process.env.BACKEND_URL + "/api/userAllergens",
+            opts
+          );
+          if (resp.status !== 200) {
+            new Error("there has been an error");
+            return false;
+          }
+          return true;
+        } catch (error) {
+          console.error(error);
+        }
+      },  
+
 
       signup: async (allergens_id, user_id) => {
         const opts = {
@@ -102,7 +135,10 @@ const getState = ({ getStore, getActions, setStore }) => {
             token: data.access_token,
             user_data: data.user_data,
             user_address: data.user_data.address,
+            user_alergenos: data.user_data.allergen
           });
+          console.log("lista de alergenos del usuario")
+          console.log(getStore().user_alergenos)
           return true;
         } catch (error) {
           console.error(error);

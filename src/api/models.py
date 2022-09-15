@@ -8,10 +8,27 @@ from sqlalchemy.orm import relationship, backref
 db = SQLAlchemy()
 
 #---------------------------------------------------------------------------------
-userAllergens = db.Table("userAllergens",
-    db.Column("allergen_id", db.Integer, db.ForeignKey("allergens.id"), primary_key=True),
-    db.Column("user_id", db.Integer, db.ForeignKey("user.id"), primary_key=True)
-) 
+# userAllergens = db.Table("userAllergens",
+#     db.Column("allergen_id", db.Integer, db.ForeignKey("allergens.id"), primary_key=True),
+#     db.Column("user_id", db.Integer, db.ForeignKey("user.id"), primary_key=True)
+# ) 
+#---------------------------------------------------------------------------------
+class userAllergens (db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    allergen_id = db.Column(db.Integer, db.ForeignKey("allergens.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+
+    def __repr__(self):
+        return f'<userAllergens {self.id}>'
+
+    def serialize(self):
+        return {
+            "id_allergen": self.allergen_id,
+            "allergen": Allergens.query.get(self.allergen_id).description,
+            "user_id": User.query.get(self.user_id).id
+        }    
+
+
 
 #---------------------------------------------------------------------------------
 class User(db.Model):
@@ -24,8 +41,7 @@ class User(db.Model):
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
     addresses_relation = db.relationship('Addresses', backref='user', lazy=True)
-    allergens = db.relationship("Allergens", secondary=userAllergens, lazy="subquery",
-        backref=db.backref("user_id", lazy=True))
+    userallergens = db.relationship("userAllergens",backref='user', lazy=True)
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -39,7 +55,7 @@ class User(db.Model):
             "birthday": datetime.date.isoformat(self.birthday),
             "phone": self.phone,
             "address": list(map(lambda x: x.serialize(), self.addresses_relation)),
-            "allergen": list(map(lambda x: x.serialize(), self.allergens))
+            "allergen": list(map(lambda x: x.serialize(), self.userallergens))
             # do not serialize the password, its a security breach
         }
 #--------------------------------------------------------------------------------- 
@@ -104,6 +120,7 @@ class Product(db.Model):
 class Allergens (db.Model):
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String(120), unique=True, nullable=False)
+    userallergens = db.relationship("userAllergens",backref="allergens", lazy=True)
 
     def __repr__(self):
         return f'<Allergens {self.description}>'
@@ -111,7 +128,7 @@ class Allergens (db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "description": self.description
+            "description": self.description,
         }    
 #---------------------------------------------------------------------------------
 

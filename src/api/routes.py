@@ -3,8 +3,9 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 import os
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Category, Product, Addresses, Allergens
+from api.models import db, User, Category, Product, Addresses, Allergens, userAllergens
 from api.utils import generate_sitemap, APIException
+from sqlalchemy import insert
 
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
@@ -182,11 +183,12 @@ def postAllergens():
     return jsonify("alergeno creado"), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 #add allergens
-@api.route("/allegensuser", methods=["POST"])
+@api.route("/allergensuser", methods=["POST"])
 def postAllergensuser():
-    info_request = request.get_json()
-    allergensUser = Allergens_Users(allergens_id=info_request["allergens_id"], user_id=info_request["user_id"])
-    db.session.add(allergensUser)
+    info_requests = request.get_json()
+    for info_request in info_requests: 
+        allergensuser=userAllergens(user_id=info_request["user_id"],allergen_id=info_request["allergen_id"])
+        db.session.add(allergensuser)
     db.session.commit()
     return jsonify("alergeno asignado al usuario"), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
