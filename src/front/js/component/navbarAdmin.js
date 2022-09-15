@@ -1,6 +1,22 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 export const NavbarAdmin = () => {
+  const { store, actions } = useContext(Context);
+  let navigate = useNavigate();
+
+  /**la función handleLogout llama la función logout dentro de actions en flux.js y redirige el usuario al home */
+  const handleLogout = () => {
+    actions.logoutRestaurant();
+    navigate("/easyrestaurant/admin");
+  };
+
+  /** con useEffect llamamos a la función getTokenFromSession para saber si el usuario está logeado leyendo si existe token en el store */
+  useEffect(() => {
+    store.restaurant_data;
+  }, []);
+
   return (
     <nav className="navbar navbar-expand-lg text-white bg-danger">
       <div className="container-fluid text-white">
@@ -40,7 +56,18 @@ export const NavbarAdmin = () => {
               </a>
             </li>
           </ul>
+          <div className="ml-auto">
+              <button
+                className="btn btn-primary"
+                onClick={() => {
+                  handleLogout();
+                }}
+              >
+                LogOut
+              </button>
+              </div>
         </div>
+        
       </div>
     </nav>
   );

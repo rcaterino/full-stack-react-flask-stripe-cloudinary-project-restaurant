@@ -1,12 +1,40 @@
 import os
 import sys
 import datetime
-from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy import Table, Column, ForeignKey, Integer, String
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship, backref
 
 db = SQLAlchemy()
 #---------------------------------------------------------------------------------
+class Restaurant(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), unique=False, nullable=False)
+    lastname = db.Column(db.String(120), unique=False, nullable=False)
+    dni_cif = db.Column(db.String(120), unique=True, nullable=False)
+    birthday = db.Column(db.Date, unique=False, nullable=False)
+    restaurant_name = db.Column(db.String(120), unique=True, nullable=False)
+    url = db.Column(db.String(80), unique=True, nullable=False)
+    phone = db.Column(db.Integer, unique=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password = db.Column(db.String(80), unique=False, nullable=False)
+    
+    def __repr__(self):
+        return f'<Restaurant {self.restaurant_name}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "lastname": self.lastname,
+            "dni_cif": self.dni_cif,
+            "birthday": datetime.date.isoformat(self.birthday),
+            "restaurant_name": self.restaurant_name,
+            "url": self.url,
+            "phone": self.phone,
+            "email": self.email,
+            # do not serialize the password, its a security breach
+        }
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=False, nullable=False)

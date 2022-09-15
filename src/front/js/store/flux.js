@@ -1,18 +1,53 @@
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       message: null,
       token: null,
+      restaurant_data: [],
       user_data: [],
       user_address: [],
       user_allergens: [],
       categories: [],
       order: [],
-      carrito:[]
+      carrito: [],
     },
     actions: {
+      /**Función para iniciar sesión del usuario */
+      loginRestaurant: async (email, password) => {
+        const opts = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password,
+          }),
+        };
+        try {
+          const resp = await fetch(
+            process.env.BACKEND_URL + "/api/tokenrestaurant",
+            opts
+          );
+          if (resp.status !== 200) {
+            new Error("error from login in context");
+            alert("usuario no registrado");
+            return false;
+          }
+          const data = await resp.json();
+          sessionStorage.setItem("token", data.access_token);
+          sessionStorage.setItem("restaurant_data", data.restaurant_data);
+          setStore({
+            token: data.access_token,
+            restaurant_data: data.restaurant_data,
+          });
+          return true;
+        } catch (error) {
+          console.error(error);
+        }
+      },
       getAllCategories: () => {
         fetch(process.env.BACKEND_URL + "/api/category")
           .then((res) => res.json())
@@ -24,41 +59,40 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
       },
 
-      setCarrito:(newProduct) => {
-        console.log("Entrando...")
-				setStore({carrito: newProduct})
-        console.log("------")
-        JSON.stringify(getStore().carrito)
-        let carritoG = JSON.stringify(getStore().carrito)
-        localStorage.setItem("carritoStr", carritoG)
-        console.log(getStore().carrito)
-        console.log("------")
+      setCarrito: (newProduct) => {
+        console.log("Entrando...");
+        setStore({ carrito: newProduct });
+        console.log("------");
+        JSON.stringify(getStore().carrito);
+        let carritoG = JSON.stringify(getStore().carrito);
+        localStorage.setItem("carritoStr", carritoG);
+        console.log(getStore().carrito);
+        console.log("------");
       },
-      
-       deleteCarritoItem:(storeId) => {
-        let carrito = getStore().carrito
-        let newData = carrito.filter(carrito => storeId !== carrito["storeId"])
-        let carritoD = JSON.stringify(newData)
-        setStore({carrito: newData})
-        localStorage.setItem("carritoStr", carritoD)
-       },
 
-       deleteCarrito:() => {
+      deleteCarritoItem: (storeId) => {
+        let carrito = getStore().carrito;
+        let newData = carrito.filter(
+          (carrito) => storeId !== carrito["storeId"]
+        );
+        let carritoD = JSON.stringify(newData);
+        setStore({ carrito: newData });
+        localStorage.setItem("carritoStr", carritoD);
+      },
+
+      deleteCarrito: () => {
         localStorage.removeItem("carritoStr");
-        setStore({carrito: []})
-       },
-
-       getCarrito: () => {
-        const carritoLocal = localStorage.getItem("carritoStr");
-        if (carritoLocal && carritoLocal !== "" && carritoLocal !== undefined){
-          console.log("getCarrito")
-          console.log(carritoLocal)
-          setStore({ carrito:JSON.parse( carritoLocal) });
-        }
-       
+        setStore({ carrito: [] });
       },
 
-
+      getCarrito: () => {
+        const carritoLocal = localStorage.getItem("carritoStr");
+        if (carritoLocal && carritoLocal !== "" && carritoLocal !== undefined) {
+          console.log("getCarrito");
+          console.log(carritoLocal);
+          setStore({ carrito: JSON.parse(carritoLocal) });
+        }
+      },
 
       /* Función para optener token almacenado en sessionStorage */
       getTokenFromSession: () => {
@@ -66,8 +100,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         if (token && token !== "" && token !== undefined)
           setStore({ token: token });
       },
-
-
 
       getUserDataFromSession: () => {
         const user_data = sessionStorage.getItem("user_data");
@@ -128,6 +160,15 @@ const getState = ({ getStore, getActions, setStore }) => {
           user_data: [],
           user_address: [],
           user_allergens: [],
+        });
+        return true;
+      },
+      logoutRestaurant: () => {
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("restaurant_data");
+        setStore({
+          token: null,
+          restaurant_data: [],
         });
         return true;
       },

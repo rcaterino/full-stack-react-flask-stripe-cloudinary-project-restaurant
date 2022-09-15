@@ -22,9 +22,9 @@ export const Navbar = () => {
     /* en caso que si tenemos token guardado en la sesión, renderizamos navbar personalizado con home, Mi perfil y LogOut */
     <>
       {!store.token ||
-        store.token === null ||
-        store.token === "" ||
-        store.token === undefined ? (
+      store.token === null ||
+      store.token === "" ||
+      store.token === undefined ? (
         <nav className="navbar navbar-light bg-light">
           <div className="container">
             <Link to="/">

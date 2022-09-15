@@ -4,7 +4,7 @@ import { FaPizzaSlice } from "react-icons/fa";
 export const Footer = () => {
   return (
     <footer className="py-3 text-center align-items-center">
-      <section className="d-flex justify-content-center  p-4 border-bottom">
+      <section className="container-fluid d-flex justify-content-center  p-4 border-bottom">
         <div>
           <a href="" className="me-4 text-reset">
             <i className="fab fa-facebook-f"></i>
@@ -27,7 +27,7 @@ export const Footer = () => {
         </div>
       </section>
 
-      <section className="">
+      <section className="container-fluid">
         <div className="container text-center text-md-start mt-5">
           <div className="row mt-3">
             <div className="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">

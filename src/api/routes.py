@@ -3,7 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 import os
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, Allergens_Users, User, Category, Product, Addresses, Allergens, Order, Order_Detail, Correlatives
+from api.models import db, Restaurant, Allergens_Users, User, Category, Product, Addresses, Allergens, Order, Order_Detail, Correlatives
 from api.utils import generate_sitemap, APIException
 
 from flask_jwt_extended import create_access_token
@@ -15,12 +15,35 @@ api = Blueprint('api', __name__)
 # Create a route to authenticate your users and return JWTs. The
 # create_access_token() function is used to actually generate the JWT.
 @api.route("/token", methods=["POST"])
-def create_token():
+def create_user_token():
     info_request = request.get_json()
     query = User.query.filter_by(email = info_request['email'], password = info_request['password']).first()
     user = query.serialize()
     access_token = create_access_token(identity=user['email'])
     return jsonify(access_token=access_token, user_data = user), 200
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
+# #get only one restaurante
+@api.route('/restaurant/<int:id>', methods=['GET'])
+def getOneRestaurantr(id):
+    restaurant_query = Restaurant.query.get(id)
+    return jsonify(restaurant_query.serialize())
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
+# get all restaurant
+@api.route('/restaurant', methods=['GET'])
+def getRestaurant():
+    restaurant_query = Restaurant.query.all()
+    all_restaurant= list(map(lambda x: x.serialize(), restaurant_query))
+    return jsonify(all_restaurant), 200
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
+# Create a route to authenticate your users and return JWTs. The
+# create_access_token() function is used to actually generate the JWT.
+@api.route("/tokenrestaurant", methods=["POST"])
+def create_restaurant_token():
+    info_request = request.get_json()
+    query = Restaurant.query.filter_by(email = info_request['email'], password = info_request['password']).first()
+    restaurant = query.serialize()
+    access_token = create_access_token(identity=restaurant['email'])
+    return jsonify(access_token=access_token, restaurant_data = restaurant), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 # #create a new user in db
 @api.route('/register', methods=['POST'])
