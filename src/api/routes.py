@@ -1,8 +1,10 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
+import json
+import stripe
 import os
-from flask import Flask, request, jsonify, url_for, Blueprint
+from flask import Flask, render_template, request, jsonify, url_for, Blueprint, redirect
 from api.models import db, Restaurant, Allergens_Users, User, Category, Product, Addresses, Allergens, Order, Order_Detail, Correlatives
 from api.utils import generate_sitemap, APIException
 
@@ -12,6 +14,43 @@ from flask_jwt_extended import jwt_required
 
 api = Blueprint('api', __name__)
 
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
+# This is your test secret API key.
+stripe.api_key = 'sk_test_51LiMLsEvrZASLd3x1uWFTlFBppDO0cbLzNKyYS109JickVGxdOSB85zKjcjMUw8q2zPtCIYss0c5vrNOy8xrdU6m008Lp7jJo9'
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
+#funtion for calculate order amount
+def calculate_order_amount(items):
+    # Replace this constant with a calculation of the order's amount
+    # Calculate the order total on the server to prevent
+    # people from directly manipulating the amount on the client
+    
+    return 1400
+#----------------------------------------------------------------------------------------------------------------------------------------------------------    
+#payment endpoint 
+@api.route('/create-payment-intent', methods=['POST'])
+def create_payment():
+    
+    print("request del peyment intent")
+    
+    try:
+        data = json.loads(request.data)
+        # Create a PaymentIntent with the order amount and currency
+        intent = stripe.PaymentIntent.create(
+            amount=calculate_order_amount(data['items']),
+            
+            currency='eur',
+            automatic_payment_methods={
+                'enabled': True,
+            },
+        )
+        print("intent desde el backend")
+        print(intent)
+        return jsonify({
+            'clientSecret': intent['client_secret']
+        })
+    except Exception as e:
+        return jsonify(error=str(e)), 403
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
 # Create a route to authenticate your users and return JWTs. The
 # create_access_token() function is used to actually generate the JWT.
 @api.route("/token", methods=["POST"])

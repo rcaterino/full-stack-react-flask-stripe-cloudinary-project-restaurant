@@ -12,6 +12,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       categories: [],
       order: [],
       carrito: [],
+      clientSecret: [],
     },
     actions: {
       /**Función para iniciar sesión del usuario */

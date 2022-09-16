@@ -1,6 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
 import { Context } from "../store/appContext";
-import { Carrito } from "../pages/carrito";
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -29,15 +28,15 @@ export const Menu = () => {
     }, [isCarrito]);
     return (
         <>
-            {store.categories?.map((category,index) => (
-                <div key={index}>
+            {store.categories?.map((category) => (
+                <div>
                     <button data-text="Awesome" className="button">
                         <span className="actual-text">{category.name}</span>
                         <span className="hover-text" aria-hidden="true">{category.name}</span>
                     </button>
                     <div className="text-center mt-5 d-flex overflow-scroll" style={{ overflow: 'auto', whiteSpace: 'nowrap' }}>
-                        {category.product?.map((producto, i) => (
-                            <div key={i} className="card">
+                        {category.product?.map((producto) => (
+                            <div className="card">
                                 <div className="card-img"></div>
                                 <div className="card-info">
                                     <p className="text-title">{producto.name}</p>
