@@ -190,12 +190,15 @@ def postAllergensuser():
         allergensuser=userAllergens(user_id=info_request["user_id"],allergen_id=info_request["allergen_id"])
         db.session.add(allergensuser)
     db.session.commit()
-    return jsonify("alergeno asignado al usuario"), 200
+    allergenUser_query = userAllergens.query.filter_by(user_id)
+    all_allergens= list(map(lambda x: x.serialize(), allergenUser_query))
+    return jsonify(allergens= all_allergens), 200
+    
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 #delete allergens
 @api.route("/allergensuserdelete/<int:id>", methods=["DELETE"])
 def deleteAllergensuser(id):
-   allergenObj = Allergens_Users.query.get(id)
+   allergenObj = userAllergens.query.get(id)
    
    db.session.delete(allergenObj)
    db.session.commit()

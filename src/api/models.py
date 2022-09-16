@@ -23,6 +23,7 @@ class userAllergens (db.Model):
 
     def serialize(self):
         return {
+            "id": self.id,
             "id_allergen": self.allergen_id,
             "allergen": Allergens.query.get(self.allergen_id).description,
             "user_id": User.query.get(self.user_id).id

@@ -8,35 +8,71 @@ import Toast from "react-bootstrap/Toast";
 
 export const Allergens = () => {
   const { store, actions } = useContext(Context);
-  const [alergeno, setAlergeno] = useState(store.user_allergens?.description);
-  const [allergenId, setAllergenId] = useState("");
-  const [userId, setUserId] = useState("");
   let navigate = useNavigate();
 
-  const handleClick = () => {
-    actions.putuser(alergeno);
-    navigate("/alergeno");
-  };
+  console.log(store.user_alergenos);
+  useEffect(() => {
+    store.user_alergenos;
+  }, []);
+
+  function deleteAllergen(id) {
+    console.log("id es handleClick");
+    console.log(id);
+    actions.deleteUserAllergens(id);
+  }
+
+  function addAllergen(allergen_id, user_id) {
+    console.log("id del alergeno para agregar");
+    console.log(allergen_id);
+    console.log("id del usuario");
+    console.log(user_id);
+    actions.addAllergenToUser(allergen_id, user_id);
+  }
 
   return (
     <>
       <UserNavBar />
+      <div class="input-group">
+  <div class="input-group">
+    <select
+      class="form-select"
+      id="inputGroupSelect04"
+      aria-label="Example select with button addon"
+    >
+      <option selected>Choose...</option>
+      {store.alergenos.map((item) => {
+        return (
+          <>
+            <option value={item.id}>{item.description}</option>
+            <button
+              class="btn btn-outline-secondary"
+              type="button"
+              onClick={(e) => {
+                const allergenToAdd = item.id;
+                const userId = item.user_id;
+                addAllergen(allergenToAdd, userId);
+              }}
+            >
+              Button
+            </button>
+          </>
+        );
+      })}
+    </select>
+  </div>
+</div>
 
-      <Form.Select aria-label="Default select example">
-        <option>Lista de alergenos contraindicados</option>
-        {store.alergenos.map((item) => {
-          return (
-            <>
-              <option value={item.id}>{item.description}</option>
-            </>
-          );
-        })}
-      </Form.Select>
 
+      
       {store.user_alergenos.map((alergia) => {
         return (
           <>
-            <Toast>
+            <Toast
+              onClose={(e) => {
+                const allergenToDelete = alergia.id;
+                deleteAllergen(allergenToDelete);
+              }}
+            >
               <Toast.Header>
                 <strong className="me-auto">Descripción</strong>
               </Toast.Header>

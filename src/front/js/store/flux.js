@@ -18,39 +18,60 @@ const getState = ({ getStore, getActions, setStore }) => {
 				)
 				.then (allergens=> {
 					setStore({alergenos: allergens})
-          console.log("lista de alergenos")
-          console.log(getStore().alergenos)
 				}).catch((error) => {
           console.error('Error:', error);
         });
 			},
 
-      addAllergen: async (userAllergens) => {
+      addAllergenToUser: async (allergen_id, user_id) => {
         const opts = {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            allergen_id: id_alergeno,
-            user_id: id_usuario,
-            is_active: true,
+            allergen_id: allergen_id,
+            user_id: user_id,
           }),
         };
         try {
           let resp = await fetch(
-            process.env.BACKEND_URL + "/api/userAllergens",
+            process.env.BACKEND_URL + "/api/allergenuser",
             opts
           );
           if (resp.status !== 200) {
             new Error("there has been an error");
             return false;
           }
+          const data = await resp.json();
+          setStore({ user_elergenos: data.allergens});
           return true;
         } catch (error) {
           console.error(error);
         }
       },  
+
+      deleteUserAllergens: async (id) => {
+        console.log("alergeno en flux")
+        console.log(id)
+      const opts = {
+        method: "DELETE",
+      };
+      try {
+        let resp = await fetch(
+          process.env.BACKEND_URL + "/api/allergensuserdelete/"+id,
+          opts
+        );
+        if (resp.status !== 200) {
+          new Error("there has been an error");
+          return false;
+        }
+        return true;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+      
 
 
       signup: async (allergens_id, user_id) => {
