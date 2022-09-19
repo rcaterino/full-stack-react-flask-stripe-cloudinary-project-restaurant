@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 2b5f8b72ec71
+Revision ID: 64f54f433301
 Revises: 
-Create Date: 2022-09-12 12:35:01.510604
+Create Date: 2022-09-19 09:27:50.295930
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '2b5f8b72ec71'
+revision = '64f54f433301'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -35,6 +35,32 @@ def upgrade():
     sa.Column('correlative_counter', sa.Integer(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_table('ingredients',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('description', sa.String(length=120), nullable=False),
+    sa.Column('is_extra', sa.Boolean(), nullable=False),
+    sa.Column('is_removable', sa.Boolean(), nullable=False),
+    sa.Column('price', sa.Float(), nullable=True),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('restaurant',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('name', sa.String(length=120), nullable=False),
+    sa.Column('lastname', sa.String(length=120), nullable=False),
+    sa.Column('dni_cif', sa.String(length=120), nullable=False),
+    sa.Column('birthday', sa.Date(), nullable=False),
+    sa.Column('restaurant_name', sa.String(length=120), nullable=False),
+    sa.Column('url', sa.String(length=80), nullable=False),
+    sa.Column('phone', sa.Integer(), nullable=True),
+    sa.Column('email', sa.String(length=120), nullable=False),
+    sa.Column('password', sa.String(length=80), nullable=False),
+    sa.Column('user_type', sa.String(length=10), nullable=False),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('dni_cif'),
+    sa.UniqueConstraint('email'),
+    sa.UniqueConstraint('restaurant_name'),
+    sa.UniqueConstraint('url')
+    )
     op.create_table('user',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=120), nullable=False),
@@ -44,6 +70,7 @@ def upgrade():
     sa.Column('email', sa.String(length=120), nullable=False),
     sa.Column('password', sa.String(length=80), nullable=False),
     sa.Column('is_active', sa.Boolean(), nullable=False),
+    sa.Column('user_type', sa.String(length=10), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email')
     )
@@ -117,6 +144,8 @@ def downgrade():
     op.drop_table('allergens__users')
     op.drop_table('addresses')
     op.drop_table('user')
+    op.drop_table('restaurant')
+    op.drop_table('ingredients')
     op.drop_table('correlatives')
     op.drop_table('category')
     op.drop_table('allergens')

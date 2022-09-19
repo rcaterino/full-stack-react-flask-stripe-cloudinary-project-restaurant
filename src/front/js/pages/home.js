@@ -19,11 +19,9 @@ export const Home = () => {
     <>
       <Navbar />
       <div className="text-center mt-5">
-          <h1 className="text-center">Bienvenido a Portal 10</h1>
-          <Menu />
-        </div>
-
-      <Footer />
+        <h1 className="text-center">Bienvenido a Portal 10</h1>
+        <Menu />
+      </div>
     </>
   );
 };

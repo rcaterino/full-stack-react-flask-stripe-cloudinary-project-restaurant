@@ -2,18 +2,26 @@ import React from "react";
 import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
 
 import ScrollToTop from "./component/scrollToTop";
+import { Footer } from "./component/footer";
 
 import { Home } from "./pages/home";
 import { QuienesSomos } from "./pages/QuienesSomos";
 import { Miperfil } from "./pages/MiPerfil";
 import { Login } from "./pages/login";
 import { Register } from "./pages/register";
-import { Cocina } from "./pages/cocina";
+import { PaymantComplete } from "./pages/paymantcomplete";
 import { Carrito } from "./pages/carrito";
-import { EasyRestaurant } from "./pages/easyrestaurante";
+
+import { EasyRestaurant } from "./pages/restaurant/easyrestaurante";
+import { Cocina } from "./pages/restaurant/cocina";
+import { Alergenos } from "./pages/restaurant/alergenos";
+import { Ingredientes } from "./pages/restaurant/ingredientes";
+import { Categorias } from "./pages/restaurant/categorias";
+import { Productos } from "./pages/restaurant/productos";
 
 import injectContext from "./store/appContext";
-import { PaymantComplete } from "./pages/paymantcomplete";
+import { Clientes } from "./pages/restaurant/clientes";
+import { Correlativos } from "./pages/restaurant/correlativos";
 
 //create your first component
 const Layout = () => {
@@ -32,12 +40,25 @@ const Layout = () => {
             <Route element={<Miperfil />} path="/miperfil" />
             <Route element={<QuienesSomos />} path="/quienessomos" />
             <Route element={<Carrito />} path="/Carrito" />
-            <Route element={<PaymantComplete />} path= "/pagocompletado" />
-
+            <Route element={<PaymantComplete />} path="/pagocompletado" />
             <Route element={<EasyRestaurant />} path="/easyrestaurant/admin" />
             <Route element={<Cocina />} path="/easyrestaurant/cocina" />
+            <Route element={<Alergenos />} path="/easyrestaurant/alergenos" />
+            <Route element={<Alergenos />} path="/easyrestaurant/alergenos" />
+            <Route
+              element={<Ingredientes />}
+              path="/easyrestaurant/ingredientes"
+            />
+            <Route element={<Categorias />} path="/easyrestaurant/categorias" />
+            <Route element={<Productos />} path="/easyrestaurant/productos" />
+            <Route element={<Clientes />} path="/easyrestaurant/clientes" />
+            <Route
+              element={<Correlativos />}
+              path="/easyrestaurant/correlativos"
+            />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
+          <Footer />
         </ScrollToTop>
       </BrowserRouter>
     </div>

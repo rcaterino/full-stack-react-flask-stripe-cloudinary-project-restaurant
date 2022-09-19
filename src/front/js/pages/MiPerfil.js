@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import "../../styles/home.css";
 import UserNavBar from "../component/usernavbar";
 import { Navbar } from "../component/navbar";
-import { Footer } from "../component/footer";
 
 export const Miperfil = () => {
   const { store, actions } = useContext(Context);
@@ -115,7 +114,6 @@ export const Miperfil = () => {
           </button>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

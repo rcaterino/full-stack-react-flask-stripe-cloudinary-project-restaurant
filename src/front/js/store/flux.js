@@ -6,15 +6,45 @@ const getState = ({ getStore, getActions, setStore }) => {
       message: null,
       token: null,
       restaurant_data: [],
-      user_data: [],
+      user_data: [{user_type: "customer"}],
       user_address: [],
       user_allergens: [],
       categories: [],
       order: [],
       carrito: [],
       clientSecret: [],
+      alergenos: [],
     },
     actions: {
+      getAlergenos: async () => {
+        const opts = {
+          method: "GET",
+          // headers: {
+          //   "conten-Type": "aplication/json",
+          // },
+        };
+        try {
+          const resp = await fetch(
+            process.env.BACKEND_URL + "/api/allergens",
+            opts
+          );
+          if (resp.status !== 200) {
+            new Error("error");
+            alert("no existen alergenos registrados");
+            return false;
+          }
+          const data = await resp.json();
+          console.log("data alergenos recibida en flux:")
+          console.log(data)
+          setStore({ alergenos: data });
+          console.log("store de alergenos")
+          console.log(getStore().alergenos)
+          return true;
+        } catch (error) {
+          console.error(error);
+        }
+      },
+
       /**Función para iniciar sesión del usuario */
       loginRestaurant: async (email, password) => {
         const opts = {
@@ -42,7 +72,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           sessionStorage.setItem("restaurant_data", data.restaurant_data);
           setStore({
             token: data.access_token,
-            restaurant_data: data.restaurant_data,
+            user_data: data.user_data,
           });
           return true;
         } catch (error) {
@@ -330,6 +360,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error(error);
         }
       },
+
     },
   };
 };

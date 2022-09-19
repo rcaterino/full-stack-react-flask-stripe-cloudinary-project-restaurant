@@ -3,8 +3,8 @@ import { FaPizzaSlice } from "react-icons/fa";
 
 export const Footer = () => {
   return (
-    <footer className="py-3 text-center align-items-center">
-      <section className="container-fluid d-flex justify-content-center  p-4 border-bottom">
+    <footer className="py-3 text-center align-items-center sticky-bottom">
+      <section className="container-fluid d-flex justify-content-center  p-1 border-bottom">
         <div>
           <a href="" className="me-4 text-reset">
             <i className="fab fa-facebook-f"></i>
@@ -28,9 +28,9 @@ export const Footer = () => {
       </section>
 
       <section className="container-fluid">
-        <div className="container text-center text-md-start mt-5">
+        <div className="container text-center text-md-start m-auto mt-2">
           <div className="row mt-3">
-            <div className="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+            <div className="col">
               <h6 className="text-uppercase fw-bold mb-4">
                 <FaPizzaSlice /> Localización
               </h6>
@@ -45,7 +45,7 @@ export const Footer = () => {
               ></iframe>
             </div>
 
-            <div className="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+            <div className="col">
               <h6 className="text-uppercase fw-bold mb-4">Contacto</h6>
               <a href="https://g.page/Portal-10?share">
                 <i className="fas fa-home me-1"></i> Calle de Barbieri, 10

@@ -18,9 +18,10 @@ class Restaurant(db.Model):
     phone = db.Column(db.Integer, unique=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
+    user_type = db.Column(db.String(10), unique=False, nullable=False)
     
     def __repr__(self):
-        return f'<Restaurant {self.restaurant_name}>'
+        return f'<Restaurant {self.url}>'
 
     def serialize(self):
         return {
@@ -33,6 +34,7 @@ class Restaurant(db.Model):
             "url": self.url,
             "phone": self.phone,
             "email": self.email,
+            "user_type": self.user_type,
             # do not serialize the password, its a security breach
         }
 class User(db.Model):
@@ -47,6 +49,7 @@ class User(db.Model):
     addresses_relation = db.relationship('Addresses', backref='user', lazy=True)
     order_relation = db.relationship('Order', backref='user', lazy=True)
     allergen_relation = db.relationship('Allergens_Users', backref='user')
+    user_type = db.Column(db.String(10), unique=False, nullable=False)
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -59,6 +62,7 @@ class User(db.Model):
             "lastname": self.lastname,
             "birthday": datetime.date.isoformat(self.birthday),
             "phone": self.phone,
+            "user_type": self.user_type,
             "address": list(map(lambda x: x.serialize(), self.addresses_relation)),
             "orders": list(map(lambda x: x.serialize(), self.order_relation)),
             "allergen": list(map(lambda x: x.serialize(), self.allergen_relation)),

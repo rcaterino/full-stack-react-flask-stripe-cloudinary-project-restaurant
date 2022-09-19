@@ -82,13 +82,13 @@ def create_restaurant_token():
     query = Restaurant.query.filter_by(email = info_request['email'], password = info_request['password']).first()
     restaurant = query.serialize()
     access_token = create_access_token(identity=restaurant['email'])
-    return jsonify(access_token=access_token, restaurant_data = restaurant), 200
+    return jsonify(access_token=access_token, user_data = restaurant), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 # #create a new user in db
 @api.route('/register', methods=['POST'])
 def createUser():
     info_request = request.get_json()
-    newUser = User(name = info_request['name'], lastname = info_request['lastname'], birthday = info_request['birthday'], phone = info_request['phone'], email = info_request['email'], password = info_request['password'], is_active = info_request['is_active'])
+    newUser = User( user_type= 'customer', name = info_request['name'], lastname = info_request['lastname'], birthday = info_request['birthday'], phone = info_request['phone'], email = info_request['email'], password = info_request['password'], is_active = info_request['is_active'])
     db.session.add(newUser)
     db.session.commit()
     access_token = create_access_token(identity=info_request['email'])
