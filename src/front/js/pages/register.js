@@ -91,7 +91,7 @@ export const Register = () => {
             />
           </div>
           <div className="field">
-            <label for="password">email</label>
+            <label for="password">Contraseña</label>
             <input
               type="password"
               className="form-control"

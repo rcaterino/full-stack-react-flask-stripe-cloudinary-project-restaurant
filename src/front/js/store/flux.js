@@ -14,8 +14,49 @@ const getState = ({ getStore, getActions, setStore }) => {
       carrito: [],
       clientSecret: [],
       alergenos: [],
+      imageUrl: [],
     },
     actions: {
+      setUrlImge: (Url) => {
+        setStore({ imageUrl: Url });
+        console.log("url de imagen en store:");
+        console.log(getStore().imageUrl);
+      },
+      createProduct: async (name, description, price, category_id) => {
+        const opts = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: name,
+            description: description,
+            price: price,
+            category_id: category_id,
+            image_url: getStore().imageUrl,
+            active: true,
+          }),
+        };
+        try {
+          let resp = await fetch(
+            process.env.BACKEND_URL + "/api/newproduct",
+            opts
+          );
+          console.log("data en request antes de salir:");
+          console.log(opts.body);
+          if (resp.status !== 200) {
+            new Error("there has been an error");
+            return false;
+          }
+          const data = await resp.json();
+          console.log(data);
+          setStore({ categories: categories });
+          return true;
+        } catch (error) {
+          console.error(error);
+        }
+      },
+
       getAlergenos: async () => {
         const opts = {
           method: "GET",
@@ -67,9 +108,10 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error(error);
         }
       },
+
       deleteAllergen: async (id) => {
-        console.log("id del alergeno a eliminar:")
-        console.log(id)
+        console.log("id del alergeno a eliminar:");
+        console.log(id);
         const opts = {
           method: "DELETE",
         };
@@ -257,6 +299,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             email: email,
             password: password,
             is_active: true,
+            user_type: "customer",
           }),
         };
         try {
@@ -270,6 +313,9 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
           const data = await resp.json();
           sessionStorage.setItem("token", data.access_token);
+          sessionStorage.setItem("user_data", data.user_data);
+          sessionStorage.setItem("user_address", data.user_address);
+          sessionStorage.setItem("user_allergens", data.user_allergens);
           setStore({
             token: data.access_token,
             user_data: data.user_data,
@@ -299,8 +345,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           let resp = await fetch(
             process.env.BACKEND_URL +
-            "/api/edituser/" +
-            getStore().user_data.id,
+              "/api/edituser/" +
+              getStore().user_data.id,
             opts
           );
           if (resp.status !== 200) {

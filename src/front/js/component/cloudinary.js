@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useContext, useState } from "react";
+import { Context } from "../store/appContext";
 import { Container, FormGroup } from "react-bootstrap";
 
 export const SubirImages= (props) => {
+    const { store, actions } = useContext(Context);
 const [image, setImage] = useState ("");
 const [Loading, setLoading] = useState (false);
 
@@ -23,6 +25,7 @@ const uploadImage = async (e) => {
     // console.log(res)
     setImage(file.secure_url)
     console.log(file.secure_url)
+    actions.setUrlImge(file.secure_url);
     setLoading(false)
 
 }

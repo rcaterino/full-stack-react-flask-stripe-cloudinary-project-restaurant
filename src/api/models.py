@@ -114,6 +114,7 @@ class Product(db.Model):
     price = db.Column(db.Float(precision=None, asdecimal=False, decimal_return_scale=None))
     active = db.Column(db.Boolean, unique=False, nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey("category.id"), nullable=False)
+    image_url = db.Column(db.String(500), unique=False, nullable=True)
     order_detail_relation = db.relationship("Order_Detail", backref='product', lazy=True)
 
     def __repr__(self):
@@ -126,6 +127,7 @@ class Product(db.Model):
             "description": self.description,
             "price": self.price,
             "active": self.active,
+            "image_url": self.image_url,
             "category_id": self.category_id,
             "category": Category.query.get(self.category_id).name
         }

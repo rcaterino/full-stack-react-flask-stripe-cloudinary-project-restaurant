@@ -88,11 +88,15 @@ def create_restaurant_token():
 @api.route('/register', methods=['POST'])
 def createUser():
     info_request = request.get_json()
-    newUser = User( user_type= 'customer', name = info_request['name'], lastname = info_request['lastname'], birthday = info_request['birthday'], phone = info_request['phone'], email = info_request['email'], password = info_request['password'], is_active = info_request['is_active'])
+    print("request en backend:")
+    print(info_request)
+    newUser = User( user_type= info_request['user_type'], name = info_request['name'], lastname = info_request['lastname'], birthday = info_request['birthday'], phone = info_request['phone'], email = info_request['email'], password = info_request['password'], is_active = info_request['is_active'])
     db.session.add(newUser)
     db.session.commit()
-    access_token = create_access_token(identity=info_request['email'])
-    return jsonify(access_token=access_token), 200
+    query = User.query.filter_by(email = info_request['email'], password = info_request['password']).first()
+    user = query.serialize()
+    access_token = create_access_token(identity=user['email'])
+    return jsonify(access_token=access_token, user_data = user), 200
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 #Edit and save user
@@ -145,10 +149,13 @@ def getoneProduct(id):
 @api.route('/newproduct', methods=['POST'])
 def newProduct():
     info_request = request.get_json()
-    product1 = Product(name=info_request["name"], description=info_request["description"], id=info_request["id"],price=info_request["price"], active=info_request["active"], category_id=info_request["category_id"])
-    db.session.add(product1)
+    
+    product = Product(name=info_request["name"], description=info_request["description"],price=info_request["price"], active=info_request["active"], category_id=info_request["category_id"], image_url=info_request["image_url"])
+    db.session.add(product)
     db.session.commit()
-    return jsonify("Producto creada"), 200  
+    category_query = Category.query.all()
+    all_category = list(map(lambda x: x.serialize(), category_query))
+    return jsonify(all_category), 200 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 #Editing a product by id
