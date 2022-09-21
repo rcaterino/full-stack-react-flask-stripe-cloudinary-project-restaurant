@@ -1,47 +1,79 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Context } from "../store/appContext";
+
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import NavDropdown from "react-bootstrap/NavDropdown";
 
 export const NavbarAdmin = () => {
+  const { store, actions } = useContext(Context);
+  let navigate = useNavigate();
+
+  /**la función handleLogout llama la función logout dentro de actions en flux.js y redirige el usuario al home */
+  const handleLogout = () => {
+    actions.logoutRestaurant();
+    navigate("/easyrestaurant/admin");
+  };
+  /** con useEffect llamamos a la función getTokenFromSession para saber si el usuario está logeado leyendo si existe token en el store */
+  useEffect(() => {
+    store.restaurant_data;
+  }, []);
+
   return (
-    <nav className="navbar navbar-expand-lg text-white bg-danger">
-      <div className="container-fluid text-white">
-        <a className="navbar-brand text-white" href="#">
-          Easy Restaurant
-        </a>
-        <button
-          className="navbar-toggler text-white"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNavDropdown"
-          aria-controls="navbarNavDropdown"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon text-white"></span>
-        </button>
-        <div className="collapse navbar-collapse text-white" id="navbarNavDropdown">
-          <ul className="navbar-nav text-white">
-            <li className="nav-item">
-              <a
-                className="nav-link active text-white"
-                aria-current="page"
-                href="#"
-              >
-                Home
-              </a>
-            </li>
-            <li className="nav-item text-white">
-              <a className="nav-link text-white" href="#">
-                Features
-              </a>
-            </li>
-            <li className="nav-item text-white">
-              <a className="nav-link text-white" href="#">
-                Pricing
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    <Navbar
+      collapseOnSelect
+      expand="lg"
+      bg="dark"
+      variant="dark"
+      className="p-3"
+    >
+      <Container>
+        <Navbar.Brand>
+          <Link to="/easyrestaurant/admin">Easy Restaurant</Link>
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link href="#features">POS</Nav.Link>
+            <Nav.Link href="#pricing">
+              <Link to="/easyrestaurant/cocina">Cocina</Link>
+            </Nav.Link>
+            <NavDropdown
+              title="Configuración de la Carta"
+              id="collasible-nav-dropdown"
+            >
+              <NavDropdown.Item href="#action/3.1">
+                <Link to="/easyrestaurant/alergenos">Alergenos</Link>
+              </NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">
+                <Link to="/easyrestaurant/ingredientes">Ingredientes</Link>
+              </NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.3">
+                <Link to="/easyrestaurant/categorias">Categorías</Link>
+              </NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.4">
+                <Link to="/easyrestaurant/productos">Productos</Link>
+              </NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="#action/3.5">
+                <Link to="/easyrestaurant/clientes">Clientes</Link>
+              </NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="#action/3.6">
+                <Link to="/easyrestaurant/correlativos">Correlativos</Link>
+              </NavDropdown.Item>
+            </NavDropdown>
+          </Nav>
+          <Nav>
+            <Nav.Link href="#deets">Settings</Nav.Link>
+            <Nav.Link eventKey={2} onClick={handleLogout}>
+              LogOut
+            </Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 };

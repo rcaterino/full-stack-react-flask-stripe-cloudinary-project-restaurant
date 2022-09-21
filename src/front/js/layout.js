@@ -1,21 +1,31 @@
 import React from "react";
 import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
+
 import ScrollToTop from "./component/scrollToTop";
+import { Footer } from "./component/footer";
 
 import { Home } from "./pages/home";
 import { QuienesSomos } from "./pages/QuienesSomos";
 import { Miperfil } from "./pages/MiPerfil";
 import { Login } from "./pages/login";
 import { Register } from "./pages/register";
-import { Cocina } from "./pages/cocina";
-import { LoginAdmin } from "./pages/loginAdmin";
+import { PaymantComplete } from "./pages/paymantcomplete";
+import { Carrito } from "./pages/carrito";
+
+import { EasyRestaurant } from "./pages/restaurant/easyrestaurante";
+import { Cocina } from "./pages/restaurant/cocina";
+import { Alergenos } from "./pages/restaurant/alergenos";
+import { Ingredientes } from "./pages/restaurant/ingredientes";
+import { Categorias } from "./pages/restaurant/categorias";
+import { Productos } from "./pages/restaurant/productos";
 
 import injectContext from "./store/appContext";
 
 import { Footer } from "./component/footer";
-import { Navbar } from "./component/navbar";
 import { Carrito } from "./pages/carrito";
 import { SubirImages } from "./component/cloudinary";
+import { Clientes } from "./pages/restaurant/clientes";
+import { Correlativos } from "./pages/restaurant/correlativos";
 
 //create your first component
 const Layout = () => {
@@ -27,22 +37,41 @@ const Layout = () => {
     <div>
       <BrowserRouter basename={basename}>
         <ScrollToTop>
-          
           <Routes>
             <Route element={<Home />} path="/" />
             <Route element={<Login />} path="/login" />
             <Route element={<Register />} path="/register" />
             <Route element={<Miperfil />} path="/miperfil" />
             <Route element={<QuienesSomos />} path="/quienessomos" />
-            <Route element={<LoginAdmin />} path="/loginadmin" />
-            <Route element={<Cocina />} path="/cocina" />
             <Route element={<Carrito />} path="/Carrito" />
-            <Route element={<SubirImages />} path="/Images" />
+            <Route element={<PaymantComplete />} path="/pagocompletado" />
+            <Route element={<EasyRestaurant />} path="/easyrestaurant/admin" />
+            <Route element={<Cocina />} path="/easyrestaurant/cocina" />
+            <Route element={<Alergenos />} path="/easyrestaurant/alergenos" />
+            <Route element={<Alergenos />} path="/easyrestaurant/alergenos" />
+            <Route
+              element={<Ingredientes />}
+              path="/easyrestaurant/ingredientes"
+            />
+            <Route element={<Categorias />} path="/easyrestaurant/categorias" />
+            <Route element={<Productos />} path="/easyrestaurant/productos" />
+            <Route element={<Clientes />} path="/easyrestaurant/clientes" />
+            <Route
+              element={<Correlativos />}
+              path="/easyrestaurant/correlativos"
+            />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
-          <a href="https://acortar.link/hp6ar1" className="float" target="_blank">
-          <i className="fa fa-whatsapp my-float"></i>
-        </a>
+          <Route element={<SubirImages />} path="/Images" />
+          <a
+            href="https://acortar.link/hp6ar1"
+            className="float"
+            target="_blank"
+          >
+            <i className="fa fa-whatsapp my-float"></i>
+          </a>
+
+          <Footer />
         </ScrollToTop>
       </BrowserRouter>
     </div>
