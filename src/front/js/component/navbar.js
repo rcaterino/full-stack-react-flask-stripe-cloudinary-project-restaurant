@@ -25,42 +25,68 @@ export const Navbar = () => {
         store.token === null ||
         store.token === "" ||
         store.token === undefined ? (
-        <nav className="navbar navbar-light bg-light">
+        <nav className="navbar navbar-dark " expand="lg" style={{ height: "80px" }}>
           <div className="container">
             <Link to="/">
-              <span className="navbar-brand mb-0 h1">Home</span>
+              <button className="button2">
+                <span className="box">
+                  Home
+                </span>
+              </button>
             </Link>
             <div className="ml-auto">
               <Link to="/login">
-                <span className="navbar-brand mb-0 h1">Login</span>
+                <button className="button2">
+                  <span className="box">
+                    login
+                  </span>
+                </button>
               </Link>
               <Link to="/Carrito">
-                <span className="fas fa-shopping-cart"></span>
+                <button className="button2">
+                <span className="box">
+                <i className="fa-sharp fa-solid fa-cart-shopping"></i>
+                  </span>
+                </button>
               </Link>
             </div>
           </div>
         </nav>
       ) : (
         /**Si el usuario está logeado, renderizamos el navbar con sus funcionalidades privadas y acceso a su página de perfil */
-        <nav className="navbar navbar-light bg-light">
+        <nav className="navbar navbar-dark " expand="lg" style={{ height: "110px" }}>
           <div className="container">
             <Link to="/">
-              <span className="navbar-brand mb-0 h1">Home</span>
+            <button className="button2">
+                <span className="box">
+                  Home
+                </span>
+              </button>
             </Link>
             <Link to="/miperfil">
-              <span className="navbar-brand mb-0 h1">Mi perfil</span>
+            <button className="button2">
+                <span className="box">
+                  Mi Perfil
+                </span>
+              </button>
             </Link>
             <Link to="/Carrito">
-              <span className="fas fa-shopping-cart"></span>
+               <button className="button2 ">
+                <span className="box">
+                <i className="fa-sharp fa-solid fa-cart-shopping"></i>
+                  </span>
+                </button>
             </Link>
-            <div className="ml-auto">
+            <div className="">
               <button
-                className="btn btn-primary"
+                className="button2"
                 onClick={() => {
                   handleLogout();
                 }}
               >
+                <span className="box">
                 LogOut
+                </span>
               </button>
             </div>
           </div>

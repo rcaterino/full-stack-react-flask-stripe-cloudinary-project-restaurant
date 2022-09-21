@@ -18,10 +18,11 @@ export const Home = () => {
     /* en caso que si tenemos token guardado en la sesión, renderizamos página de inicio personalizada */
     <>
       <Navbar />
-      <div className="text-center mt-5">
-          <h1 className="text-center">Bienvenido a Portal 10</h1>
-          <Menu />
-        </div>
+      <h1 className="text-center">Bienvenido a Portal 10</h1>
+      <div className="bodyMenu">
+        <Menu />
+        
+      </div>
       <Footer />
     </>
   );

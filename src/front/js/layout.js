@@ -15,6 +15,7 @@ import injectContext from "./store/appContext";
 import { Footer } from "./component/footer";
 import { Navbar } from "./component/navbar";
 import { Carrito } from "./pages/carrito";
+import { SubirImages } from "./component/cloudinary";
 
 //create your first component
 const Layout = () => {
@@ -36,9 +37,12 @@ const Layout = () => {
             <Route element={<LoginAdmin />} path="/loginadmin" />
             <Route element={<Cocina />} path="/cocina" />
             <Route element={<Carrito />} path="/Carrito" />
+            <Route element={<SubirImages />} path="/Images" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
-          
+          <a href="https://acortar.link/hp6ar1" className="float" target="_blank">
+          <i className="fa fa-whatsapp my-float"></i>
+        </a>
         </ScrollToTop>
       </BrowserRouter>
     </div>

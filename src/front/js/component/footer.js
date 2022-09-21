@@ -5,7 +5,7 @@ export const Footer = () => {
   return (
     <footer className="py-3 text-center align-items-center">
       <section className="d-flex justify-content-center  p-4 border-bottom">
-        <div>
+        <div >
           <a href="" className="me-4 text-reset">
             <i className="fab fa-facebook-f"></i>
           </a>
@@ -65,7 +65,7 @@ export const Footer = () => {
 
       <div
         className="text-center p-4"
-        style={{ background: "rgba(0, 0, 0, 0.05)" }}
+        style={{ background: "darkorange" }}
       >
         © 2022 Copyright:{" "}
         <a className="text-reset fw-bold" href="/">

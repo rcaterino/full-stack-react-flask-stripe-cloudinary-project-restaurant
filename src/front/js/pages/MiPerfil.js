@@ -59,7 +59,7 @@ export const Miperfil = () => {
           </div>
         </div>
         <div
-          class="d-grid gap-2"
+          className="d-grid gap-2"
           data-date="12-02-2012"
           data-date-format="dd-mm-yyyy"
         >

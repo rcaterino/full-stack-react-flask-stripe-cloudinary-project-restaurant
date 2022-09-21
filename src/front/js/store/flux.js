@@ -10,9 +10,10 @@ const getState = ({ getStore, getActions, setStore }) => {
       user_allergens: [],
       categories: [],
       order: [],
-      carrito:[]
+      carrito: []
     },
-    actions: {
+    actions:
+    {
       getAllCategories: () => {
         fetch(process.env.BACKEND_URL + "/api/category")
           .then((res) => res.json())
@@ -24,9 +25,9 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
       },
 
-      setCarrito:(newProduct) => {
+      setCarrito: (newProduct) => {
         console.log("Entrando...")
-				setStore({carrito: newProduct})
+        setStore({ carrito: newProduct })
         console.log("------")
         JSON.stringify(getStore().carrito)
         let carritoG = JSON.stringify(getStore().carrito)
@@ -34,28 +35,28 @@ const getState = ({ getStore, getActions, setStore }) => {
         console.log(getStore().carrito)
         console.log("------")
       },
-      
-       deleteCarritoItem:(storeId) => {
+
+      deleteCarritoItem: (storeId) => {
         let carrito = getStore().carrito
         let newData = carrito.filter(carrito => storeId !== carrito["storeId"])
         let carritoD = JSON.stringify(newData)
-        setStore({carrito: newData})
+        setStore({ carrito: newData })
         localStorage.setItem("carritoStr", carritoD)
-       },
+      },
 
-       deleteCarrito:() => {
+      deleteCarrito: () => {
         localStorage.removeItem("carritoStr");
-        setStore({carrito: []})
-       },
+        setStore({ carrito: [] })
+      },
 
-       getCarrito: () => {
+      getCarrito: () => {
         const carritoLocal = localStorage.getItem("carritoStr");
-        if (carritoLocal && carritoLocal !== "" && carritoLocal !== undefined){
+        if (carritoLocal && carritoLocal !== "" && carritoLocal !== undefined) {
           console.log("getCarrito")
           console.log(carritoLocal)
-          setStore({ carrito:JSON.parse( carritoLocal) });
+          setStore({ carrito: JSON.parse(carritoLocal) });
         }
-       
+
       },
 
 
@@ -189,8 +190,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           let resp = await fetch(
             process.env.BACKEND_URL +
-              "/api/edituser/" +
-              getStore().user_data.id,
+            "/api/edituser/" +
+            getStore().user_data.id,
             opts
           );
           if (resp.status !== 200) {
