@@ -6,7 +6,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       message: null,
       token: null,
       restaurant_data: [],
-      user_data: [{user_type: "customer"}],
+      user_data: [],
       user_address: [],
       user_allergens: [],
       categories: [],
@@ -34,11 +34,56 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await resp.json();
-          console.log("data alergenos recibida en flux:")
-          console.log(data)
           setStore({ alergenos: data });
-          console.log("store de alergenos")
-          console.log(getStore().alergenos)
+          return true;
+        } catch (error) {
+          console.error(error);
+        }
+      },
+
+      postAllergen: async (alergeno) => {
+        const opts = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            description: alergeno,
+          }),
+        };
+        try {
+          let resp = await fetch(
+            process.env.BACKEND_URL + "/api/newallergens",
+            opts
+          );
+          if (resp.status !== 200) {
+            new Error("there has been an error");
+            return false;
+          }
+          const data = await resp.json();
+          setStore({ alergenos: data });
+          return true;
+        } catch (error) {
+          console.error(error);
+        }
+      },
+      deleteAllergen: async (id) => {
+        console.log("id del alergeno a eliminar:")
+        console.log(id)
+        const opts = {
+          method: "DELETE",
+        };
+        try {
+          let resp = await fetch(
+            process.env.BACKEND_URL + "/api/deleteallergen/" + id,
+            opts
+          );
+          if (resp.status !== 200) {
+            new Error("there has been an error");
+            return false;
+          }
+          const data = await resp.json();
+          setStore({ alergenos: data });
           return true;
         } catch (error) {
           console.error(error);
@@ -91,14 +136,10 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       setCarrito: (newProduct) => {
-        console.log("Entrando...");
         setStore({ carrito: newProduct });
-        console.log("------");
         JSON.stringify(getStore().carrito);
         let carritoG = JSON.stringify(getStore().carrito);
         localStorage.setItem("carritoStr", carritoG);
-        console.log(getStore().carrito);
-        console.log("------");
       },
 
       deleteCarritoItem: (storeId) => {
@@ -119,8 +160,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       getCarrito: () => {
         const carritoLocal = localStorage.getItem("carritoStr");
         if (carritoLocal && carritoLocal !== "" && carritoLocal !== undefined) {
-          console.log("getCarrito");
-          console.log(carritoLocal);
           setStore({ carrito: JSON.parse(carritoLocal) });
         }
       },
@@ -137,7 +176,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         if (user_data && user_data !== "" && user_data !== undefined)
           setStore({
             user_data: user_data,
-            /*user_address: user_data.user_address,*/
           });
       },
 
@@ -360,7 +398,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error(error);
         }
       },
-
     },
   };
 };

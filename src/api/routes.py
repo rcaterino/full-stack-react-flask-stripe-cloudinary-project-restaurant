@@ -241,7 +241,9 @@ def postAllergens():
     newAllergens = Allergens(description=info_request["description"])
     db.session.add(newAllergens)
     db.session.commit()
-    return jsonify("alergeno creado"), 200
+    allergens_query = Allergens.query.all()
+    all_allergens = list(map(lambda x: x.serialize(), allergens_query))
+    return jsonify(all_allergens), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 #Editing a allergen by id
 @api.route("/editallergen/<int:id>", methods=["PUT"])
@@ -254,6 +256,20 @@ def putallergen(id):
         allergen1.description = info_request["description"]    
     db.session.commit()
     return jsonify("alergeno editado"),200
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
+#Deleting allergen by id
+@api.route("/deleteallergen/<int:id>", methods=["DELETE"])
+def deleteallergen(id):
+    print("id del alergeno a eliminar")
+    print(id)
+    allergen = Allergens.query.get(id)
+    if allergen is None:
+        raise APIException('Allergen not found', status_code=404)
+    db.session.delete(allergen)
+    db.session.commit()
+    allergens_query = Allergens.query.all()
+    all_allergens = list(map(lambda x: x.serialize(), allergens_query))
+    return jsonify(all_allergens), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 # get all user allergens
 @api.route('/allallergenuser', methods=['GET'])
