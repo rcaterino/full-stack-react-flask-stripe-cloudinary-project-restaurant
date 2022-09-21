@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
 
 import ScrollToTop from "./component/scrollToTop";
 import { Footer } from "./component/footer";
+import { SubirImages } from "./component/cloudinary";
 
 import { Home } from "./pages/home";
 import { QuienesSomos } from "./pages/QuienesSomos";
@@ -18,14 +19,10 @@ import { Alergenos } from "./pages/restaurant/alergenos";
 import { Ingredientes } from "./pages/restaurant/ingredientes";
 import { Categorias } from "./pages/restaurant/categorias";
 import { Productos } from "./pages/restaurant/productos";
-
-import injectContext from "./store/appContext";
-
-import { Footer } from "./component/footer";
-import { Carrito } from "./pages/carrito";
-import { SubirImages } from "./component/cloudinary";
 import { Clientes } from "./pages/restaurant/clientes";
 import { Correlativos } from "./pages/restaurant/correlativos";
+
+import injectContext from "./store/appContext";
 
 //create your first component
 const Layout = () => {
@@ -48,7 +45,6 @@ const Layout = () => {
             <Route element={<EasyRestaurant />} path="/easyrestaurant/admin" />
             <Route element={<Cocina />} path="/easyrestaurant/cocina" />
             <Route element={<Alergenos />} path="/easyrestaurant/alergenos" />
-            <Route element={<Alergenos />} path="/easyrestaurant/alergenos" />
             <Route
               element={<Ingredientes />}
               path="/easyrestaurant/ingredientes"
@@ -60,9 +56,10 @@ const Layout = () => {
               element={<Correlativos />}
               path="/easyrestaurant/correlativos"
             />
+            <Route element={<SubirImages />} path="/Images" />
+
             <Route element={<h1>Not found!</h1>} />
           </Routes>
-          <Route element={<SubirImages />} path="/Images" />
           <a
             href="https://acortar.link/hp6ar1"
             className="float"
@@ -70,7 +67,6 @@ const Layout = () => {
           >
             <i className="fa fa-whatsapp my-float"></i>
           </a>
-
           <Footer />
         </ScrollToTop>
       </BrowserRouter>
