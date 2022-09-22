@@ -48,17 +48,17 @@ export const Carrito = () => {
             <div className="col-xs-4 md-8 col-lg-12  order-md-last">
               <h4 className=" justify-content-between mb-3">
                 <span className="text-primary">Tus productos: </span>
-                <span className="badge bg-primary rounded-pill">
+                <span className="badge bg-success rounded-pill">
                   {store.carrito.length}
                 </span>
               </h4>
               <ul className="list-group mb-3">
                 {store.carrito.length > 0 &&
-                  store.carrito.map((item, k) => {
+                  store.carrito.map((item) => {
                     return (
                       <>
                         <li className="list-group-item d-flex justify-content-between lh-sm">
-                          <div>
+                          <div key={item.id}>
                             <h6 className="my-0">{item.name}</h6>
                             <small className="text">{item.description}</small>
                           </div>
