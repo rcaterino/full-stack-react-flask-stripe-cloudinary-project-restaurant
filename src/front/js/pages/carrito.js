@@ -80,16 +80,16 @@ export const Carrito = () => {
                   <strong>$ {store.total}</strong>
                 </li>
               </ul>
-              <div className="d-grid gap-2">
-                <Link to="/checkout">
+              <Link to="/checkout">
+                <div className="d-grid gap-2">
                   <button
                     className="btn btn-success btn-lg mt-3 mb-3 "
                     type="submit"
                   >
                     Pagar
                   </button>
-                </Link>
-              </div>
+                </div>
+              </Link>
             </div>
           </div>
         </div>
