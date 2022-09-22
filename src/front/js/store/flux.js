@@ -423,9 +423,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       getOrder: async () => {
         const opts = {
           method: "GET",
-          // headers: {
-          //   "conten-Type": "aplication/json",
-          // },
         };
         try {
           const resp = await fetch(
