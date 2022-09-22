@@ -1,12 +1,42 @@
 import os
 import sys
 import datetime
-from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy import Table, Column, ForeignKey, Integer, String
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship, backref
 
 db = SQLAlchemy()
 #---------------------------------------------------------------------------------
+class Restaurant(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), unique=False, nullable=False)
+    lastname = db.Column(db.String(120), unique=False, nullable=False)
+    dni_cif = db.Column(db.String(120), unique=True, nullable=False)
+    birthday = db.Column(db.Date, unique=False, nullable=False)
+    restaurant_name = db.Column(db.String(120), unique=True, nullable=False)
+    url = db.Column(db.String(80), unique=True, nullable=False)
+    phone = db.Column(db.Integer, unique=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password = db.Column(db.String(80), unique=False, nullable=False)
+    user_type = db.Column(db.String(10), unique=False, nullable=False)
+    
+    def __repr__(self):
+        return f'<Restaurant {self.url}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "lastname": self.lastname,
+            "dni_cif": self.dni_cif,
+            "birthday": datetime.date.isoformat(self.birthday),
+            "restaurant_name": self.restaurant_name,
+            "url": self.url,
+            "phone": self.phone,
+            "email": self.email,
+            "user_type": self.user_type,
+            # do not serialize the password, its a security breach
+        }
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=False, nullable=False)
@@ -19,6 +49,7 @@ class User(db.Model):
     addresses_relation = db.relationship('Addresses', backref='user', lazy=True)
     order_relation = db.relationship('Order', backref='user', lazy=True)
     allergen_relation = db.relationship('Allergens_Users', backref='user')
+    user_type = db.Column(db.String(10), unique=False, nullable=False)
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -31,6 +62,7 @@ class User(db.Model):
             "lastname": self.lastname,
             "birthday": datetime.date.isoformat(self.birthday),
             "phone": self.phone,
+            "user_type": self.user_type,
             "address": list(map(lambda x: x.serialize(), self.addresses_relation)),
             "orders": list(map(lambda x: x.serialize(), self.order_relation)),
             "allergen": list(map(lambda x: x.serialize(), self.allergen_relation)),
@@ -82,6 +114,7 @@ class Product(db.Model):
     price = db.Column(db.Float(precision=None, asdecimal=False, decimal_return_scale=None))
     active = db.Column(db.Boolean, unique=False, nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey("category.id"), nullable=False)
+    image_url = db.Column(db.String(500), unique=False, nullable=True)
     order_detail_relation = db.relationship("Order_Detail", backref='product', lazy=True)
 
     def __repr__(self):
@@ -94,6 +127,7 @@ class Product(db.Model):
             "description": self.description,
             "price": self.price,
             "active": self.active,
+            "image_url": self.image_url,
             "category_id": self.category_id,
             "category": Category.query.get(self.category_id).name
         }

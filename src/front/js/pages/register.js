@@ -2,7 +2,6 @@ import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
 import { Navbar } from "../component/navbar";
-import { Footer } from "../component/footer";
 
 export const Register = () => {
   const { store, actions } = useContext(Context);
@@ -92,7 +91,7 @@ export const Register = () => {
             />
           </div>
           <div className="field">
-            <label for="password">email</label>
+            <label for="password">Contraseña</label>
             <input
               type="password"
               className="form-control"
@@ -114,7 +113,6 @@ export const Register = () => {
           </div>
         </form>
       </div>
-      <Footer />
     </>
   );
 };

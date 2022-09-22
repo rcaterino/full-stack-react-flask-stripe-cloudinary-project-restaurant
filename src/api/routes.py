@@ -1,9 +1,11 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
+import json
+import stripe
 import os
-from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, Allergens_Users, User, Category, Product, Addresses, Allergens, Order, Order_Detail, Correlatives
+from flask import Flask, render_template, request, jsonify, url_for, Blueprint, redirect
+from api.models import db, Restaurant, Allergens_Users, User, Category, Product, Addresses, Allergens, Order, Order_Detail, Correlatives
 from api.utils import generate_sitemap, APIException
 
 from flask_jwt_extended import create_access_token
@@ -12,25 +14,89 @@ from flask_jwt_extended import jwt_required
 
 api = Blueprint('api', __name__)
 
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
+# This is your test secret API key.
+stripe.api_key = 'sk_test_51LiMLsEvrZASLd3x1uWFTlFBppDO0cbLzNKyYS109JickVGxdOSB85zKjcjMUw8q2zPtCIYss0c5vrNOy8xrdU6m008Lp7jJo9'
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
+#funtion for calculate order amount
+def calculate_order_amount(items):
+    # Replace this constant with a calculation of the order's amount
+    # Calculate the order total on the server to prevent
+    # people from directly manipulating the amount on the client
+    
+    return 1400
+#----------------------------------------------------------------------------------------------------------------------------------------------------------    
+#payment endpoint 
+@api.route('/create-payment-intent', methods=['POST'])
+def create_payment():
+    print("request del peyment intent")
+    
+    try:
+        data = json.loads(request.data)
+        # Create a PaymentIntent with the order amount and currency
+        intent = stripe.PaymentIntent.create(
+            amount=calculate_order_amount(data['items']),
+            
+            currency='eur',
+            automatic_payment_methods={
+                'enabled': True,
+            },
+        )
+        print(data['items'])
+        print("intent desde el backend")
+        print(intent)
+        return jsonify({
+            'clientSecret': intent['client_secret']
+        })
+    except Exception as e:
+        return jsonify(error=str(e)), 403
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
 # Create a route to authenticate your users and return JWTs. The
 # create_access_token() function is used to actually generate the JWT.
 @api.route("/token", methods=["POST"])
-def create_token():
+def create_user_token():
     info_request = request.get_json()
     query = User.query.filter_by(email = info_request['email'], password = info_request['password']).first()
     user = query.serialize()
     access_token = create_access_token(identity=user['email'])
     return jsonify(access_token=access_token, user_data = user), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
+# #get only one restaurante
+@api.route('/restaurant/<int:id>', methods=['GET'])
+def getOneRestaurantr(id):
+    restaurant_query = Restaurant.query.get(id)
+    return jsonify(restaurant_query.serialize())
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
+# get all restaurant
+@api.route('/restaurant', methods=['GET'])
+def getRestaurant():
+    restaurant_query = Restaurant.query.all()
+    all_restaurant= list(map(lambda x: x.serialize(), restaurant_query))
+    return jsonify(all_restaurant), 200
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
+# Create a route to authenticate your users and return JWTs. The
+# create_access_token() function is used to actually generate the JWT.
+@api.route("/tokenrestaurant", methods=["POST"])
+def create_restaurant_token():
+    info_request = request.get_json()
+    query = Restaurant.query.filter_by(email = info_request['email'], password = info_request['password']).first()
+    restaurant = query.serialize()
+    access_token = create_access_token(identity=restaurant['email'])
+    return jsonify(access_token=access_token, user_data = restaurant), 200
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
 # #create a new user in db
 @api.route('/register', methods=['POST'])
 def createUser():
     info_request = request.get_json()
-    newUser = User(name = info_request['name'], lastname = info_request['lastname'], birthday = info_request['birthday'], phone = info_request['phone'], email = info_request['email'], password = info_request['password'], is_active = info_request['is_active'])
+    print("request en backend:")
+    print(info_request)
+    newUser = User( user_type= info_request['user_type'], name = info_request['name'], lastname = info_request['lastname'], birthday = info_request['birthday'], phone = info_request['phone'], email = info_request['email'], password = info_request['password'], is_active = info_request['is_active'])
     db.session.add(newUser)
     db.session.commit()
-    access_token = create_access_token(identity=info_request['email'])
-    return jsonify(access_token=access_token), 200
+    query = User.query.filter_by(email = info_request['email'], password = info_request['password']).first()
+    user = query.serialize()
+    access_token = create_access_token(identity=user['email'])
+    return jsonify(access_token=access_token, user_data = user), 200
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 #Edit and save user
@@ -83,10 +149,13 @@ def getoneProduct(id):
 @api.route('/newproduct', methods=['POST'])
 def newProduct():
     info_request = request.get_json()
-    product1 = Product(name=info_request["name"], description=info_request["description"], id=info_request["id"],price=info_request["price"], active=info_request["active"], category_id=info_request["category_id"])
-    db.session.add(product1)
+    
+    product = Product(name=info_request["name"], description=info_request["description"],price=info_request["price"], active=info_request["active"], category_id=info_request["category_id"], image_url=info_request["image_url"])
+    db.session.add(product)
     db.session.commit()
-    return jsonify("Producto creada"), 200  
+    category_query = Category.query.all()
+    all_category = list(map(lambda x: x.serialize(), category_query))
+    return jsonify(all_category), 200 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 #Editing a product by id
@@ -179,7 +248,9 @@ def postAllergens():
     newAllergens = Allergens(description=info_request["description"])
     db.session.add(newAllergens)
     db.session.commit()
-    return jsonify("alergeno creado"), 200
+    allergens_query = Allergens.query.all()
+    all_allergens = list(map(lambda x: x.serialize(), allergens_query))
+    return jsonify(all_allergens), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 #Editing a allergen by id
 @api.route("/editallergen/<int:id>", methods=["PUT"])
@@ -192,6 +263,20 @@ def putallergen(id):
         allergen1.description = info_request["description"]    
     db.session.commit()
     return jsonify("alergeno editado"),200
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
+#Deleting allergen by id
+@api.route("/deleteallergen/<int:id>", methods=["DELETE"])
+def deleteallergen(id):
+    print("id del alergeno a eliminar")
+    print(id)
+    allergen = Allergens.query.get(id)
+    if allergen is None:
+        raise APIException('Allergen not found', status_code=404)
+    db.session.delete(allergen)
+    db.session.commit()
+    allergens_query = Allergens.query.all()
+    all_allergens = list(map(lambda x: x.serialize(), allergens_query))
+    return jsonify(all_allergens), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 # get all user allergens
 @api.route('/allallergenuser', methods=['GET'])

@@ -1,23 +1,22 @@
-
-import React, { useEffect, useContext, useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import { Navbar } from "../component/navbar";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import "../../styles/carrito.css";
+
+import { Navbar } from "../component/navbar.js";
+import { toast } from "react-toastify";
 
 export const Carrito = () => {
   const { store, actions } = useContext(Context);
+  let navigate = useNavigate();
 
   useEffect(() => {
     actions.getCarrito();
-    console.log("useEffect");
-    console.log(store.carrito);
+    store.carrito;
   }, []);
 
-  const deleteClick = (storeId) => {
-    toast.error('Se ha elminado el producto!', {
+  const deleteClick = (storeId, price) => {
+    toast.error("Se ha elminado el producto!", {
       position: "bottom-left",
       autoClose: 1000,
       hideProgressBar: false,
@@ -26,63 +25,75 @@ export const Carrito = () => {
       draggable: true,
       progress: undefined,
     });
+    let Total = store.total - price;
+    store.total = Total;
     actions.deleteCarritoItem(storeId);
-  }
+  };
 
   const deleteCarrito = () => {
     actions.deleteCarrito();
-  }
-
-
+  };
 
   return (
-    <div>
+    <>
       <Navbar />
-      <div className="row row-cols-1 row-cols-md-2 g-4 text-center mt-5 d-flex " >
-        <>
-          {store.carrito.length > 0 && store.carrito.map((item, k) => {
-            return (
-              <div key={k} >
-                <div className="card mb-3" style={{ maxWidth: "540px" }}>
-                  <div className="row g-0">
-                    <div className="col-md-4">
-                      <img src="https://media.istockphoto.com/photos/cheesy-pepperoni-pizza-picture-id938742222?k=20&m=938742222&s=612x612&w=0&h=X5AlEERlt4h86X7U7vlGz3bDaDDGQl4C3MuU99u2ZwQ=" className="img-fluid rounded-start" alt="..." />
-                    </div>
-                    <div className="col-md-6">
-                      <div className="card-body">
-                        <h5 className="card-title">{item.name}</h5>
-                        <p className="card-text">{item.description}</p>
-                        <p className="card-text">${item.price}</p>
-                      </div>
-                    </div>
-                    <div className="col-md-2">
-                      <button className="cssbuttons-io-button" onClick={() => deleteClick(item.storeId)}>
-                        <i className="fa-solid fa-x"></i>
-                      </button>
-                    </div>
-                  </div>
+      <div className="container align-items-center mt-3">
+        <div className="col m-auto">
+          <div className="text-center">
+            <h2>Finalizar orden de preparación</h2>
+            <p className="lead">Tu orden de preparación es la siguiente:</p>
+          </div>
+
+          <div className="row g-5">
+            <div className="col-xs-4 md-8 col-lg-12  order-md-last">
+              <h4 className=" justify-content-between mb-3">
+                <span className="text-primary">Tus productos: </span>
+                <span className="badge bg-success rounded-pill">
+                  {store.carrito.length}
+                </span>
+              </h4>
+              <ul className="list-group mb-3">
+                {store.carrito.length > 0 &&
+                  store.carrito.map((item) => {
+                    return (
+                      <>
+                        <li className="list-group-item d-flex justify-content-between lh-sm">
+                          <div key={item.id}>
+                            <h6 className="my-0">{item.name}</h6>
+                            <small className="text">{item.description}</small>
+                          </div>
+                          <span className="text">€ {item.price}</span>
+                          <button
+                            type="button"
+                            className="btn-close"
+                            onClick={(e) => {
+                              deleteClick(item.storeId, item.price);
+                            }}
+                          ></button>
+                        </li>
+                      </>
+                    );
+                  })}
+
+                <li className="list-group-item d-flex justify-content-between">
+                  <span>Total (EUR)</span>
+                  <strong>$ {store.total}</strong>
+                </li>
+              </ul>
+              <Link to="/checkout">
+                <div className="d-grid gap-2">
+                  <button
+                    className="btn btn-success btn-lg mt-3 mb-3 "
+                    type="submit"
+                  >
+                    Pagar
+                  </button>
                 </div>
-              </div>)
-          })}
-        </>
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
-      <button onClick={deleteCarrito} className="button1  ">eliminar Carrito</button>
-      <ToastContainer
-        position="bottom-left"
-        autoClose={1000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-    </div>
-
+    </>
   );
-}
-
-
-
-
+};

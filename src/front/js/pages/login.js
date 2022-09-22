@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Footer } from "../component/footer";
 import { Navbar } from "../component/navbar";
 import { Context } from "../store/appContext";
 
@@ -86,8 +85,6 @@ export const Login = () => {
           <h1>ya estás logeado</h1>
         </div>
       )}
-      
-      <Footer />
     </>
   );
 };

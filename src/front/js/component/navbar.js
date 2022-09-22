@@ -45,7 +45,7 @@ export const Navbar = () => {
               <Link to="/Carrito">
                 <button className="button2">
                 <span className="box">
-                <i className="fa-sharp fa-solid fa-cart-shopping"></i>
+                <i className="fa-sharp fa-solid fa-cart-shopping"><span className="badge bg-success rounded-pill">{store.carrito.length}</span></i>
                   </span>
                 </button>
               </Link>

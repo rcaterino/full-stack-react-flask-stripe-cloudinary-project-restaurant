@@ -20,6 +20,7 @@ flask-admin = "*"
 flask-jwt-extended = "*"
 flask-marshmallow = "*"
 marshmallow-sqlalchemy = "*"
+stripe = "*"
 
 [requires]
 python_version = "3.8"
