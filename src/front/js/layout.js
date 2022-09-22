@@ -12,6 +12,7 @@ import { Login } from "./pages/login";
 import { Register } from "./pages/register";
 import { PaymantComplete } from "./pages/paymantcomplete";
 import { Carrito } from "./pages/carrito";
+import { Checkout } from "./pages/checkout";
 
 import { EasyRestaurant } from "./pages/restaurant/easyrestaurante";
 import { Cocina } from "./pages/restaurant/cocina";
@@ -23,7 +24,7 @@ import { Clientes } from "./pages/restaurant/clientes";
 import { Correlativos } from "./pages/restaurant/correlativos";
 
 import injectContext from "./store/appContext";
-import { Checkout } from "./pages/checkout";
+
 
 //create your first component
 const Layout = () => {

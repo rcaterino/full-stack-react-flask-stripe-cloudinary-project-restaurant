@@ -7,6 +7,7 @@ import os
 from flask import Flask, render_template, request, jsonify, url_for, Blueprint, redirect
 from api.models import db, Restaurant, Allergens_Users, User, Category, Product, Addresses, Allergens, Order, Order_Detail, Correlatives
 from api.utils import generate_sitemap, APIException
+from functools import reduce
 
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
@@ -16,27 +17,48 @@ api = Blueprint('api', __name__)
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 # This is your test secret API key.
-stripe.api_key = 'sk_test_51LiMLsEvrZASLd3x1uWFTlFBppDO0cbLzNKyYS109JickVGxdOSB85zKjcjMUw8q2zPtCIYss0c5vrNOy8xrdU6m008Lp7jJo9'
+stripe.api_key = 'pk_test_51LiMLsEvrZASLd3xkRkKXzOoUPeH81Nw4G9NSiMoqL7vMmLrGxeW1CF7O3Vjy6pNuQ4yP5TONun6VUSkI2DpseQ000UVZkU15a'
+
+
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 #funtion for calculate order amount
 def calculate_order_amount(items):
-    # Replace this constant with a calculation of the order's amount
+     # Replace this constant with a calculation of the order's amount
     # Calculate the order total on the server to prevent
     # people from directly manipulating the amount on the client
+    amount = 0
+    price = []
+    for item in items:
+        id=(item['id'])
+        product_query = Product.query.get(id)
+        price.append(product_query.price)
+        #amount += price
+        print("van=")
+        print(price)
+    def do_sum(x1, x2): return x1 + x2
     
-    return 1400
+    #amount=(reduce(do_sum, price)) 
+    print("el valor en amount es:")
+    print(reduce(do_sum, price))
+    return int((reduce(do_sum, price))*100)
+    
+
 #----------------------------------------------------------------------------------------------------------------------------------------------------------    
 #payment endpoint 
 @api.route('/create-payment-intent', methods=['POST'])
 def create_payment():
+   
     print("request del peyment intent")
     
     try:
         data = json.loads(request.data)
+        print(data)
+        total=calculate_order_amount(data['items'])
+        print("total en try:")
+        print(total)
         # Create a PaymentIntent with the order amount and currency
         intent = stripe.PaymentIntent.create(
-            amount=calculate_order_amount(data['items']),
-            
+            amount= total,
             currency='eur',
             automatic_payment_methods={
                 'enabled': True,
@@ -50,6 +72,46 @@ def create_payment():
         })
     except Exception as e:
         return jsonify(error=str(e)), 403
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+@api.route('/webhook', methods=['POST'])
+def webhook():
+    event = None
+    payload = request.data
+    sig_header = request.headers['STRIPE_SIGNATURE']
+    # This is your Stripe CLI webhook secret for testing your endpoint locally.
+    endpoint_secret = 'whsec_0e27a3816315ddc29d6185dfdd69b9634f21d33a5df9b706c168ac2696fce337'
+
+    print("evento de webhoooks")
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, endpoint_secret
+        )
+    except ValueError as e:
+        # Invalid payload
+        raise e
+    except stripe.error.SignatureVerificationError as e:
+        # Invalid signature
+        raise e
+
+    # Handle the event
+    if event['type'] == 'checkout.session.async_payment_failed':
+      session = event['data']['object']
+    elif event['type'] == 'checkout.session.async_payment_succeeded':
+      session = event['data']['object']
+    elif event['type'] == 'checkout.session.completed':
+      session = event['data']['object']
+    elif event['type'] == 'checkout.session.expired':
+      session = event['data']['object']
+    # ... handle other event types
+    else:
+      print('Unhandled event type {}'.format(event['type']))
+
+    return jsonify(success=True)
+
+
+
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 # Create a route to authenticate your users and return JWTs. The
 # create_access_token() function is used to actually generate the JWT.
@@ -267,8 +329,6 @@ def putallergen(id):
 #Deleting allergen by id
 @api.route("/deleteallergen/<int:id>", methods=["DELETE"])
 def deleteallergen(id):
-    print("id del alergeno a eliminar")
-    print(id)
     allergen = Allergens.query.get(id)
     if allergen is None:
         raise APIException('Allergen not found', status_code=404)
@@ -293,7 +353,9 @@ def postUserAllergen():
         newAllergensUser = Allergens_Users(user_id=info_request["user_id"], allergen_id=info_request['allergen_id'])
         db.session.add(newAllergensUser)
     db.session.commit()
-    return jsonify("alergeno registrado en usuario"), 200
+    allergen_user_query = Allergens_Users.query.get(info_request["user_id"])
+    all_allergen_user= list(map(lambda x: x.serialize(), allergen_user_query))
+    return jsonify(all_allergen_user), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 # get all correlatives
 @api.route('/correlatives', methods=['GET'])
