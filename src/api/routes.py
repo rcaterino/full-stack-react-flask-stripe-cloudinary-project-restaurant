@@ -29,7 +29,6 @@ def calculate_order_amount(items):
 #payment endpoint 
 @api.route('/create-payment-intent', methods=['POST'])
 def create_payment():
-    
     print("request del peyment intent")
     
     try:
@@ -43,6 +42,7 @@ def create_payment():
                 'enabled': True,
             },
         )
+        print(data['items'])
         print("intent desde el backend")
         print(intent)
         return jsonify({

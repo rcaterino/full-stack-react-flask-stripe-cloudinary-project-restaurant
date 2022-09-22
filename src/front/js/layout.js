@@ -23,6 +23,7 @@ import { Clientes } from "./pages/restaurant/clientes";
 import { Correlativos } from "./pages/restaurant/correlativos";
 
 import injectContext from "./store/appContext";
+import { Checkout } from "./pages/checkout";
 
 //create your first component
 const Layout = () => {
@@ -41,6 +42,7 @@ const Layout = () => {
             <Route element={<Miperfil />} path="/miperfil" />
             <Route element={<QuienesSomos />} path="/quienessomos" />
             <Route element={<Carrito />} path="/Carrito" />
+            <Route element={<Checkout />} path='/checkout' />
             <Route element={<PaymantComplete />} path="/pagocompletado" />
             <Route element={<EasyRestaurant />} path="/easyrestaurant/admin" />
             <Route element={<Cocina />} path="/easyrestaurant/cocina" />

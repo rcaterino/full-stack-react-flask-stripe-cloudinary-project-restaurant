@@ -12,7 +12,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       categories: [],
       order: [],
       carrito: [],
-      clientSecret: [],
+      total: 0,
       alergenos: [],
       imageUrl: [],
     },

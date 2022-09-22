@@ -24,6 +24,9 @@ export const Menu = () => {
     });
     e.preventDefault();
     let Car = [...store.carrito];
+    let Total = store.total + product.price;
+    store.total= Total
+   
     Car.push({
       name: product.name,
       id: product.id,
