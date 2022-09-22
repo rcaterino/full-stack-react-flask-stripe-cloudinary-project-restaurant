@@ -288,12 +288,13 @@ def getAllAllergenUser():
 #Create new allergens for user
 @api.route("/newuserallergen", methods=["POST"])
 def postUserAllergen():
-    info_requests = request.get_json()
-    for info_request in info_requests:
-        newAllergensUser = Allergens_Users(user_id=info_request["user_id"], allergen_id=info_request['allergen_id'])
-        db.session.add(newAllergensUser)
+    info_request = request.get_json() 
+    newAllergen = Allergens_Users(user_id= info_request["user_id"], allergen_id = info_request["allergen_id "])
+    db.session.add(newAllergen)
     db.session.commit()
-    return jsonify("alergeno registrado en usuario"), 200
+    query = User.query.filter_by(id = info_request['user_id']).first()
+    user = query.serialize()
+    return jsonify(user_data = user), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 # get all correlatives
 @api.route('/correlatives', methods=['GET'])
