@@ -1,7 +1,7 @@
 import React from "react";
-import { NavbarAdmin } from "../component/navbarAdmin";
-import { OrderInKitchen } from "../component/orderInKitchen";
+import { OrderInKitchen } from "../../component/orderInKitchen";
 import Alert from "react-bootstrap/Alert";
+import { NavbarAdmin } from "../../component/navbarAdmin";
 
 export const Cocina = () => {
   return (

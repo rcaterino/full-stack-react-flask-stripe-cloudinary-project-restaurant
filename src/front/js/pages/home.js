@@ -23,7 +23,6 @@ export const Home = () => {
         <Menu />
         
       </div>
-      <Footer />
     </>
   );
 };

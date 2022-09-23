@@ -1,22 +1,42 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Context } from "../store/appContext";
+import {
+  Link,
+  useNavigate,
+  BrowserRouter as Router,
+  Route,
+} from "react-router-dom";
+import { NavbarAdmin } from "../../component/navbarAdmin";
+import { SidebarAdmin } from "../../component/sidebaradmin";
+import { Context } from "../../store/appContext";
 
-export const LoginAdmin = () => {
+export const EasyRestaurant = () => {
   const { store, actions } = useContext(Context);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   let navigate = useNavigate();
 
+  /** con useEffect llamamos a la función getTokenFromSession para saber si el usuario está logeado leyendo si existe token en el store */
+  useEffect(() => {
+    actions.getTokenFromSession();
+    store.token;
+  }, []);
+
   const handleClick = () => {
-    actions.login(email, password);
-    navigate("/cocina");
+    actions.loginRestaurant(email, password);
+  };
+
+  const handleLogout = () => {
+    actions.logoutRestaurant();
   };
 
   return (
     <>
-      <div className="container text-center align-items-center">
-          <div className="p-3 border-0">
+      {!store.token ||
+      store.token === null ||
+      store.token === "" ||
+      store.token === undefined ? (
+        <div className="container align-items-center">
+          <div className=" col-6 p-3 border-0">
             <h1 className="text-center">Iniciar Sesión</h1>
             <div className="d-grid gap-2">
               <input
@@ -55,6 +75,14 @@ export const LoginAdmin = () => {
             </div>
           </div>
         </div>
+      ) : (
+        <>
+          <NavbarAdmin />
+          <div>
+            <h3>Soy el dashboard</h3>
+          </div>
+        </>
+      )}
     </>
   );
 };
