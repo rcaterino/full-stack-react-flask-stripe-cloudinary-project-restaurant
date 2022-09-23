@@ -26,8 +26,8 @@ export const Miperfil = () => {
   return (
     <div>
       <Navbar />
-      <UserNavBar />
-      <div className="p-3 border-0">
+      {/* <UserNavBar /> */}
+      <div className="form cardR m-auto ">
         <h1 className="text-center">Formulario de Registro</h1>
         <div className="d-grid gap-2">
           <label className="form-label">Nombre</label>
@@ -107,7 +107,7 @@ export const Miperfil = () => {
         <div className="d-grid gap-2">
           <button
             type="submit"
-            className="btn btn-primary"
+            className="button1"
             onClick={handleClick}
           >
             Guardar

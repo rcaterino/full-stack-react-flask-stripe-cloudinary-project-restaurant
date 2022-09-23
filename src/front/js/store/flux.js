@@ -254,6 +254,23 @@ const getState = ({ getStore, getActions, setStore }) => {
         localStorage.setItem("carritoStr", carritoG);
       },
 
+      setTotal:(totalActualizado) => {
+        // let totalActualizado = getStore().total
+        setStore({total: totalActualizado});
+        localStorage.setItem("totalStr", totalActualizado)
+      },
+
+       getTotal:() => {
+        let LocalTotal = localStorage.getItem("totalStr");
+        console.log(LocalTotal)
+        
+        if (LocalTotal && LocalTotal !== "" && LocalTotal != undefined && LocalTotal !== "undefined") {
+          LocalTotal = JSON.parse(LocalTotal)
+
+          setStore({ total: LocalTotal });
+        }
+       },
+
       deleteCarritoItem: (storeId) => {
         let carrito = getStore().carrito;
         let newData = carrito.filter(
