@@ -83,15 +83,15 @@ def create_payment():
         print(total)
         # Create a PaymentIntent with the order amount and currency
         intent = stripe.PaymentIntent.create(
-            customer=customer['id'],
+            customer= customer['id'],
             setup_future_usage='off_session',
             amount= total,
             currency='eur',
             automatic_payment_methods={
                 'enabled': True,
             },
+            metadata= [data['metadata']]
         )
-        print(data['items'])
         print("intent desde el backend")
         print(intent)
         return jsonify({

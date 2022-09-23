@@ -21,12 +21,11 @@ export const Checkout = () => {
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
     fetch(process.env.BACKEND_URL + "/api/create-payment-intent", {
-      
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         items: [...store.carrito],
-        metadata: JSON.stringify(store.user_data),
+        metadata: [store.user_data],
       }),
     })
       .then((res) => res.json())
