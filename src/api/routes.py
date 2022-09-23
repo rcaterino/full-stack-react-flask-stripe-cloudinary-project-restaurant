@@ -5,8 +5,9 @@ import json
 import stripe
 import os
 from flask import Flask, render_template, request, jsonify, url_for, Blueprint, redirect
-from api.models import db, Restaurant, Allergens_Users, User, Category, Product, Addresses, Allergens, Order, Order_Detail, Correlatives
+from api.models import db, Pay, Restaurant, Allergens_Users, User, Category, Product, Addresses, Allergens, Order, Order_Detail, Correlatives
 from api.utils import generate_sitemap, APIException
+from functools import reduce
 
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
@@ -16,33 +17,81 @@ api = Blueprint('api', __name__)
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 # This is your test secret API key.
-stripe.api_key = 'sk_test_51LiMLsEvrZASLd3x1uWFTlFBppDO0cbLzNKyYS109JickVGxdOSB85zKjcjMUw8q2zPtCIYss0c5vrNOy8xrdU6m008Lp7jJo9'
+stripe.api_key = 'pk_test_51LiMLsEvrZASLd3xkRkKXzOoUPeH81Nw4G9NSiMoqL7vMmLrGxeW1CF7O3Vjy6pNuQ4yP5TONun6VUSkI2DpseQ000UVZkU15a'
+
+
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 #funtion for calculate order amount
 def calculate_order_amount(items):
-    # Replace this constant with a calculation of the order's amount
+     # Replace this constant with a calculation of the order's amount
     # Calculate the order total on the server to prevent
     # people from directly manipulating the amount on the client
+    amount = 0
+    price = []
+    for item in items:
+        id=(item['id'])
+        product_query = Product.query.get(id)
+        price.append(product_query.price)
+        #amount += price
+        print("van=")
+        print(price)
+    def do_sum(x1, x2): return x1 + x2
     
-    return 1400
+    #amount=(reduce(do_sum, price)) 
+    print("el valor en amount es:")
+    print(reduce(do_sum, price))
+    return int((reduce(do_sum, price))*100)
+#----------------------------------------------------------------------------------------------------------------------------------------------------------        
+def charge_customer(customer_id):
+    # Lookup the payment methods available for the customer
+    payment_methods = stripe.PaymentMethod.list(
+        customer=customer_id,
+        type='card'
+    )
+    # Charge the customer and payment method immediately
+    try:
+        stripe.PaymentIntent.create(
+            amount=1099,
+            currency='eur',
+            customer=customer_id,
+            payment_method=payment_methods.data[0].id,
+            off_session=True,
+            confirm=True
+        )
+    except stripe.error.CardError as e:
+        err = e.error
+        # Error code will be authentication_required if authentication is needed
+        print('Code is: %s' % err.code)
+        payment_intent_id = err.payment_intent['id']
+        payment_intent = stripe.PaymentIntent.retrieve(payment_intent_id)
+
 #----------------------------------------------------------------------------------------------------------------------------------------------------------    
 #payment endpoint 
 @api.route('/create-payment-intent', methods=['POST'])
 def create_payment():
+    # Alternatively, set up a webhook to listen for the payment_intent.succeeded event
+    # and attach the PaymentMethod to a new Customer
+    customer = stripe.Customer.create()
+
     print("request del peyment intent")
     
     try:
         data = json.loads(request.data)
+        print(data)
+        total=calculate_order_amount(data['items'])
+        print("total en try:")
+        print(total)
         # Create a PaymentIntent with the order amount and currency
         intent = stripe.PaymentIntent.create(
-            amount=calculate_order_amount(data['items']),
-            
+            customer= customer['id'],
+            setup_future_usage='off_session',
+            amount= total,
             currency='eur',
             automatic_payment_methods={
                 'enabled': True,
             },
+            metadata= [data['metadata']]
         )
-        print(data['items'])
         print("intent desde el backend")
         print(intent)
         return jsonify({
@@ -50,6 +99,66 @@ def create_payment():
         })
     except Exception as e:
         return jsonify(error=str(e)), 403
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+@api.route('/webhook', methods=['POST'])
+def webhook():
+    event = None
+    payload = request.data
+    sig_header = request.headers['STRIPE_SIGNATURE']
+    # This is your Stripe CLI webhook secret for testing your endpoint locally.
+    endpoint_secret = 'whsec_5gsg10eVLjSMRIsyK6HjxddkihWEeF5s'
+
+    print("evento de webhoooks")
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, endpoint_secret
+        )
+    except ValueError as e:
+        # Invalid payload
+        raise e
+    except stripe.error.SignatureVerificationError as e:
+        # Invalid signature
+        raise e
+
+    # Handle the event
+    if event['type'] == 'charge.captured':
+      charge = event['data']['object']
+    elif event['type'] == 'charge.expired':
+      charge = event['data']['object']
+    elif event['type'] == 'charge.failed':
+      charge = event['data']['object']
+    elif event['type'] == 'charge.pending':
+      charge = event['data']['object']
+    elif event['type'] == 'charge.refunded':
+      charge = event['data']['object']
+    elif event['type'] == 'charge.succeeded':
+      charge = event['data']['object']
+      print("recepcion del webhook:")
+      print(charge)
+    elif event['type'] == 'charge.updated':
+      charge = event['data']['object']
+    elif event['type'] == 'charge.dispute.closed':
+      dispute = event['data']['object']
+    elif event['type'] == 'charge.dispute.created':
+      dispute = event['data']['object']
+    elif event['type'] == 'charge.dispute.funds_reinstated':
+      dispute = event['data']['object']
+    elif event['type'] == 'charge.dispute.funds_withdrawn':
+      dispute = event['data']['object']
+    elif event['type'] == 'charge.dispute.updated':
+      dispute = event['data']['object']
+    elif event['type'] == 'charge.refund.updated':
+      refund = event['data']['object']
+    # ... handle other event types
+    else:
+      print('Unhandled event type {}'.format(event['type']))
+
+    return jsonify(success=True)
+
+
+
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 # Create a route to authenticate your users and return JWTs. The
 # create_access_token() function is used to actually generate the JWT.
@@ -267,8 +376,6 @@ def putallergen(id):
 #Deleting allergen by id
 @api.route("/deleteallergen/<int:id>", methods=["DELETE"])
 def deleteallergen(id):
-    print("id del alergeno a eliminar")
-    print(id)
     allergen = Allergens.query.get(id)
     if allergen is None:
         raise APIException('Allergen not found', status_code=404)

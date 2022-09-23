@@ -1,8 +1,11 @@
 import React from "react";
+import { Navbar } from "../component/navbar";
 
 export const PaymantComplete = () => {
-
-    return(
-        <h1>Muchas gracias por su compra</h1>
-    )
-}
+  return (
+    <>
+      <Navbar />
+      <h1>Muchas gracias por su compra</h1>
+    </>
+  );
+};

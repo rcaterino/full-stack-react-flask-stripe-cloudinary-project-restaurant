@@ -58,7 +58,7 @@ export default function CheckOutForm() {
       confirmParams: {
         // Make sure to change this to your payment completion page
         return_url:
-          "https://3000-rcaterino-easyrestauran-e9jm2vzkwge.ws-eu64.gitpod.io/pagocompletado",
+          "https://3000-rcaterino-easyrestauran-e9jm2vzkwge.ws-eu67.gitpod.io//pagocompletado",
       },
     });
 
@@ -79,7 +79,11 @@ export default function CheckOutForm() {
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
       <PaymentElement id="payment-element" />
-      <button className="btn btn-primary btn-lg mt-3 mb-3" disabled={isLoading || !stripe || !elements} id="submit">
+      <button
+        className="btn btn-primary btn-lg mt-3 mb-3"
+        disabled={isLoading || !stripe || !elements}
+        id="submit"
+      >
         <span id="button-text">
           {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
         </span>

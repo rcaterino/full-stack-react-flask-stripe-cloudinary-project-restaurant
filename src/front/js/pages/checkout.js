@@ -23,7 +23,10 @@ export const Checkout = () => {
     fetch(process.env.BACKEND_URL + "/api/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items: [...store.carrito] }),
+      body: JSON.stringify({
+        items: [...store.carrito],
+        metadata: [store.user_data],
+      }),
     })
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
