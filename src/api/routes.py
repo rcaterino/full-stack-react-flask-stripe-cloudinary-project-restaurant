@@ -41,13 +41,38 @@ def calculate_order_amount(items):
     print("el valor en amount es:")
     print(reduce(do_sum, price))
     return int((reduce(do_sum, price))*100)
-    
+#----------------------------------------------------------------------------------------------------------------------------------------------------------        
+def charge_customer(customer_id):
+    # Lookup the payment methods available for the customer
+    payment_methods = stripe.PaymentMethod.list(
+        customer=customer_id,
+        type='card'
+    )
+    # Charge the customer and payment method immediately
+    try:
+        stripe.PaymentIntent.create(
+            amount=1099,
+            currency='eur',
+            customer=customer_id,
+            payment_method=payment_methods.data[0].id,
+            off_session=True,
+            confirm=True
+        )
+    except stripe.error.CardError as e:
+        err = e.error
+        # Error code will be authentication_required if authentication is needed
+        print('Code is: %s' % err.code)
+        payment_intent_id = err.payment_intent['id']
+        payment_intent = stripe.PaymentIntent.retrieve(payment_intent_id)
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------    
 #payment endpoint 
 @api.route('/create-payment-intent', methods=['POST'])
 def create_payment():
-   
+    # Alternatively, set up a webhook to listen for the payment_intent.succeeded event
+    # and attach the PaymentMethod to a new Customer
+    customer = stripe.Customer.create()
+
     print("request del peyment intent")
     
     try:
@@ -58,6 +83,8 @@ def create_payment():
         print(total)
         # Create a PaymentIntent with the order amount and currency
         intent = stripe.PaymentIntent.create(
+            customer=customer['id'],
+            setup_future_usage='off_session',
             amount= total,
             currency='eur',
             automatic_payment_methods={
@@ -80,7 +107,7 @@ def webhook():
     payload = request.data
     sig_header = request.headers['STRIPE_SIGNATURE']
     # This is your Stripe CLI webhook secret for testing your endpoint locally.
-    endpoint_secret = 'whsec_0e27a3816315ddc29d6185dfdd69b9634f21d33a5df9b706c168ac2696fce337'
+    endpoint_secret = 'whsec_5gsg10eVLjSMRIsyK6HjxddkihWEeF5s'
 
     print("evento de webhoooks")
 
@@ -96,24 +123,37 @@ def webhook():
         raise e
 
     # Handle the event
-    if event['type'] == 'checkout.session.async_payment_failed':
-        session = event['data']['object']
-    elif event['type'] == 'checkout.session.async_payment_succeeded':
-        session = event['data']['object']
-        charge = event['data']['object']
-        ejemplo = charge.billing_details.email
-        user = User.query.filter_by(email = ejemplo).first()
-        pay = Pay(user_id = cliente.id, amount = charge.amount / 100 )
-        #cliente.corrienteDePago = True
-        db.session.add(pago)
-        db.session.commit()
-    elif event['type'] == 'checkout.session.completed':
-        session = event['data']['object']
-    elif event['type'] == 'checkout.session.expired':
-        session = event['data']['object']
+    if event['type'] == 'charge.captured':
+      charge = event['data']['object']
+    elif event['type'] == 'charge.expired':
+      charge = event['data']['object']
+    elif event['type'] == 'charge.failed':
+      charge = event['data']['object']
+    elif event['type'] == 'charge.pending':
+      charge = event['data']['object']
+    elif event['type'] == 'charge.refunded':
+      charge = event['data']['object']
+    elif event['type'] == 'charge.succeeded':
+      charge = event['data']['object']
+      print("recepcion del webhook:")
+      print(charge)
+    elif event['type'] == 'charge.updated':
+      charge = event['data']['object']
+    elif event['type'] == 'charge.dispute.closed':
+      dispute = event['data']['object']
+    elif event['type'] == 'charge.dispute.created':
+      dispute = event['data']['object']
+    elif event['type'] == 'charge.dispute.funds_reinstated':
+      dispute = event['data']['object']
+    elif event['type'] == 'charge.dispute.funds_withdrawn':
+      dispute = event['data']['object']
+    elif event['type'] == 'charge.dispute.updated':
+      dispute = event['data']['object']
+    elif event['type'] == 'charge.refund.updated':
+      refund = event['data']['object']
     # ... handle other event types
     else:
-        print('Unhandled event type {}'.format(event['type']))
+      print('Unhandled event type {}'.format(event['type']))
 
     return jsonify(success=True)
 

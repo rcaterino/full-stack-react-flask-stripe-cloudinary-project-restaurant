@@ -200,16 +200,17 @@ class Correlatives(db.Model):
 class Pay(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    date_pay = db.Column(db.Date, unique=False, nullable=True)
+    date_pay = db.Column(db.Date, unique=False, nullable=False)
     amount = db.Column(db.Integer, unique=False, nullable=False)
 
     def __repr__(self):
-        return f'<Pago {self.email}>'
+        return f'<Pay {self.amount}>'
 
     def serialize(self):
         return {
             "cliente_id": self.user_id,
             "amount": self.amount,
+            "date_pay": datetime.date.isoformat(self.date_pay),
         }
 #---------------------------------------------------------------------------------
 class Order(db.Model):
