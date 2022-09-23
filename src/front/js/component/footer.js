@@ -3,7 +3,7 @@ import { FaPizzaSlice } from "react-icons/fa";
 
 export const Footer = () => {
   return (
-    <footer className="py-3 text-center align-items-center sticky-bottom">
+    <footer className="py-3 text-center align-items-center  ">
       <section className="container-fluid d-flex justify-content-center  p-1 border-bottom">
         <div>
           <a href="" className="me-4 text-reset">
@@ -28,9 +28,9 @@ export const Footer = () => {
       </section>
 
       <section className="container-fluid">
-        <div className="container text-center text-md-start m-auto mt-2">
-          <div className="row mt-3">
-            <div className="col">
+        <div className="container text-center  m-auto mt-2">
+          <div className="col mt-3 ">
+            {/* <div className="col-6">
               <h6 className="text-uppercase fw-bold mb-4">
                 <FaPizzaSlice /> Localización
               </h6>
@@ -43,10 +43,9 @@ export const Footer = () => {
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
               ></iframe>
-            </div>
+            </div> */}
 
-            <div className="col">
-              <h6 className="text-uppercase fw-bold mb-4">Contacto</h6>
+              <h6 className="text-uppercase m-auto fw-bold mb-4">Contacto</h6>
               <a href="https://g.page/Portal-10?share">
                 <i className="fas fa-home me-1"></i> Calle de Barbieri, 10
                 (Madrid)
@@ -58,13 +57,13 @@ export const Footer = () => {
               <p>
                 <i className="fas fa-phone me-2"></i> 91 1458110
               </p>
-            </div>
+            
           </div>
         </div>
       </section>
 
       <div
-        className="text-center p-4"
+        className="text-center p-4 "
         style={{ background: "darkorange" }}
       >
         © 2022 Copyright:{" "}

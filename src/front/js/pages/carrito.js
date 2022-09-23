@@ -4,7 +4,8 @@ import { Context } from "../store/appContext";
 import "../../styles/carrito.css";
 
 import { Navbar } from "../component/navbar.js";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const Carrito = () => {
   const { store, actions } = useContext(Context);
@@ -13,7 +14,12 @@ export const Carrito = () => {
   useEffect(() => {
     actions.getCarrito();
     store.carrito;
+    actions.getTotal();
   }, []);
+
+//   useEffect(() =>{
+//  actions.setTotal();
+//   }, [store.total])
 
   const deleteClick = (storeId, price) => {
     toast.error("Se ha elminado el producto!", {
@@ -25,12 +31,26 @@ export const Carrito = () => {
       draggable: true,
       progress: undefined,
     });
-    let Total = store.total - price;
-    store.total = Total;
+    let Total;
+    if(store.total-price<0){
+       Total= 0
+    }else{
+       Total = store.total - price;
+    }
+    actions.setTotal(Total);
     actions.deleteCarritoItem(storeId);
   };
 
   const deleteCarrito = () => {
+    toast.error("Se ha elminado el Carrito completo", {
+      position: "bottom-left",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+    });
     actions.deleteCarrito();
   };
 
@@ -93,7 +113,27 @@ export const Carrito = () => {
             </div>
           </div>
         </div>
+        
       </div>
+      <ToastContainer
+        position="bottom-left"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+     <div className="d-grid gap-2">
+                  <button
+                    className="button1 btn-lg mt-3 mb-3 "
+                    onClick={deleteCarrito}
+                  >
+                    Eliminar Carrito
+                  </button>
+    </div>
     </>
   );
 };

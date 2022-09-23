@@ -17,6 +17,76 @@ const getState = ({ getStore, getActions, setStore }) => {
       imageUrl: [],
     },
     actions: {
+      getAllAllergens: () => {
+        fetch(process.env.BACKEND_URL + "/api/allergens")
+          .then(res => res.json()
+          )
+          .then(allergens => {
+            setStore({ alergenos: allergens })
+          }).catch((error) => {
+            console.error('Error:', error);
+          });
+      },
+
+      addAllergenToUser: async (allergen_id, user_id) => {
+        console.log("soy flux");
+        console.log(allergen_id);
+        console.log(user_id);
+        const opts = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            allergen_id: allergen_id,
+            user_id: user_id,
+          }),
+        };
+        try {
+          let resp = await fetch(
+            process.env.BACKEND_URL + "/api/newuserallergen",
+            opts
+          );
+          if (resp.status !== 200) {
+            new Error("there has been an error");
+            return false;
+          }
+          const data = await resp.json();
+          sessionStorage.setItem("user_data", data.user_data);
+          sessionStorage.setItem("user_address", data.user_address);
+          sessionStorage.setItem("user_allergens", data.user_allergens);
+          setStore({
+            user_data: data.user_data,
+            user_address: data.user_data.address,
+            user_allergens: data.user_data.allergens,
+          });
+
+          return true;
+        } catch (error) {
+          console.error(error);
+        }
+      },
+
+      deleteUserAllergens: async (id) => {
+        console.log("alergeno en flux")
+        console.log(id)
+        const opts = {
+          method: "DELETE",
+        };
+        try {
+          let resp = await fetch(
+            process.env.BACKEND_URL + "/api/allergensuserdelete/" + id,
+            opts
+          );
+          if (resp.status !== 200) {
+            new Error("there has been an error");
+            return false;
+          }
+          return true;
+        } catch (error) {
+          console.error(error);
+        }
+      },
       setUrlImge: (Url) => {
         setStore({ imageUrl: Url });
         console.log("url de imagen en store:");
@@ -184,6 +254,23 @@ const getState = ({ getStore, getActions, setStore }) => {
         localStorage.setItem("carritoStr", carritoG);
       },
 
+      setTotal:(totalActualizado) => {
+        // let totalActualizado = getStore().total
+        setStore({total: totalActualizado});
+        localStorage.setItem("totalStr", totalActualizado)
+      },
+
+       getTotal:() => {
+        let LocalTotal = localStorage.getItem("totalStr");
+        console.log(LocalTotal)
+        
+        if (LocalTotal && LocalTotal !== "" && LocalTotal != undefined && LocalTotal !== "undefined") {
+          LocalTotal = JSON.parse(LocalTotal)
+
+          setStore({ total: LocalTotal });
+        }
+       },
+
       deleteCarritoItem: (storeId) => {
         let carrito = getStore().carrito;
         let newData = carrito.filter(
@@ -345,8 +432,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           let resp = await fetch(
             process.env.BACKEND_URL +
-              "/api/edituser/" +
-              getStore().user_data.id,
+            "/api/edituser/" +
+            getStore().user_data.id,
             opts
           );
           if (resp.status !== 200) {
