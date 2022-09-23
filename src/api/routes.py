@@ -5,7 +5,7 @@ import json
 import stripe
 import os
 from flask import Flask, render_template, request, jsonify, url_for, Blueprint, redirect
-from api.models import db, Restaurant, Allergens_Users, User, Category, Product, Addresses, Allergens, Order, Order_Detail, Correlatives
+from api.models import db, Pay, Restaurant, Allergens_Users, User, Category, Product, Addresses, Allergens, Order, Order_Detail, Correlatives
 from api.utils import generate_sitemap, APIException
 from functools import reduce
 
@@ -97,16 +97,23 @@ def webhook():
 
     # Handle the event
     if event['type'] == 'checkout.session.async_payment_failed':
-      session = event['data']['object']
+        session = event['data']['object']
     elif event['type'] == 'checkout.session.async_payment_succeeded':
-      session = event['data']['object']
+        session = event['data']['object']
+        charge = event['data']['object']
+        ejemplo = charge.billing_details.email
+        user = User.query.filter_by(email = ejemplo).first()
+        pay = Pay(user_id = cliente.id, amount = charge.amount / 100 )
+        #cliente.corrienteDePago = True
+        db.session.add(pago)
+        db.session.commit()
     elif event['type'] == 'checkout.session.completed':
-      session = event['data']['object']
+        session = event['data']['object']
     elif event['type'] == 'checkout.session.expired':
-      session = event['data']['object']
+        session = event['data']['object']
     # ... handle other event types
     else:
-      print('Unhandled event type {}'.format(event['type']))
+        print('Unhandled event type {}'.format(event['type']))
 
     return jsonify(success=True)
 

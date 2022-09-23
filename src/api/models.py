@@ -50,6 +50,7 @@ class User(db.Model):
     order_relation = db.relationship('Order', backref='user', lazy=True)
     allergen_relation = db.relationship('Allergens_Users', backref='user')
     user_type = db.Column(db.String(10), unique=False, nullable=False)
+    payment = db.relationship('Pay', backref='user', lazy=True)
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -195,7 +196,21 @@ class Correlatives(db.Model):
         "description": self.correlative_description,
         "correlative": self.correlative_counter,
         }    
+#---------------------------------------------------------------------------------
+class Pay(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    date_pay = db.Column(db.Date, unique=False, nullable=True)
+    amount = db.Column(db.Integer, unique=False, nullable=False)
 
+    def __repr__(self):
+        return f'<Pago {self.email}>'
+
+    def serialize(self):
+        return {
+            "cliente_id": self.user_id,
+            "amount": self.amount,
+        }
 #---------------------------------------------------------------------------------
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
