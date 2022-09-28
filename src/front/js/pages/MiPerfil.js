@@ -17,6 +17,7 @@ export const Miperfil = () => {
   /* utilizamos useEffect para optener del actions en flux.js el token del usuario con la función getTokenFromSession*/
   useEffect(() => {
     actions.getTokenFromSession();
+    actions.getUserDataFromSession();
   }, []);
 
   const handleClick = () => {
@@ -27,7 +28,7 @@ export const Miperfil = () => {
     <div>
       <Navbar />
       {/* <UserNavBar /> */}
-      <div className="form cardR m-auto ">
+      <div className="form cardR m-auto">
         <h1 className="text-center">Formulario de Registro</h1>
         <div className="d-grid gap-2">
           <label className="form-label">Nombre</label>

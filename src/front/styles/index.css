@@ -271,6 +271,7 @@ footer {
  
  .form {
   padding: 25px;
+  max-width: 500px;
  }
  
  .card_header {

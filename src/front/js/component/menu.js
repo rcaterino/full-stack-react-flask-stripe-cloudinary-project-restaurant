@@ -49,7 +49,6 @@ export const Menu = () => {
           </button>
           <div className="productos row row-cols-1 row-cols-md-2 g-4 text-center mt-5 d-flex ">
             {category.product?.map((producto, i) => (
-              
               <div
                 key={i}
                 className="card mb-3 m-auto "

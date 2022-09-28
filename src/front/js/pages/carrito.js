@@ -78,11 +78,11 @@ export const Carrito = () => {
                     return (
                       <>
                         <li className="list-group-item d-flex justify-content-between lh-sm">
-                          <div key={item.id}>
+                          <div key={item.id} className="col">
                             <h6 className="my-0">{item.name}</h6>
                             <small className="text">{item.description}</small>
                           </div>
-                          <span className="text">€ {item.price}</span>
+                          <div className="text col">€ {item.price}</div>
                           <button
                             type="button"
                             className="btn-close"
@@ -126,14 +126,14 @@ export const Carrito = () => {
         draggable
         pauseOnHover
       />
-     <div className="d-grid gap-2">
+     {/* <div className="d-grid gap-2">
                   <button
                     className="button1 btn-lg mt-3 mb-3 "
                     onClick={deleteCarrito}
                   >
                     Eliminar Carrito
                   </button>
-    </div>
+    </div> */}
     </>
   );
 };

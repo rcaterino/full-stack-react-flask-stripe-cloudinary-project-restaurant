@@ -81,11 +81,11 @@ export const Login = () => {
         </div>
       ) : (
         /**Si tenemos token, el usuario está logeado y no mostramos el formulario de login */
-        <div className="container text-center align-items-center">
+        <div className="container text-center align-items-center" style={{minHeight: "800px"}}>
           <h1>¡ya estás logeado!</h1>
           <h1>Te invitamos a conocer nuestro local</h1>
           <h1> y degustar nuestra excelentes pizzas</h1>
-           <div className="">
+           {/* <div className="">
               <h6 className="text-uppercase fw-bold mb-4">
                 <FaPizzaSlice /> Localización
               </h6>
@@ -98,7 +98,7 @@ export const Login = () => {
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
               ></iframe>
-            </div> 
+            </div>  */}
         </div>
       )}
     </>

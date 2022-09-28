@@ -12,7 +12,6 @@ import { Login } from "./pages/login";
 import { Register } from "./pages/register";
 import { PaymantComplete } from "./pages/paymantcomplete";
 import { Carrito } from "./pages/carrito";
-import { Checkout } from "./pages/checkout";
 
 import { EasyRestaurant } from "./pages/restaurant/easyrestaurante";
 import { Cocina } from "./pages/restaurant/cocina";
