@@ -1,7 +1,7 @@
 import os
 import sys
 import datetime
-from sqlalchemy import Table, Column, ForeignKey, Integer, String
+from sqlalchemy import Table, Column, ForeignKey, Integer, String, DateTime
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship, backref
 
@@ -65,7 +65,7 @@ class User(db.Model):
             "phone": self.phone,
             "user_type": self.user_type,
             "address": list(map(lambda x: x.serialize(), self.addresses_relation)),
-            "orders": list(map(lambda x: x.serialize(), self.order_relation)),
+            #"orders": list(map(lambda x: x.serialize(), self.order_relation)),
             "allergen": list(map(lambda x: x.serialize(), self.allergen_relation)),
             # do not serialize the password, its a security breach
         }
@@ -182,21 +182,6 @@ class Allergens_Users(db.Model):
 
         }
 #---------------------------------------------------------------------------------
-class Correlatives(db.Model):
-    id = db.Column(db.Integer , primary_key=True)
-    correlative_description = db.Column(db.String(100), unique=False, nullable=False)
-    correlative_counter = db.Column(db.Integer, unique=False, nullable=False)
-    order_relation = db.relationship("Order", backref='correlative', lazy=True)
-    def __repr__(self):
-      return f'<Correlatives {self.correlative_description}>'
-
-    def serialize(self):
-      return {
-        "id": self.id,
-        "description": self.correlative_description,
-        "correlative": self.correlative_counter,
-        }    
-#---------------------------------------------------------------------------------
 class Pay(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
@@ -216,14 +201,10 @@ class Pay(db.Model):
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    correlative_id = db.Column(db.Integer, db.ForeignKey('correlatives.id'))
-    order_number = db.Column(db.Integer, unique=True)
-    order_comments = db.Column(db.String(150), unique=False, nullable=False)
-    order_date = db.Column(db.Date, unique=False, nullable=False)
-    order_subtotal = db.Column(db.Float, unique=False)
-    tax_total = db.Column(db.Float, unique=False)
+    order_comments = db.Column(db.String(150), unique=False, nullable=True)
+    order_date = db.Column(db.DateTime, default= datetime.datetime.utcnow)
     order_total = db.Column(db.Float, unique=False)
-    pay_method = db.Column(db.String(150), unique=False, nullable=False)
+    pay_method = db.Column(db.String(150), unique=False, nullable=True)
     order_status =db.Column(db.Boolean, unique=False, nullable=False)
     user_relation = db.relationship('User', backref='order, Lazy=True')
     order_detail_relation = db.relationship("Order_Detail", backref='order', lazy=True)
@@ -236,11 +217,8 @@ class Order(db.Model):
             "order_id": self.id,
             "user_id": self.user_id,
             "client": User.query.get(self.user_id).name,
-            "order_number": self.order_number,
             "order_comments": self.order_comments,
             "order_date": datetime.date.isoformat(self.order_date),
-            "order_subtotal": self.order_subtotal,
-            "tax_total": self.tax_total,
             "order_total": self.order_total,
             "order_status": self.order_status,
             "order_detail": list(map(lambda x: x.serialize(), self.order_detail_relation))
@@ -252,8 +230,6 @@ class Order_Detail(db.Model):
     product_id = db.Column(db.Integer, db.ForeignKey("product.id"))
     units = db.Column(db.Integer, unique=False, nullable=False)
     unit_price = db.Column(db.Float, unique=False)
-    tax_base = db.Column(db.Float, unique=False)
-    tax_total = db.Column(db.Float, unique=False)
     subtotal = db.Column(db.Float, unique=False)
     
     
@@ -267,6 +243,4 @@ class Order_Detail(db.Model):
             "units": self.units,
             "unit_price": self.unit_price,
             "subtotal": self.subtotal,
-            "tax_base": self.tax_base,
-            "tax_total": self.tax_total,
         }

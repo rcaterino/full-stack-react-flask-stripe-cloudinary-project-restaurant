@@ -5,7 +5,7 @@ import json
 import stripe
 import os
 from flask import Flask, render_template, request, jsonify, url_for, Blueprint, redirect
-from api.models import db, Pay, Restaurant, Allergens_Users, User, Category, Product, Addresses, Allergens, Order, Order_Detail, Correlatives
+from api.models import db, Pay, Restaurant, Allergens_Users, User, Category, Product, Addresses, Allergens, Order, Order_Detail
 from api.utils import generate_sitemap, APIException
 from functools import reduce
 
@@ -32,14 +32,8 @@ def calculate_order_amount(items):
         id=(item['id'])
         product_query = Product.query.get(id)
         price.append(product_query.price)
-        #amount += price
-        print("van=")
-        print(price)
     def do_sum(x1, x2): return x1 + x2
     
-    #amount=(reduce(do_sum, price)) 
-    print("el valor en amount es:")
-    print(reduce(do_sum, price))
     return int((reduce(do_sum, price))*100)
 #----------------------------------------------------------------------------------------------------------------------------------------------------------        
 def charge_customer(customer_id):
@@ -71,26 +65,23 @@ def charge_customer(customer_id):
 def create_payment():
     # Alternatively, set up a webhook to listen for the payment_intent.succeeded event
     # and attach the PaymentMethod to a new Customer
-    customer = stripe.Customer.create()
-
-    print("request del peyment intent")
+    #customer = stripe.Customer.create()
     
     try:
         data = json.loads(request.data)
-        print(data)
         total=calculate_order_amount(data['items'])
-        print("total en try:")
-        print(total)
+        print("request en create-payment-intent:")
+        print(data)
         # Create a PaymentIntent with the order amount and currency
         intent = stripe.PaymentIntent.create(
-            customer= customer['id'],
+            #customer= customer['id'],
             setup_future_usage='off_session',
             amount= total,
             currency='eur',
+            metadata= data['metadata'],
             automatic_payment_methods={
                 'enabled': True,
             },
-            metadata= [data['metadata']]
         )
         print("intent desde el backend")
         print(intent)
@@ -404,44 +395,7 @@ def postUserAllergen():
     all_allergen_user= list(map(lambda x: x.serialize(), allergen_user_query))
     return jsonify(all_allergen_user), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
-# get all correlatives
-@api.route('/correlatives', methods=['GET'])
-def getCorrelatives():
-    correlatives_query = Correlatives.query.all()
-    all_correlatives= list(map(lambda x: x.serialize(), correlatives_query))
-    return jsonify(all_correlatives), 200
-#----------------------------------------------------------------------------------------------------------------------------------------------------------
-# #get only one correlative in db
-@api.route('/correlative/<int:id>', methods=['GET'])
-def getOneCorrelative(id):
-    correlative_query = Correlatives.query.get(id)
-    return jsonify(correlative_query.serialize())
-#----------------------------------------------------------------------------------------------------------------------------------------------------------
-#Create new correlative
-@api.route('/newcorrelative', methods=['POST'])
-def newCorrelative():
-    info_request = request.get_json()
-    correlative1 = Correlatives(correlative_description=info_request["correlative_description"], correlative_counter=info_request["correlative_counter"])
-    db.session.add(correlative1)
-    db.session.commit()
-    return jsonify("Correlativo creado"), 200  
-
-#----------------------------------------------------------------------------------------------------------------------------------------------------------
-#Editing a correlative by id
-@api.route("/editcorrelative/<int:id>", methods=["PUT"])
-def putCorrelative(id):
-    info_request = request.get_json()
-    correlative1 = Correlatives.query.get(id)
-    if correlative1 is None:
-        raise APIException('correlative not found', status_code=404)
-    if "correlative_description" in info_request:
-        correlative1.correlative_description = info_request["correlative_description"]  
-    if "correlative_counter" in info_request:
-        correlative1.correlative_counter = info_request["correlative_counter"]
-    db.session.commit()
-    return jsonify("correlativo editado"),200
-#----------------------------------------------------------------------------------------------------------------------------------------------------------
-# get all correlatives
+# get all orders
 @api.route('/allorders', methods=['GET'])
 def getAllOrders():
     orders_query = Order.query.filter_by(order_status=False)
@@ -449,29 +403,20 @@ def getAllOrders():
     return jsonify(orders=all_orders), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 #Create new order
-@api.route('/neworder/<int:id>', methods=['POST'])
-def newOrder(id):
+@api.route('/neworder', methods=['POST'])
+def newOrder():
     info_request = request.get_json()
-    correlative1 = Correlatives.query.get(id)
-    correlative = Correlatives.query.get(id).correlative_counter
-    order1 = Order(user_id=info_request["user_id"], correlative_id=info_request['correlative_id'], order_number=correlative, order_comments=info_request['order_comments'], order_date=info_request['order_date'], order_subtotal=info_request['order_subtotal'], tax_total=info_request['tax_total'], order_total=info_request['order_total'], pay_method=info_request['pay_method'], order_status=info_request['order_status'])
+    order1 = Order(user_id=info_request["user_id"], order_comments=info_request['order_comments'], order_total=info_request['order_total'], pay_method=info_request['pay_method'], order_status= False)
     db.session.add(order1)
+    db.session.flush()
+    order_number = order1.id
     db.session.commit()
-    correlative1 = Correlatives.query.get(id)
-    correlative1.correlative_counter = correlative + 1 
-    db.session.commit()
-    return jsonify(order_number= correlative, mensaje="orden de preparación creada"), 200  
-#----------------------------------------------------------------------------------------------------------------------------------------------------------
-#Create new order detail
-@api.route('/neworderdetail/<int:order_id>', methods=['POST'])
-def newOrderDetail(order_id):
-    info_requests = request.get_json()
-    print(info_requests)
-    for info_request in info_requests:
-        orderDetail = Order_Detail(order_id=info_request['order_id'], product_id=info_request['product_id'], units=info_request['units'], unit_price=info_request['unit_price'], tax_base=info_request['tax_base'], tax_total=info_request['tax_total'], subtotal=info_request['subtotal'])
+    items= info_request['items']
+    for item in items:
+        orderDetail = Order_Detail(order_id = order_number, product_id = items['product_id'], units = items['units'], unit_price = items['unit_price'], subtotal = items['subtotal'])
         db.session.add(orderDetail)
     db.session.commit()
-    return jsonify("detalle de pedido incluido con exito"), 200  
+    return jsonify(mensaje="orden de preparación creada con éxito", order_id = order_number), 200  
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 #Ending a order
 @api.route("/endingorder/<int:id>", methods=["PUT"])
