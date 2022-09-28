@@ -25,9 +25,11 @@ export const Checkout = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         items: [...store.carrito],
-        //metadata:{'client_id': store.user_data.id, 'items': store.carrito.map((item) => (item.id)) }
+        metadata: {
+          client_id: store.user_data.id,
+          order_id: store.order_id,
+        },
       }),
-    
     })
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
