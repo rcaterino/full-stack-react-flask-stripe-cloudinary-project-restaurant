@@ -205,6 +205,7 @@ def createUser():
     query = User.query.filter_by(email = info_request['email'], password = info_request['password']).first()
     user = query.serialize()
     access_token = create_access_token(identity=user['email'])
+    print(user)
     return jsonify(access_token=access_token, user_data = user), 200
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------

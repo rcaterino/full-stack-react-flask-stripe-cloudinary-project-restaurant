@@ -399,6 +399,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await resp.json();
+          console.log(data);
           sessionStorage.setItem("token", data.access_token);
           sessionStorage.setItem("user_data", data.user_data);
           sessionStorage.setItem("user_address", data.user_address);
