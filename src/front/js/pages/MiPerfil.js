@@ -17,7 +17,7 @@ export const Miperfil = () => {
   /* utilizamos useEffect para optener del actions en flux.js el token del usuario con la función getTokenFromSession*/
   useEffect(() => {
     actions.getTokenFromSession();
-    actions.getUserDataFromSession();
+    store.user_data;
   }, []);
 
   const handleClick = () => {
