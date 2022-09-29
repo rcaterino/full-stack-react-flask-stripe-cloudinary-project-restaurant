@@ -30,9 +30,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           },
           body: JSON.stringify({
             user_id: getStore().user_data.id,
-            order_comments: " ",
+            order_comments: "",
             pay_method: "debit",
-            order_total: getStore().total,
             items: [...getStore().carrito],
           }),
         };
@@ -46,7 +45,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await resp.json();
-
+          console.log("respuesta del backend en front")
+          console.log(data)
           setStore({
             order_id: data.order_id,
           });

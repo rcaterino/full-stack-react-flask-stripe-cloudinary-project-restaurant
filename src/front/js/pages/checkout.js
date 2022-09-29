@@ -18,7 +18,9 @@ export const Checkout = () => {
   const [clientSecret, setClientSecret] = useState("");
   const { store, actions } = useContext(Context);
 
+
   useEffect(() => {
+    
     // Create PaymentIntent as soon as the page loads
     fetch(process.env.BACKEND_URL + "/api/create-payment-intent", {
       method: "POST",
@@ -26,8 +28,7 @@ export const Checkout = () => {
       body: JSON.stringify({
         items: [...store.carrito],
         metadata: {
-          client_id: store.user_data.id,
-          order_id: store.order_id,
+          order_id: store.order_id
         },
       }),
     })

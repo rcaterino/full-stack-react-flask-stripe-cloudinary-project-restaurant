@@ -78,7 +78,7 @@ def create_payment():
             setup_future_usage='off_session',
             amount= total,
             currency='eur',
-            #metadata= data['metadata'],
+            metadata= data['metadata'],
             automatic_payment_methods={
                 'enabled': True,
             },
@@ -406,14 +406,21 @@ def getAllOrders():
 @api.route('/neworder', methods=['POST'])
 def newOrder():
     info_request = request.get_json()
-    order1 = Order(user_id=info_request["user_id"], order_comments=info_request['order_comments'], order_total=info_request['order_total'], pay_method=info_request['pay_method'], order_status= False)
+    print("request en newOrder:")
+    print(info_request)
+    total = (calculate_order_amount(info_request['items']))/100
+    print("total en newOrder:")
+    print(total)
+    order1 = Order(user_id=info_request["user_id"], order_comments=info_request['order_comments'], order_total= total, pay_method=info_request['pay_method'], order_status= False)
     db.session.add(order1)
     db.session.flush()
     order_number = order1.id
     db.session.commit()
     items= info_request['items']
+    print("items en newOrder:")
+    print(items)
     for item in items:
-        orderDetail = Order_Detail(order_id = order_number, product_id = items['product_id'], units = items['units'], unit_price = items['unit_price'], subtotal = items['subtotal'])
+        orderDetail = Order_Detail(order_id = order_number, product_id = item['id'], units = 1, unit_price = item['price'], subtotal = item['price'])
         db.session.add(orderDetail)
     db.session.commit()
     return jsonify(mensaje="orden de preparación creada con éxito", order_id = order_number), 200  
