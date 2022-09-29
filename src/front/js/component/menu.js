@@ -25,7 +25,7 @@ export const Menu = () => {
     e.preventDefault();
     let Car = [...store.carrito];
     let Total = store.total + product.price;
-    store.total= Total
+    actions.setTotal(Total);
    
     Car.push({
       name: product.name,
@@ -69,7 +69,7 @@ export const Menu = () => {
                       <h6 className="card-text">${producto.price}</h6>
                     </div>
                   </div>
-                  <div className="col-md-2">
+                  <div className="col-2 mt-5">
                     <button
                       className="cssbuttons-io-button"
                       onClick={(e) => {

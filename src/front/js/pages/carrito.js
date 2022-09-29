@@ -4,7 +4,8 @@ import { Context } from "../store/appContext";
 import "../../styles/carrito.css";
 
 import { Navbar } from "../component/navbar.js";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const Carrito = () => {
   const { store, actions } = useContext(Context);
@@ -13,7 +14,12 @@ export const Carrito = () => {
   useEffect(() => {
     actions.getCarrito();
     store.carrito;
+    actions.getTotal();
   }, []);
+
+  //   useEffect(() =>{
+  //  actions.setTotal();
+  //   }, [store.total])
 
   const deleteClick = (storeId, price) => {
     toast.error("Se ha elminado el producto!", {
@@ -25,12 +31,26 @@ export const Carrito = () => {
       draggable: true,
       progress: undefined,
     });
-    let Total = store.total - price;
-    store.total = Total;
+    let Total;
+    if (store.total - price < 0) {
+      Total = 0
+    } else {
+      Total = store.total - price;
+    }
+    actions.setTotal(Total);
     actions.deleteCarritoItem(storeId);
   };
 
   const deleteCarrito = () => {
+    toast.error("Se ha elminado el Carrito completo", {
+      position: "bottom-left",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+    });
     actions.deleteCarrito();
   };
 
@@ -58,11 +78,11 @@ export const Carrito = () => {
                     return (
                       <>
                         <li className="list-group-item d-flex justify-content-between lh-sm">
-                          <div key={item.id}>
+                          <div key={item.id} className="col">
                             <h6 className="my-0">{item.name}</h6>
                             <small className="text">{item.description}</small>
                           </div>
-                          <span className="text">€ {item.price}</span>
+                          <div className="text col">€ {item.price}</div>
                           <button
                             type="button"
                             className="btn-close"
@@ -80,20 +100,54 @@ export const Carrito = () => {
                   <strong>$ {store.total}</strong>
                 </li>
               </ul>
-              <Link to="/checkout">
-                <div className="d-grid gap-2">
-                  <button
-                    className="btn btn-success btn-lg mt-3 mb-3 "
-                    type="submit"
-                  >
-                    Pagar
-                  </button>
-                </div>
-              </Link>
+              {!store.token ||
+                store.token === null ||
+                store.token === "" ||
+                store.token === undefined ? (
+                <Link to="/login">
+                  <div className="d-grid gap-2">
+                    <button
+                      className="btn btn-success btn-lg mt-3 mb-3 "
+                      type="submit"
+                    >
+                      Continuar al Pedido
+                    </button>
+                  </div>
+                </Link>):(
+                  <Link to="/checkout">
+                  <div className="d-grid gap-2">
+                    <button
+                      className="btn btn-success btn-lg mt-3 mb-3 "
+                      type="submit"
+                    >
+                      Continuar al Pedido
+                    </button>
+                  </div>
+                </Link>
+                )}
             </div>
           </div>
         </div>
       </div>
+      <ToastContainer
+        position="bottom-left"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      {/* <div className="d-grid gap-2">
+                  <button
+                    className="button1 btn-lg mt-3 mb-3 "
+                    onClick={deleteCarrito}
+                  >
+                    Eliminar Carrito
+                  </button>
+    </div> */}
     </>
   );
 };

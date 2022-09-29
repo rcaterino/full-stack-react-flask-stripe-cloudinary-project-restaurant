@@ -4,7 +4,7 @@ import { Navbar } from "../component/navbar";
 export const PaymantComplete = () => {
   return (
     <>
-      <Navbar />
+      <Navbar/>
       <h1>Muchas gracias por su compra</h1>
     </>
   );

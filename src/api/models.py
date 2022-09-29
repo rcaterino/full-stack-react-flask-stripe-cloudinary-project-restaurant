@@ -6,6 +6,22 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship, backref
 
 db = SQLAlchemy()
+
+class userAllergens (db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    allergen_id = db.Column(db.Integer, db.ForeignKey("allergens.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+
+    def __repr__(self):
+        return f'<userAllergens {self.id}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "id_allergen": self.allergen_id,
+            "allergen": Allergens.query.get(self.allergen_id).description,
+            "user_id": User.query.get(self.user_id).id
+        }    
 #---------------------------------------------------------------------------------
 class Restaurant(db.Model):
     id = db.Column(db.Integer, primary_key=True)

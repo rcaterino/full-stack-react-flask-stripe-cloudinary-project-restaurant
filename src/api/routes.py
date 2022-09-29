@@ -78,7 +78,7 @@ def create_payment():
             setup_future_usage='off_session',
             amount= total,
             currency='eur',
-            metadata= data['metadata'],
+            #metadata= data['metadata'],
             automatic_payment_methods={
                 'enabled': True,
             },
@@ -196,6 +196,7 @@ def createUser():
     query = User.query.filter_by(email = info_request['email'], password = info_request['password']).first()
     user = query.serialize()
     access_token = create_access_token(identity=user['email'])
+    print(user)
     return jsonify(access_token=access_token, user_data = user), 200
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -386,14 +387,13 @@ def getAllAllergenUser():
 #Create new allergens for user
 @api.route("/newuserallergen", methods=["POST"])
 def postUserAllergen():
-    info_requests = request.get_json()
-    for info_request in info_requests:
-        newAllergensUser = Allergens_Users(user_id=info_request["user_id"], allergen_id=info_request['allergen_id'])
-        db.session.add(newAllergensUser)
+    info_request = request.get_json() 
+    newAllergen = Allergens_Users(user_id= info_request["user_id"], allergen_id = info_request["allergen_id "])
+    db.session.add(newAllergen)
     db.session.commit()
-    allergen_user_query = Allergens_Users.query.get(info_request["user_id"])
-    all_allergen_user= list(map(lambda x: x.serialize(), allergen_user_query))
-    return jsonify(all_allergen_user), 200
+    query = User.query.filter_by(id = info_request['user_id']).first()
+    user = query.serialize()
+    return jsonify(user_data = user), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 # get all orders
 @api.route('/allorders', methods=['GET'])
