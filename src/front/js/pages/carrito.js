@@ -17,9 +17,9 @@ export const Carrito = () => {
     actions.getTotal();
   }, []);
 
-//   useEffect(() =>{
-//  actions.setTotal();
-//   }, [store.total])
+  //   useEffect(() =>{
+  //  actions.setTotal();
+  //   }, [store.total])
 
   const deleteClick = (storeId, price) => {
     toast.error("Se ha elminado el producto!", {
@@ -32,10 +32,10 @@ export const Carrito = () => {
       progress: undefined,
     });
     let Total;
-    if(store.total-price<0){
-       Total= 0
-    }else{
-       Total = store.total - price;
+    if (store.total - price < 0) {
+      Total = 0
+    } else {
+      Total = store.total - price;
     }
     actions.setTotal(Total);
     actions.deleteCarritoItem(storeId);
@@ -100,20 +100,34 @@ export const Carrito = () => {
                   <strong>$ {store.total}</strong>
                 </li>
               </ul>
-              <Link to="/checkout">
-                <div className="d-grid gap-2">
-                  <button
-                    className="btn btn-success btn-lg mt-3 mb-3 "
-                    type="submit"
-                  >
-                    Pagar
-                  </button>
-                </div>
-              </Link>
+              {!store.token ||
+                store.token === null ||
+                store.token === "" ||
+                store.token === undefined ? (
+                <Link to="/login">
+                  <div className="d-grid gap-2">
+                    <button
+                      className="btn btn-success btn-lg mt-3 mb-3 "
+                      type="submit"
+                    >
+                      Continuar al Pedido
+                    </button>
+                  </div>
+                </Link>):(
+                  <Link to="/checkout">
+                  <div className="d-grid gap-2">
+                    <button
+                      className="btn btn-success btn-lg mt-3 mb-3 "
+                      type="submit"
+                    >
+                      Continuar al Pedido
+                    </button>
+                  </div>
+                </Link>
+                )}
             </div>
           </div>
         </div>
-        
       </div>
       <ToastContainer
         position="bottom-left"
@@ -126,7 +140,7 @@ export const Carrito = () => {
         draggable
         pauseOnHover
       />
-     {/* <div className="d-grid gap-2">
+      {/* <div className="d-grid gap-2">
                   <button
                     className="button1 btn-lg mt-3 mb-3 "
                     onClick={deleteCarrito}

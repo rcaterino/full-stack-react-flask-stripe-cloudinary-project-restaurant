@@ -17,6 +17,17 @@ const getState = ({ getStore, getActions, setStore }) => {
       imageUrl: [],
     },
     actions: {
+      setUser: (nombre, apellidos, phone, email) => {
+       let newUser={
+          "nombre": nombre,
+          "apellidos": apellidos,
+          "phone": phone,
+          "email": email
+        }
+        setStore({ user_data: newUser});
+        JSON.stringify(getStore().user_data);
+        console.log(getStore().user_data);
+      },
       getAllAllergens: () => {
         fetch(process.env.BACKEND_URL + "/api/allergens")
           .then(res => res.json()
