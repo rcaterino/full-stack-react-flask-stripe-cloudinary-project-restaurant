@@ -1,5 +1,3 @@
-import { v4 as uuidv4 } from "uuid";
-
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
@@ -15,6 +13,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       total: 0,
       alergenos: [],
       imageUrl: [],
+      order_id: null,
     },
     actions: {
       setUser: (nombre, apellidos, phone, email) => {
@@ -102,6 +101,42 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ imageUrl: Url });
         console.log("url de imagen en store:");
         console.log(getStore().imageUrl);
+      },
+      /**Función para registrar o dar de alta en sistema un usuario (cliente) nuevo */
+      createOrder: async () => {
+        const opts = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            user_id: getStore().user_data.id,
+            order_comments: "",
+            pay_method: "debit",
+            items: [...getStore().carrito],
+          }),
+        };
+        try {
+          let resp = await fetch(
+            process.env.BACKEND_URL + "/api/neworder",
+            opts
+          );
+          if (resp.status !== 200) {
+            new Error("there has been an error");
+            return false;
+          }
+          const data = await resp.json();
+          console.log("respuesta del backend en front")
+          console.log(data)
+          setStore({
+            order_id: data.order_id,
+          });
+          console.log("orden de preparación numero");
+          console.log(getStore().order_id);
+          return true;
+        } catch (error) {
+          console.error(error);
+        }
       },
       createProduct: async (name, description, price, category_id) => {
         const opts = {
