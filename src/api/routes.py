@@ -78,7 +78,7 @@ def create_payment():
             setup_future_usage='off_session',
             amount= total,
             currency='eur',
-            #metadata= data['metadata'],
+            metadata= data['metadata'],
             automatic_payment_methods={
                 'enabled': True,
             },
