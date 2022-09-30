@@ -7,21 +7,6 @@ from sqlalchemy.orm import relationship, backref
 
 db = SQLAlchemy()
 
-class userAllergens (db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    allergen_id = db.Column(db.Integer, db.ForeignKey("allergens.id"))
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-
-    def __repr__(self):
-        return f'<userAllergens {self.id}>'
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "id_allergen": self.allergen_id,
-            "allergen": Allergens.query.get(self.allergen_id).description,
-            "user_id": User.query.get(self.user_id).id
-        }    
 #---------------------------------------------------------------------------------
 class Restaurant(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -201,8 +186,17 @@ class Allergens_Users(db.Model):
 class Pay(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    date_pay = db.Column(db.Date, unique=False, nullable=False)
-    amount = db.Column(db.Integer, unique=False, nullable=False)
+    order_id = db.Column(db.Integer, db.ForeignKey('order.id'), nullable=False)
+    date_pay = db.Column(db.DateTime, default= datetime.datetime.utcnow)
+    amount = db.Column(db.Float, unique=False)
+    #paid = db.Column(db.Boolean, unique=False, nullable=False)
+    status = db.Column(db.Boolean, unique=False, nullable=False)
+    payment_method= db.Column(db.String(50), unique=False, nullable=True)
+    brand = db.Column(db.String(50), unique=False, nullable=True)
+    last4 = db.Column(db.String(50), unique=False, nullable=True)
+
+
+    
 
     def __repr__(self):
         return f'<Pay {self.amount}>'
@@ -224,6 +218,7 @@ class Order(db.Model):
     order_status =db.Column(db.Boolean, unique=False, nullable=False)
     user_relation = db.relationship('User', backref='order, Lazy=True')
     order_detail_relation = db.relationship("Order_Detail", backref='order', lazy=True)
+    payment = db.relationship('Pay', backref='order', lazy=True)
     
     def __repr__(self):
         return f'<Order {self.id}>'
@@ -237,7 +232,8 @@ class Order(db.Model):
             "order_date": datetime.date.isoformat(self.order_date),
             "order_total": self.order_total,
             "order_status": self.order_status,
-            "order_detail": list(map(lambda x: x.serialize(), self.order_detail_relation))
+            "order_detail": list(map(lambda x: x.serialize(), self.order_detail_relation)),
+            "payment_details": list(map(lambda x: x.serialize(), self.payment))
         }
 #---------------------------------------------------------------------------------
 class Order_Detail(db.Model):

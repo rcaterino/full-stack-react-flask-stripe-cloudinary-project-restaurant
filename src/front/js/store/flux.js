@@ -17,24 +17,24 @@ const getState = ({ getStore, getActions, setStore }) => {
     },
     actions: {
       setUser: (nombre, apellidos, phone, email) => {
-       let newUser={
-          "nombre": nombre,
-          "apellidos": apellidos,
-          "phone": phone,
-          "email": email
-        }
-        setStore({ user_data: newUser});
+        let newUser = {
+          nombre: nombre,
+          apellidos: apellidos,
+          phone: phone,
+          email: email,
+        };
+        setStore({ user_data: newUser });
         JSON.stringify(getStore().user_data);
         console.log(getStore().user_data);
       },
       getAllAllergens: () => {
         fetch(process.env.BACKEND_URL + "/api/allergens")
-          .then(res => res.json()
-          )
-          .then(allergens => {
-            setStore({ alergenos: allergens })
-          }).catch((error) => {
-            console.error('Error:', error);
+          .then((res) => res.json())
+          .then((allergens) => {
+            setStore({ alergenos: allergens });
+          })
+          .catch((error) => {
+            console.error("Error:", error);
           });
       },
 
@@ -78,8 +78,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       deleteUserAllergens: async (id) => {
-        console.log("alergeno en flux")
-        console.log(id)
+        console.log("alergeno en flux");
+        console.log(id);
         const opts = {
           method: "DELETE",
         };
@@ -126,8 +126,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await resp.json();
-          console.log("respuesta del backend en front")
-          console.log(data)
+          console.log("respuesta del backend en front");
+          console.log(data);
           setStore({
             order_id: data.order_id,
           });
@@ -300,22 +300,27 @@ const getState = ({ getStore, getActions, setStore }) => {
         localStorage.setItem("carritoStr", carritoG);
       },
 
-      setTotal:(totalActualizado) => {
+      setTotal: (totalActualizado) => {
         // let totalActualizado = getStore().total
-        setStore({total: totalActualizado});
-        localStorage.setItem("totalStr", totalActualizado)
+        setStore({ total: totalActualizado });
+        localStorage.setItem("totalStr", totalActualizado);
       },
 
-       getTotal:() => {
+      getTotal: () => {
         let LocalTotal = localStorage.getItem("totalStr");
-        console.log(LocalTotal)
-        
-        if (LocalTotal && LocalTotal !== "" && LocalTotal != undefined && LocalTotal !== "undefined") {
-          LocalTotal = JSON.parse(LocalTotal)
+        console.log(LocalTotal);
+
+        if (
+          LocalTotal &&
+          LocalTotal !== "" &&
+          LocalTotal != undefined &&
+          LocalTotal !== "undefined"
+        ) {
+          LocalTotal = JSON.parse(LocalTotal);
 
           setStore({ total: LocalTotal });
         }
-       },
+      },
 
       deleteCarritoItem: (storeId) => {
         let carrito = getStore().carrito;
@@ -379,13 +384,13 @@ const getState = ({ getStore, getActions, setStore }) => {
           const data = await resp.json();
           sessionStorage.setItem("token", data.access_token);
           sessionStorage.setItem("user_data", data.user_data);
-          sessionStorage.setItem("user_address", data.user_address);
-          sessionStorage.setItem("user_allergens", data.user_allergens);
+          sessionStorage.setItem("user_address", data.user_data["address"]);
+          sessionStorage.setItem("user_allergens", data.user_data["allergen"]);
           setStore({
             token: data.access_token,
             user_data: data.user_data,
-            user_address: data.user_data.address,
-            user_allergens: data.user_data.allergens,
+            user_address: data.user_data["address"],
+            user_allergens: data.user_data["allergen"],
           });
           return true;
         } catch (error) {
@@ -479,8 +484,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           let resp = await fetch(
             process.env.BACKEND_URL +
-            "/api/edituser/" +
-            getStore().user_data.id,
+              "/api/edituser/" +
+              getStore().user_data.id,
             opts
           );
           if (resp.status !== 200) {
