@@ -28,7 +28,8 @@ export const Checkout = () => {
       body: JSON.stringify({
         items: [...store.carrito],
         metadata: {
-          order_id: store.order_id
+          order_id: store.order_id,
+          user_id: store.user_data['id']
         },
       }),
     })

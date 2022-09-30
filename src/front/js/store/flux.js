@@ -382,17 +382,15 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await resp.json();
-          console.log("user data para store:");
-          console.log(data);
           sessionStorage.setItem("token", data.access_token);
           sessionStorage.setItem("user_data", data.user_data);
-          sessionStorage.setItem("user_address", data.user_address);
-          sessionStorage.setItem("user_allergens", data.user_allergens);
+          sessionStorage.setItem("user_address", data.user_data["address"]);
+          sessionStorage.setItem("user_allergens", data.user_data["allergen"]);
           setStore({
             token: data.access_token,
             user_data: data.user_data,
-            user_address: data.address,
-            user_allergens: data.allergens,
+            user_address: data.user_data["address"],
+            user_allergens: data.user_data["allergen"],
           });
           return true;
         } catch (error) {

@@ -128,25 +128,26 @@ def webhook():
       charge = event['data']['object']
       print("recepcion del webhook:")
       print(charge)
-      order = charge['metadata']
-      print("metadata recibida")
-      print(order)
-      payment_method = charge['payment_method_details']
-      pay_type = payment_method['type']
-      last4 = payment_method['card']['last4']
-      brand = payment_method['card']['brand']
-      print("mayment_method:")
-      print(pay_type)
-      print("last4:")
-      print(last4)
+      print("user_id:")
+      print(charge['metadata']['user_id'])
+      print("order_id:")
+      print(charge['metadata']['order_id'])
+      print("payment_method:")
+      print(charge['payment_method_details']['type'])
       print("brand:")
-      print(brand)
-      paid = charge['paid']
-      print("paid:")
-      print (paid)
-      status = charge['status']
+      print(charge['payment_method_details']['card']['brand'])
+      print("last4:")
+      print(charge['payment_method_details']['card']['last4'])
       print("status:")
-      print(status)
+      print(charge['status'])
+      print("paid:")
+      print(charge['paid']) 
+      print("amount:")
+      total = (charge['amount'])/100
+      print(total)
+      newPay = Pay( user_id=charge['metadata']['user_id'], order_id =charge['metadata']['order_id'], payment_method= charge['payment_method_details']['type'], brand = charge['payment_method_details']['card']['brand'], last4 = charge['payment_method_details']['card']['last4'], status = charge['paid'], amount = total)
+      db.session.add(newPay)
+      db.session.commit()
     elif event['type'] == 'charge.updated':
       charge = event['data']['object']
     elif event['type'] == 'charge.dispute.closed':
@@ -271,7 +272,6 @@ def getoneProduct(id):
 @api.route('/newproduct', methods=['POST'])
 def newProduct():
     info_request = request.get_json()
-    
     product = Product(name=info_request["name"], description=info_request["description"],price=info_request["price"], active=info_request["active"], category_id=info_request["category_id"], image_url=info_request["image_url"])
     db.session.add(product)
     db.session.commit()
