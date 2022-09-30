@@ -128,6 +128,25 @@ def webhook():
       charge = event['data']['object']
       print("recepcion del webhook:")
       print(charge)
+      order = charge['metadata']
+      print("metadata recibida")
+      print(order)
+      payment_method = charge['payment_method_details']
+      pay_type = payment_method['type']
+      last4 = payment_method['card']['last4']
+      brand = payment_method['card']['brand']
+      print("mayment_method:")
+      print(pay_type)
+      print("last4:")
+      print(last4)
+      print("brand:")
+      print(brand)
+      paid = charge['paid']
+      print("paid:")
+      print (paid)
+      status = charge['status']
+      print("status:")
+      print(status)
     elif event['type'] == 'charge.updated':
       charge = event['data']['object']
     elif event['type'] == 'charge.dispute.closed':
@@ -159,6 +178,8 @@ def create_user_token():
     query = User.query.filter_by(email = info_request['email'], password = info_request['password']).first()
     user = query.serialize()
     access_token = create_access_token(identity=user['email'])
+    print("user data:")
+    print(user)
     return jsonify(access_token=access_token, user_data = user), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 # #get only one restaurante

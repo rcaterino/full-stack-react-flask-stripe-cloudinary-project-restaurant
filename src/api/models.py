@@ -201,8 +201,17 @@ class Allergens_Users(db.Model):
 class Pay(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    date_pay = db.Column(db.Date, unique=False, nullable=False)
+    order_id = db.Column(db.Integer, db.ForeignKey('order.id'), nullable=False)
+    date_pay = db.Column(db.DateTime, default= datetime.datetime.utcnow)
     amount = db.Column(db.Integer, unique=False, nullable=False)
+    paid = db.Column(db.String(50), unique=False, nullable=True)
+    status = db.Column(db.String(50), unique=False, nullable=True)
+    payment_method= db.Column(db.String(50), unique=False, nullable=True)
+    brand = db.Column(db.String(50), unique=False, nullable=True)
+    last4 = db.Column(db.String(50), unique=False, nullable=True)
+
+
+    
 
     def __repr__(self):
         return f'<Pay {self.amount}>'
@@ -224,6 +233,7 @@ class Order(db.Model):
     order_status =db.Column(db.Boolean, unique=False, nullable=False)
     user_relation = db.relationship('User', backref='order, Lazy=True')
     order_detail_relation = db.relationship("Order_Detail", backref='order', lazy=True)
+    payment = db.relationship('Pay', backref='order', lazy=True)
     
     def __repr__(self):
         return f'<Order {self.id}>'

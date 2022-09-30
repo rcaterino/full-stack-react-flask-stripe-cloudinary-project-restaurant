@@ -111,7 +111,7 @@ export const Carrito = () => {
                       className="btn btn-success btn-lg mt-3 mb-3 "
                       type="submit"
                     >
-                      Continuar al Pedido
+                      Continuar al pago
                     </button>
                   </div>
                 </Link>
@@ -122,7 +122,7 @@ export const Carrito = () => {
                       className="btn btn-success btn-lg mt-3 mb-3 "
                       type="submit"
                     >
-                      Continuar al Pedido
+                      Continuar al pago
                     </button>
                   </div>
                 </Link>
