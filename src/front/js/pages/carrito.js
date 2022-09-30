@@ -15,6 +15,7 @@ export const Carrito = () => {
     actions.getCarrito();
     store.carrito;
     actions.getTotal();
+    actions.createOrder();
   }, []);
 
   //   useEffect(() =>{
@@ -33,7 +34,7 @@ export const Carrito = () => {
     });
     let Total;
     if (store.total - price < 0) {
-      Total = 0
+      Total = 0;
     } else {
       Total = store.total - price;
     }
@@ -101,9 +102,9 @@ export const Carrito = () => {
                 </li>
               </ul>
               {!store.token ||
-                store.token === null ||
-                store.token === "" ||
-                store.token === undefined ? (
+              store.token === null ||
+              store.token === "" ||
+              store.token === undefined ? (
                 <Link to="/login">
                   <div className="d-grid gap-2">
                     <button
@@ -113,8 +114,9 @@ export const Carrito = () => {
                       Continuar al Pedido
                     </button>
                   </div>
-                </Link>):(
-                  <Link to="/checkout">
+                </Link>
+              ) : (
+                <Link to="/checkout">
                   <div className="d-grid gap-2">
                     <button
                       className="btn btn-success btn-lg mt-3 mb-3 "
@@ -124,7 +126,7 @@ export const Carrito = () => {
                     </button>
                   </div>
                 </Link>
-                )}
+              )}
             </div>
           </div>
         </div>
