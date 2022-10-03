@@ -11,6 +11,10 @@ export const Carrito = () => {
   const { store, actions } = useContext(Context);
   let navigate = useNavigate();
 
+  const handleClick = () =>{
+    actions.createOrder();
+  }
+
   useEffect(() => {
     actions.getCarrito();
     store.carrito;
@@ -114,9 +118,16 @@ export const Carrito = () => {
                       Continuar al pago
                     </button>
                   </div>
-                </Link>
-              ) : (
-                <Link to="/checkout">
+                </Link>) : (
+                <div class="accordion accordion-flush" id="accordionFlushExample">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="flush-headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne" onClick={handleClick}>
+                      Dar por finalizado el pedido
+                    </button>
+                  </h2>
+                  <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                  <Link to="/checkout">
                   <div className="d-grid gap-2">
                     <button
                       className="btn btn-success btn-lg mt-3 mb-3 "
@@ -126,6 +137,9 @@ export const Carrito = () => {
                     </button>
                   </div>
                 </Link>
+                  </div>
+                </div>
+                </div>
               )}
             </div>
           </div>

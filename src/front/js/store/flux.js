@@ -383,7 +383,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
           const data = await resp.json();
           sessionStorage.setItem("token", data.access_token);
-          sessionStorage.setItem("user_data", data.user_data);
+          sessionStorage.setItem("user_data", JSON.stringify(data.user_data));
           sessionStorage.setItem("user_address", data.user_data["address"]);
           sessionStorage.setItem("user_allergens", data.user_data["allergen"]);
           setStore({
@@ -392,6 +392,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             user_address: data.user_data["address"],
             user_allergens: data.user_data["allergen"],
           });
+          console.log(JSON.stringify(getStore().user_data))
           return true;
         } catch (error) {
           console.error(error);
