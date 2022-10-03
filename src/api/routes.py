@@ -427,19 +427,13 @@ def getAllOrders():
 @api.route('/neworder', methods=['POST'])
 def newOrder():
     info_request = request.get_json()
-    print("request en newOrder:")
-    print(info_request)
     total = (calculate_order_amount(info_request['items']))/100
-    print("total en newOrder:")
-    print(total)
     order1 = Order(user_id=info_request["user_id"], order_comments=info_request['order_comments'], order_total= total, pay_method=info_request['pay_method'], order_status= False)
     db.session.add(order1)
     db.session.flush()
     order_number = order1.id
     db.session.commit()
     items= info_request['items']
-    print("items en newOrder:")
-    print(items)
     for item in items:
         orderDetail = Order_Detail(order_id = order_number, product_id = item['id'], units = 1, unit_price = item['price'], subtotal = item['price'])
         db.session.add(orderDetail)
@@ -450,9 +444,7 @@ def newOrder():
 @api.route("/endingorder/<int:id>", methods=["PUT"])
 def putEndOrder(id):
     info_request = request.get_json()
-    print(info_request)
     orderToEnd = Order.query.get(id)
-    print(orderToEnd)
     if orderToEnd is None:
         raise APIException('Order not found', status_code=404)
     if "order_status" in info_request:
@@ -461,6 +453,12 @@ def putEndOrder(id):
     orders_query = Order.query.filter_by(order_status=False)
     all_orders= list(map(lambda x: x.serialize(), orders_query))
     return jsonify(orders=all_orders), 200
+    #----------------------------------------------------------------------------------------------------------------------------------------------------------
+#Geting order detail by client id
+@api.route('/orderinprocess/<int:id>', methods=["GET"])
+def getOrderInProcess(id):
+    order_query = Order.query.get(id)
+    return jsonify(order_query.serialize()),200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():

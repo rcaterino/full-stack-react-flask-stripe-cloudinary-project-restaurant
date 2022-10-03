@@ -29,7 +29,7 @@ const injectContext = (PassedComponent) => {
        * store, instead use actions, like this:
        **/
 
-      let carrito2 = JSON.parse(localStorage.getItem("carritoStr"))
+      let carrito2 = JSON.parse(localStorage.getItem("carritoStr"));
       state.store.carrito = carrito2 ? carrito2 : [];
       state.actions.getTokenFromSession(); // <---- calling this function from the flux.js actions
       state.actions.getOrder();

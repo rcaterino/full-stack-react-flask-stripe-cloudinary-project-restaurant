@@ -16,9 +16,18 @@ export const Miperfil = () => {
 
   /* utilizamos useEffect para optener del actions en flux.js el token del usuario con la función getTokenFromSession*/
   useEffect(() => {
+    actions.getUserDataFromSession();
     store.user_data;
   }, []);
 
+  console.log("user data al finalizar compra")
+  console.log(store.user_data)
+  console.log("user address al finalizar compra")
+  console.log(store.user_address)
+  console.log("user allergens al finalizar compra")
+  console.log(store.user_allergens)
+  console.log("order id")
+  
   const handleClick = () => {
     actions.putuser(nombre, apellidos, birthday, phone, email);
   };
@@ -105,11 +114,7 @@ export const Miperfil = () => {
           </div>
         </div>
         <div className="d-grid gap-2">
-          <button
-            type="submit"
-            className="button1"
-            onClick={handleClick}
-          >
+          <button type="submit" className="button1" onClick={handleClick}>
             Guardar
           </button>
         </div>
