@@ -19,6 +19,7 @@ export const Miperfil = () => {
     store.user_data;
   }, []);
 
+  
   const handleClick = () => {
     actions.putuser(nombre, apellidos, birthday, phone, email);
   };
@@ -105,11 +106,7 @@ export const Miperfil = () => {
           </div>
         </div>
         <div className="d-grid gap-2">
-          <button
-            type="submit"
-            className="button1"
-            onClick={handleClick}
-          >
+          <button type="submit" className="button1" onClick={handleClick}>
             Guardar
           </button>
         </div>
