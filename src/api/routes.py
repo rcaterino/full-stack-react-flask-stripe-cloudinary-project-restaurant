@@ -453,7 +453,7 @@ def putEndOrder(id):
     orders_query = Order.query.filter_by(order_status=False)
     all_orders= list(map(lambda x: x.serialize(), orders_query))
     return jsonify(orders=all_orders), 200
-    #----------------------------------------------------------------------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
 #Geting order detail by client id
 @api.route('/orderinprocess/<int:id>', methods=["GET"])
 def getOrderInProcess(id):
