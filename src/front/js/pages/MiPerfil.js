@@ -7,19 +7,20 @@ import { Navbar } from "../component/navbar";
 
 export const Miperfil = () => {
   const { store, actions } = useContext(Context);
-  const [nombre, setNombre] = useState(store.user_data?.name);
-  const [apellidos, setApellidos] = useState(store.user_data?.lastname);
-  const [birthday, setBirthday] = useState(store.user_data?.birthday);
-  const [phone, setPhone] = useState(store.user_data?.phone);
-  const [email, setEmail] = useState(store.user_data?.email);
+  const [nombre, setNombre] = useState(store.user_data.name);
+  const [apellidos, setApellidos] = useState(store.user_data.lastname);
+  const [birthday, setBirthday] = useState(store.user_data.birthday);
+  const [phone, setPhone] = useState(store.user_data.phone);
+  const [email, setEmail] = useState(store.user_data.email);
   let navigate = useNavigate();
 
   /* utilizamos useEffect para optener del actions en flux.js el token del usuario con la función getTokenFromSession*/
   useEffect(() => {
     store.user_data;
+    console.log("user data consultado desde mi perfil");
+    console.log(store.user_data);
   }, []);
 
-  
   const handleClick = () => {
     actions.putuser(nombre, apellidos, birthday, phone, email);
   };
