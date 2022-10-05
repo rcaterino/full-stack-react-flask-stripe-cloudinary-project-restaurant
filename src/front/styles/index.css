@@ -41,7 +41,7 @@ footer {
 /* ------------------------------------------------------------------------------------------------------------------------------*/
 .navbar{
   background-color: darkorange;
-  font-family: 'Rubik Moonrocks', cursive;
+  /* font-family: 'Rubik Moonrocks', cursive; */
   font-size: 25px;
 }
 
