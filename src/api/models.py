@@ -189,23 +189,23 @@ class Pay(db.Model):
     order_id = db.Column(db.Integer, db.ForeignKey('order.id'), nullable=False)
     date_pay = db.Column(db.DateTime, default= datetime.datetime.utcnow)
     amount = db.Column(db.Float, unique=False)
-    #paid = db.Column(db.Boolean, unique=False, nullable=False)
     status = db.Column(db.Boolean, unique=False, nullable=False)
     payment_method= db.Column(db.String(50), unique=False, nullable=True)
     brand = db.Column(db.String(50), unique=False, nullable=True)
     last4 = db.Column(db.String(50), unique=False, nullable=True)
 
-
-    
-
     def __repr__(self):
-        return f'<Pay {self.amount}>'
+        return f'<Pay {self.id}>'
 
     def serialize(self):
         return {
-            "cliente_id": self.user_id,
-            "amount": self.amount,
+            #"user_id": self.user_id,
             "date_pay": datetime.date.isoformat(self.date_pay),
+            "amount": self.amount,
+            "status": self.status,
+            "payment_method": self.payment_method,
+            "brand": self.brand,
+            "last4": self.last4
         }
 #---------------------------------------------------------------------------------
 class Order(db.Model):
@@ -250,7 +250,7 @@ class Order_Detail(db.Model):
     
     def serialize(self):
         return {
-            "order_id": self.order_id,
+            #"order_id": self.order_id,
             "product_name": Product.query.get(self.product_id).name,
             "units": self.units,
             "unit_price": self.unit_price,

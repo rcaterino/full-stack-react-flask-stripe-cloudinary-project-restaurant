@@ -14,6 +14,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       alergenos: [],
       imageUrl: [],
       order_id: null,
+      order_detail: [],
     },
     actions: {
       setUser: (nombre, apellidos, phone, email) => {
@@ -39,9 +40,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       addAllergenToUser: async (allergen_id, user_id) => {
-        console.log("soy flux");
-        console.log(allergen_id);
-        console.log(user_id);
         const opts = {
           method: "POST",
           headers: {
@@ -78,8 +76,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       deleteUserAllergens: async (id) => {
-        console.log("alergeno en flux");
-        console.log(id);
         const opts = {
           method: "DELETE",
         };
@@ -99,8 +95,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       setUrlImge: (Url) => {
         setStore({ imageUrl: Url });
-        console.log("url de imagen en store:");
-        console.log(getStore().imageUrl);
       },
       /**Función para registrar o dar de alta en sistema un usuario (cliente) nuevo */
       createOrder: async () => {
@@ -126,13 +120,10 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await resp.json();
-          console.log("respuesta del backend en front");
-          console.log(data);
           setStore({
             order_id: data.order_id,
           });
-          console.log("orden de preparación numero");
-          console.log(getStore().order_id);
+          localStorage.setItem("order_id", data.order_id);
           return true;
         } catch (error) {
           console.error(error);
@@ -158,14 +149,11 @@ const getState = ({ getStore, getActions, setStore }) => {
             process.env.BACKEND_URL + "/api/newproduct",
             opts
           );
-          console.log("data en request antes de salir:");
-          console.log(opts.body);
           if (resp.status !== 200) {
             new Error("there has been an error");
             return false;
           }
           const data = await resp.json();
-          console.log(data);
           setStore({ categories: categories });
           return true;
         } catch (error) {
@@ -226,8 +214,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       deleteAllergen: async (id) => {
-        console.log("id del alergeno a eliminar:");
-        console.log(id);
         const opts = {
           method: "DELETE",
         };
@@ -308,7 +294,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       getTotal: () => {
         let LocalTotal = localStorage.getItem("totalStr");
-        console.log(LocalTotal);
 
         if (
           LocalTotal &&
@@ -335,6 +320,10 @@ const getState = ({ getStore, getActions, setStore }) => {
       deleteCarrito: () => {
         localStorage.removeItem("carritoStr");
         setStore({ carrito: [] });
+        localStorage.removeItem("order_id");
+        setStore({ order_id: null });
+        localStorage.removeItem("totalStr");
+        setStore({ total: 0 });
       },
 
       getCarrito: () => {
@@ -352,11 +341,23 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       getUserDataFromSession: () => {
-        const user_data = sessionStorage.getItem("user_data");
+        console.log("soy get usar data from session:")
+        const user_data = JSON.parse(sessionStorage.getItem("user_data"));
+        console.log(user_data)
+        const user_address = sessionStorage.getItem("user_address");
+        console.log(user_address)
+        const user_allergens = sessionStorage.getItem("user_allergens");
+        console.log(user_allergens)
+        const order_id = localStorage.getItem("order_id");
         if (user_data && user_data !== "" && user_data !== undefined)
           setStore({
             user_data: user_data,
+            user_address: user_address,
+            user_allergens: user_allergens,
+            order_id: order_id,
           });
+          console.log("user data actualizado en store")
+          console.log(getStore().user_data)
       },
 
       /**Función para iniciar sesión del usuario */
@@ -384,15 +385,20 @@ const getState = ({ getStore, getActions, setStore }) => {
           const data = await resp.json();
           sessionStorage.setItem("token", data.access_token);
           sessionStorage.setItem("user_data", JSON.stringify(data.user_data));
-          sessionStorage.setItem("user_address", data.user_data["address"]);
-          sessionStorage.setItem("user_allergens", data.user_data["allergen"]);
+          sessionStorage.setItem(
+            "user_address",
+            JSON.stringify(data.user_data["address"])
+          );
+          sessionStorage.setItem(
+            "user_allergens",
+            JSON.stringify(data.user_data["allergen"])
+          );
           setStore({
             token: data.access_token,
             user_data: data.user_data,
             user_address: data.user_data["address"],
             user_allergens: data.user_data["allergen"],
           });
-          console.log(JSON.stringify(getStore().user_data))
           return true;
         } catch (error) {
           console.error(error);
@@ -451,7 +457,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await resp.json();
-          console.log(data);
           sessionStorage.setItem("token", data.access_token);
           sessionStorage.setItem("user_data", data.user_data);
           sessionStorage.setItem("user_address", data.user_address);
@@ -530,13 +535,38 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error(error);
         }
       },
+      /**Función para optener los datos del pedido en curso para el cliente */
+      getClientOrders: async (orderId) => {
+        const opts = {
+          method: "GET",
+        };
+        try {
+          const resp = await fetch(
+            process.env.BACKEND_URL + "/api/orderinprocess/" + orderId,
+            opts
+          );
+          if (resp.status !== 200) {
+            new Error("error");
+            alert("no existen ordenes de preparación en proceso");
+            return false;
+          }
+          const data = await resp.json();
+          console.log("data recibida del pedido en curso:")
+          console.log(data)
+          setStore({
+            order_detail: data,
+          });
+          console.log(getStore().order_detail);
+          return true;
+        } catch (error) {
+          console.error(error);
+        }
+      },
+
       /**Función para optener del backend la lista de productos y categorías de la carta */
       getCarta: async () => {
         const opts = {
           method: "GET",
-          // headers: {
-          //   "Content-Type": "application/json",
-          // },
         };
         try {
           const resp = await fetch(
