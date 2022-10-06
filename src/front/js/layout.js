@@ -25,8 +25,7 @@ import { Correlativos } from "./pages/restaurant/correlativos";
 import injectContext from "./store/appContext";
 import { Checkout } from "./pages/checkout";
 import { Allergens } from "./component/alergenos";
-
-
+import { HomeEasyRest } from "./pages/easyrestaurant/home";
 
 //create your first component
 const Layout = () => {
@@ -39,15 +38,18 @@ const Layout = () => {
       <BrowserRouter basename={basename}>
         <ScrollToTop>
           <Routes>
+            // FUNCIONALIDAD CLIENTE EASY RESTAURANT
             <Route element={<Home />} path="/" />
             <Route element={<Login />} path="/login" />
             <Route element={<Register />} path="/register" />
             <Route element={<Miperfil />} path="/miperfil" />
             <Route element={<QuienesSomos />} path="/quienessomos" />
             <Route element={<Carrito />} path="/Carrito" />
-            <Route element={<Checkout />} path='/checkout' />
-            <Route element={<Allergens />} path='/alergenos' />
+            <Route element={<Checkout />} path="/checkout" />
+            <Route element={<Allergens />} path="/alergenos" />
             <Route element={<PaymantComplete />} path="/pagocompletado" />
+            // EASY RESTAURANT
+            <Route element={<HomeEasyRest />} path="/home" />
             <Route element={<EasyRestaurant />} path="/easyrestaurant/admin" />
             <Route element={<Cocina />} path="/easyrestaurant/cocina" />
             <Route element={<Alergenos />} path="/easyrestaurant/alergenos" />
@@ -63,7 +65,6 @@ const Layout = () => {
               path="/easyrestaurant/correlativos"
             />
             <Route element={<SubirImages />} path="/Images" />
-
             <Route element={<h1>Not found!</h1>} />
           </Routes>
           <a
@@ -73,7 +74,6 @@ const Layout = () => {
           >
             <i className="fa fa-whatsapp my-float"></i>
           </a>
-          <Footer />
         </ScrollToTop>
       </BrowserRouter>
     </div>

@@ -6,6 +6,7 @@ import { Elements } from "@stripe/react-stripe-js";
 
 import CheckOutForm from "../component/checkoutform.js";
 import { Navbar } from "../component/navbar";
+import { Footer } from "../component/footer";
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
@@ -18,9 +19,7 @@ export const Checkout = () => {
   const [clientSecret, setClientSecret] = useState("");
   const { store, actions } = useContext(Context);
 
-
   useEffect(() => {
-    
     // Create PaymentIntent as soon as the page loads
     fetch(process.env.BACKEND_URL + "/api/create-payment-intent", {
       method: "POST",
@@ -29,7 +28,7 @@ export const Checkout = () => {
         items: [...store.carrito],
         metadata: {
           order_id: store.order_id,
-          user_id: store.user_data['id']
+          user_id: store.user_data["id"],
         },
       }),
     })
@@ -59,6 +58,7 @@ export const Checkout = () => {
           </div>
         </Elements>
       )}
+      <Footer />
     </>
   );
 };

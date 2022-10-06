@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState } from "react";
 import { OrderDetail } from "../component/clientOrder";
 import { Context } from "../store/appContext";
 import { Navbar } from "../component/navbar";
-
+import { Footer } from "../component/footer";
 
 export const PaymantComplete = () => {
   const { store, actions } = useContext(Context);
@@ -10,6 +10,7 @@ export const PaymantComplete = () => {
   useEffect(() => {
     actions.getTokenFromSession();
     actions.getUserDataFromSession();
+    actions.getClientOrders(store.order_id);
   }, []);
 
   return (
@@ -17,6 +18,7 @@ export const PaymantComplete = () => {
       <Navbar />
       <h1>Muchas gracias por su compra</h1>
       <OrderDetail />
+      <Footer />
     </>
   );
 };
