@@ -7,7 +7,7 @@ import Button from "react-bootstrap/Button";
 
 export const NavbarEasy = () => {
   return (
-    <Navbar className="navbar-easy" collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <Navbar className="sticky-top" collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container className="m-auto p-3">
         <Navbar.Brand href="/home">
           <img
