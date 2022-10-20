@@ -154,14 +154,14 @@ export const Carrito = () => {
         draggable
         pauseOnHover
       />
-      /* <div className="d-grid gap-2">
+       <div className="d-grid gap-2">
                   <button
                     className="button1 btn-lg mt-3 mb-3 "
                     onClick={deleteCarrito}
                   >
                     Eliminar Carrito
                   </button>
-    </div> */
+    </div>
     </>
   );
 };

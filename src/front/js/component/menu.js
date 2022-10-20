@@ -58,7 +58,7 @@ export const Menu = () => {
                   <div className="col-md-4">
                     <img
                       src={producto.image_url}
-                      className="img-fluid rounded-start"
+                      className="imgcloud img-fluid rounded-start"
                       alt="..."
                     />
                   </div>
@@ -66,7 +66,7 @@ export const Menu = () => {
                     <div className="card-body">
                       <h3 className="card-title">{producto.name}</h3>
                       <h6 className="card-text">{producto.description}</h6>
-                      <h6 className="card-text">${producto.price}</h6>
+                      <h6 className="card-text">€{producto.price}</h6>
                     </div>
                   </div>
                   <div className="col-2 mt-5">

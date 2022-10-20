@@ -11,11 +11,14 @@ export const PaymantComplete = () => {
     actions.getTokenFromSession();
     actions.getUserDataFromSession();
   }, []);
+  
 
   return (
     <>
       <Navbar />
-      <h1>Muchas gracias por su compra</h1>
+      <div className="text-center">
+      <h1 >Muchas gracias por su compra</h1>
+      </div>
       <OrderDetail />
     </>
   );
