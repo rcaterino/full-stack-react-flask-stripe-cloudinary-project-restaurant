@@ -48,7 +48,7 @@ export const Navbar = () => {
               id="navbarSupportedContent"
             >
               <div className="col-9">
-              <Link to="/Carrito">
+              <Link to="/login">
                   <button className="button2">
                     <span className="box ">login</span>
                   </button>
@@ -56,7 +56,7 @@ export const Navbar = () => {
               </div>
               <div className="col-1">
                 
-                <Link to="/login">
+                <Link to="/Carrito">
                   <button className="button2">
                     <span className="box">
                       <i className="fa-sharp fa-solid fa-cart-shopping">
@@ -99,21 +99,14 @@ export const Navbar = () => {
               className="collapse navbar-collapse"
               id="navbarSupportedContent"
             >
-              <div className="col-3">
-                <Link to="/login">
-                  <button className="button2">
-                    <span className="box">login</span>
-                  </button>
-                </Link>
-              </div>
-              <div className="col-3">
+              <div className="col-5">
                 <Link to="/miperfil">
                   <button className="button2">
                     <span className="box">Mi Perfil</span>
                   </button>
                 </Link>
               </div>
-              <div className="col-3">
+              <div className="col-4">
                 <Link to="/Carrito">
                   <button className="button2">
                     <span className="box">
