@@ -6,6 +6,7 @@ import "../../styles/carrito.css";
 import { Navbar } from "../component/navbar.js";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Footer } from "../component/footer";
 
 export const Carrito = () => {
   const { store, actions } = useContext(Context);
@@ -161,7 +162,8 @@ export const Carrito = () => {
                   >
                     Eliminar Carrito
                   </button>
-    </div>
+    </div> 
+    <Footer />
     </>
   );
 };

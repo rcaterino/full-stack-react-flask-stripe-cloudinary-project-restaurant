@@ -21,13 +21,17 @@ body {
   text-align: center;
   font-size: 20px;
 }
+<<<<<<< HEAD
 h1 {
+=======
+/* h1 {
+>>>>>>> 2f157a84c2a9bf9c8b3ac18a62e243fa49244c8b
   font-family: "Rubik Moonrocks", cursive;
   margin-top: 20px;
   margin-bottom: 20px;
-}
+} */
 /* ------------------------------------------------------------------------------------------------------------------------------*/
-footer {
+/* footer {
   bottom: 0%;
   margin-top: 120px;
   left: 0;
@@ -40,7 +44,7 @@ footer {
   background-color: darkorange;
   /* font-family: 'Rubik Moonrocks', cursive; */
   font-size: 25px;
-}
+} 
 
 /* ------------------------------------------------------------------------------------------------------------------------------*/
 

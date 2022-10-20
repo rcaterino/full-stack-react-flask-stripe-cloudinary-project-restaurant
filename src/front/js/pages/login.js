@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Footer } from "../component/footer";
 import { Navbar } from "../component/navbar";
 import { Context } from "../store/appContext";
-import { FaPizzaSlice } from "react-icons/fa";
 
 export const Login = () => {
   const { store, actions } = useContext(Context);
@@ -119,6 +119,7 @@ export const Login = () => {
             </div>  */}
         </div>
       )}
+      <Footer />
     </div>
   );
 };

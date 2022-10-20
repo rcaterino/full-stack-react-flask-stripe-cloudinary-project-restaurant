@@ -341,13 +341,11 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       getUserDataFromSession: () => {
-        console.log("soy get usar data from session:")
         const user_data = JSON.parse(sessionStorage.getItem("user_data"));
-        console.log(user_data)
-        const user_address = sessionStorage.getItem("user_address");
-        console.log(user_address)
-        const user_allergens = sessionStorage.getItem("user_allergens");
-        console.log(user_allergens)
+        const user_address = JSON.parse(sessionStorage.getItem("user_address"));
+        const user_allergens = JSON.parse(
+          sessionStorage.getItem("user_allergens")
+        );
         const order_id = localStorage.getItem("order_id");
         if (user_data && user_data !== "" && user_data !== undefined)
           setStore({
@@ -356,8 +354,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             user_allergens: user_allergens,
             order_id: order_id,
           });
-          console.log("user data actualizado en store")
-          console.log(getStore().user_data)
       },
 
       /**Función para iniciar sesión del usuario */
@@ -551,8 +547,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await resp.json();
-          console.log("data recibida del pedido en curso:")
-          console.log(data)
+          console.log("data recibida del pedido en curso:");
+          console.log(data);
           setStore({
             order_detail: data,
           });
