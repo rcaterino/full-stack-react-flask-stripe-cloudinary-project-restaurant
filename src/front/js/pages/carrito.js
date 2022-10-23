@@ -12,7 +12,7 @@ export const Carrito = () => {
   const { store, actions } = useContext(Context);
   let navigate = useNavigate();
 
-  const handleClick = () =>{
+  const handleClick = () => {
     actions.createOrder();
   }
 
@@ -102,9 +102,9 @@ export const Carrito = () => {
                 </li>
               </ul>
               {!store.token ||
-              store.token === null ||
-              store.token === "" ||
-              store.token === undefined ? (
+                store.token === null ||
+                store.token === "" ||
+                store.token === undefined ? (
                 <Link to="/login">
                   <div className="d-grid gap-2">
                     <button
@@ -112,32 +112,32 @@ export const Carrito = () => {
                       type="submit"
                     >
                       <span>
-                      Continuar al pago
+                        Continuar al pago
                       </span>
-                      
+
                     </button>
                   </div>
                 </Link>) : (
                 <div class="accordion accordion-flush" id="accordionFlushExample">
-                <div class="accordion-item">
-                  <h2 class="accordion-header" id="flush-headingOne">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne" onClick={handleClick}>
-                      Dar por finalizado el pedido
-                    </button>
-                  </h2>
-                  <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                  <Link to="/checkout">
-                  <div className="d-grid gap-2">
-                    <button
-                      className="button1"
-                      type="submit"
-                    >
-                      Continuar al pago
-                    </button>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingOne">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne" onClick={handleClick}>
+                        Dar por finalizado el pedido
+                      </button>
+                    </h2>
+                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                      <Link to="/checkout">
+                        <div className="d-grid gap-2">
+                          <button
+                            className="button1"
+                            type="submit"
+                          >
+                            Continuar al pago
+                          </button>
+                        </div>
+                      </Link>
+                    </div>
                   </div>
-                </Link>
-                  </div>
-                </div>
                 </div>
               )}
             </div>
@@ -155,15 +155,14 @@ export const Carrito = () => {
         draggable
         pauseOnHover
       />
-       <div className="d-grid gap-2">
-                  <button
-                    className="button1 btn-lg mt-3 mb-3 "
-                    onClick={deleteCarrito}
-                  >
-                    Eliminar Carrito
-                  </button>
-    </div> 
-    <Footer />
+      <div className="m-auto">
+        <button className="button1"> Eliminar carrito
+          <div class="icon">
+            <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg>
+          </div>
+        </button>
+      </div>
+      <Footer />
     </>
   );
 };

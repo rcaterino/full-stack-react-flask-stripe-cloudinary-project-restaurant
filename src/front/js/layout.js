@@ -53,17 +53,11 @@ const Layout = () => {
             <Route element={<EasyRestaurant />} path="/easyrestaurant/admin" />
             <Route element={<Cocina />} path="/easyrestaurant/cocina" />
             <Route element={<Alergenos />} path="/easyrestaurant/alergenos" />
-            <Route
-              element={<Ingredientes />}
-              path="/easyrestaurant/ingredientes"
-            />
+            <Route element={<Ingredientes />} path="/easyrestaurant/ingredientes"/>
             <Route element={<Categorias />} path="/easyrestaurant/categorias" />
             <Route element={<Productos />} path="/easyrestaurant/productos" />
             <Route element={<Clientes />} path="/easyrestaurant/clientes" />
-            <Route
-              element={<Correlativos />}
-              path="/easyrestaurant/correlativos"
-            />
+            <Route element={<Correlativos />} path="/easyrestaurant/correlativos"/>
             <Route element={<SubirImages />} path="/Images" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
