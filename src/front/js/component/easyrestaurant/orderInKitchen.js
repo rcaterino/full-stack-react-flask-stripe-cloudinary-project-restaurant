@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from "react";
-import { Context } from "../store/appContext";
+import { Context } from "../../store/appContext";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
@@ -62,8 +62,7 @@ export const OrderInKitchen = () => {
                       ))}
                       ,
                     </ListGroup>
-                    <h3>Detalles del pedido: </h3>
-                    <h4>{order.order_comments}</h4>
+                  
                   </Card.Text>
                   <Button
                     className="p-3"

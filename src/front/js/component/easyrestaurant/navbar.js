@@ -24,6 +24,7 @@ export const NavbarEasy = () => {
           <Nav>
 						<Nav.Link href="/Quienes Somos">Quienes Somos</Nav.Link>
             <Nav.Link href="/pricing">Precios</Nav.Link>
+            <Nav.Link href="/admin">Iniciar Sesión</Nav.Link>
           </Nav>
         </Navbar.Collapse>
         <Nav>

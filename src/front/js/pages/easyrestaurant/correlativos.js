@@ -1,10 +1,9 @@
 import React from "react";
-import { NavbarAdmin } from "../../component/navbarAdmin";
+import { NavbarAdmin } from "../../component/easyrestaurant/navbarAdmin";
 
-export const Clientes = () => {
+export const Correlativos = () => {
   return (
     <>
-      <NavbarAdmin />
       <div class="bg-light">
         <div class="container">
           <div>

@@ -1,9 +1,9 @@
 import React from "react";
-import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import ScrollToTop from "./component/scrollToTop";
-import { Footer } from "./component/footer";
 import { SubirImages } from "./component/cloudinary";
+import { Allergens } from "./component/alergenos";
 
 import { Home } from "./pages/home";
 import { QuienesSomos } from "./pages/QuienesSomos";
@@ -12,20 +12,19 @@ import { Login } from "./pages/login";
 import { Register } from "./pages/register";
 import { PaymantComplete } from "./pages/paymantcomplete";
 import { Carrito } from "./pages/carrito";
+import { Checkout } from "./pages/checkout";
 
-import { EasyRestaurant } from "./pages/restaurant/easyrestaurante";
-import { Cocina } from "./pages/restaurant/cocina";
-import { Alergenos } from "./pages/restaurant/alergenos";
-import { Ingredientes } from "./pages/restaurant/ingredientes";
-import { Categorias } from "./pages/restaurant/categorias";
-import { Productos } from "./pages/restaurant/productos";
-import { Clientes } from "./pages/restaurant/clientes";
-import { Correlativos } from "./pages/restaurant/correlativos";
+import { Cocina } from "./pages/easyrestaurant/cocina";
+import { Alergenos } from "./pages/easyrestaurant/alergenos";
+import { Ingredientes } from "./pages/easyrestaurant/ingredientes";
+import { Categorias } from "./pages/easyrestaurant/categorias";
+import { Productos } from "./pages/easyrestaurant/productos";
+import { Clientes } from "./pages/easyrestaurant/clientes";
+import { Correlativos } from "./pages/easyrestaurant/correlativos";
+import { HomeEasyRest } from "./pages/easyrestaurant/home";
+import { Dashboard } from "./pages/easyrestaurant/dashboard";
 
 import injectContext from "./store/appContext";
-import { Checkout } from "./pages/checkout";
-import { Allergens } from "./component/alergenos";
-import { HomeEasyRest } from "./pages/easyrestaurant/home";
 
 //create your first component
 const Layout = () => {
@@ -50,24 +49,24 @@ const Layout = () => {
             <Route element={<PaymantComplete />} path="/pagocompletado" />
             // EASY RESTAURANT
             <Route element={<HomeEasyRest />} path="/home" />
-            <Route element={<EasyRestaurant />} path="/easyrestaurant/admin" />
-            <Route element={<Cocina />} path="/easyrestaurant/cocina" />
-            <Route element={<Alergenos />} path="/easyrestaurant/alergenos" />
-            <Route element={<Ingredientes />} path="/easyrestaurant/ingredientes"/>
-            <Route element={<Categorias />} path="/easyrestaurant/categorias" />
-            <Route element={<Productos />} path="/easyrestaurant/productos" />
-            <Route element={<Clientes />} path="/easyrestaurant/clientes" />
-            <Route element={<Correlativos />} path="/easyrestaurant/correlativos"/>
+            <Route element={<Dashboard />} path="/admin/" />
+            <Route element={<Cocina />} path="/admin/cocina" />
+            <Route element={<Alergenos />} path="/admin/alergenos" />
+            <Route element={<Ingredientes />} path="/admin/ingredientes" />
+            <Route element={<Categorias />} path="/admin/categorias" />
+            <Route element={<Productos />} path="/admin/productos" />
+            <Route element={<Clientes />} path="/admin/clientes" />
+            <Route element={<Correlativos />} path="/admin/correlativos" />
             <Route element={<SubirImages />} path="/Images" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
-          <a
+          {/* <a
             href="https://acortar.link/hp6ar1"
             className="float"
             target="_blank"
           >
             <i className="fa fa-whatsapp my-float"></i>
-          </a>
+          </a> */}
         </ScrollToTop>
       </BrowserRouter>
     </div>

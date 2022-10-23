@@ -1,7 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SubirImages } from "../../component/cloudinary";
-import { NavbarAdmin } from "../../component/navbarAdmin";
+import { FooterEasy } from "../../component/easyrestaurant/footer";
+import { NavbarAdmin } from "../../component/easyrestaurant/navbarAdmin";
+import { SidebarAdmin } from "../../component/easyrestaurant/sidebar";
 import { Context } from "../../store/appContext";
 
 export const Productos = () => {
@@ -19,16 +21,20 @@ export const Productos = () => {
 
   function handleClick() {
     actions.createProduct(name, description, price, category);
-    navigate("/easyrestaurant/productos");
+    navigate("/admin");
   }
 
   return (
     <>
-      <NavbarAdmin />
-      <div class="bg-light">
+    <div className="dashboard">
+        <NavbarAdmin />
+        <div className="flex">
+          <SidebarAdmin />
+          <div className="content">
+          <div class="col-10">
         <div class="container align-items-center">
           <div>
-            <div class="py-5 text-center">
+            <div class=" text-center">
               <h2>Productos</h2>
               <p class="lead">
                 Recuerda que para incluir un producto en la carta, debes
@@ -148,6 +154,14 @@ export const Productos = () => {
           </div>
         </div>
       </div>
+              
+            
+          </div>
+        </div>
+
+        <FooterEasy />
+      </div>
+      
     </>
   );
 };
