@@ -62,8 +62,7 @@ export const OrderInKitchen = () => {
                       ))}
                       ,
                     </ListGroup>
-                    <h3>Detalles del pedido: </h3>
-                    <h4>{order.order_comments}</h4>
+                  
                   </Card.Text>
                   <Button
                     className="p-3"

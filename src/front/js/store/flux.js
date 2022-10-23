@@ -320,8 +320,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       deleteCarrito: () => {
         localStorage.removeItem("carritoStr");
         setStore({ carrito: [] });
-        localStorage.removeItem("order_id");
-        setStore({ order_id: null });
+        // localStorage.removeItem("order_id");
+        // setStore({ order_id: null });
         localStorage.removeItem("totalStr");
         setStore({ total: 0 });
       },
@@ -601,7 +601,28 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await resp.json();
-          setStore({ order: data.orders });
+          setStore({ order: data });
+          return true;
+        } catch (error) {
+          console.error(error);
+        }
+      },
+      getOrderById: async () => {
+        const opts = {
+          method: "GET",
+        };
+        try {
+          const resp = await fetch(
+            process.env.BACKEND_URL + "/api/allorders",
+            opts
+          );
+          if (resp.status !== 200) {
+            new Error("error");
+            alert("no existen pedidos para preparar");
+            return false;
+          }
+          const data = await resp.json();
+          setStore({ order: data });
           return true;
         } catch (error) {
           console.error(error);
