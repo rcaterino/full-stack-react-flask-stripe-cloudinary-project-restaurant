@@ -108,10 +108,13 @@ export const Carrito = () => {
                 <Link to="/login">
                   <div className="d-grid gap-2">
                     <button
-                      className="btn btn-success btn-lg mt-3 mb-3 "
+                      className="button1"
                       type="submit"
                     >
+                      <span>
                       Continuar al pago
+                      </span>
+                      
                     </button>
                   </div>
                 </Link>) : (
@@ -126,7 +129,7 @@ export const Carrito = () => {
                   <Link to="/checkout">
                   <div className="d-grid gap-2">
                     <button
-                      className="btn btn-success btn-lg mt-3 mb-3 "
+                      className="button1"
                       type="submit"
                     >
                       Continuar al pago
@@ -152,14 +155,14 @@ export const Carrito = () => {
         draggable
         pauseOnHover
       />
-      /* <div className="d-grid gap-2">
+       <div className="d-grid gap-2">
                   <button
                     className="button1 btn-lg mt-3 mb-3 "
                     onClick={deleteCarrito}
                   >
                     Eliminar Carrito
                   </button>
-    </div> */
+    </div> 
     <Footer />
     </>
   );
