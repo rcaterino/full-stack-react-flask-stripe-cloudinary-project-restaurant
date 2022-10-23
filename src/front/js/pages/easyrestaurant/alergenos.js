@@ -1,6 +1,8 @@
 import React, { useEffect, useContext, useState } from "react";
 import { Context } from "../../store/appContext";
-import { NavbarAdmin } from "../../component/navbarAdmin";
+import { NavbarAdmin } from "../../component/easyrestaurant/navbarAdmin";
+import { SidebarAdmin } from "../../component/easyrestaurant/sidebar";
+import { FooterEasy } from "../../component/easyrestaurant/footer";
 
 export const Alergenos = () => {
   const { store, actions } = useContext(Context);
@@ -20,11 +22,16 @@ export const Alergenos = () => {
 
   return (
     <>
-      <NavbarAdmin />
-      <div className="bg-light">
-        <div className="container align-items-center">
-          <div>
-            <div className="col py-5">
+      <div className="dashboard">
+        <NavbarAdmin />
+        <div className="flex">
+          <SidebarAdmin />
+          <div className="content">
+            
+          <div className="container bg-light">
+        <div className="col-10 d-flex align-items-start">
+          <div >
+            <div className="col">
               <h2>Alérgenos</h2>
               <p className="lead">
                 Para mejorar la experiencia de compra del usuario, podemos crear
@@ -56,12 +63,13 @@ export const Alergenos = () => {
             >
               Agregar Alergeno
             </button>
-            <div><h2>Listado de Alérgenos</h2></div>
+            <div>
+              <h2>Listado de Alérgenos</h2>
+            </div>
             <div className="container">
               <table className="table">
                 <thead>
                   <tr>
-                    
                     <th scope="col">Descripción</th>
                     <th scope="col">Eliminar</th>
                   </tr>
@@ -70,13 +78,16 @@ export const Alergenos = () => {
                   {store.alergenos?.map((alergeno) => (
                     <>
                       <tr>
-                        
                         <td scope="row">{alergeno.description}</td>
                         <td scope="row">
-                          <button type="button" class="btn-close" onClick={(e) => {
-                      const alergenoToDelete = alergeno.id;
-                      deleteAllergens(alergenoToDelete);
-                    }}></button>
+                          <button
+                            type="button"
+                            class="btn-close"
+                            onClick={(e) => {
+                              const alergenoToDelete = alergeno.id;
+                              deleteAllergens(alergenoToDelete);
+                            }}
+                          ></button>
                         </td>
                       </tr>
                     </>
@@ -87,6 +98,13 @@ export const Alergenos = () => {
           </div>
         </div>
       </div>
+            
+          </div>
+        </div>
+
+        <FooterEasy />
+      </div>
     </>
   );
 };
+

@@ -1,6 +1,6 @@
 import React from "react";
 
-export const Carousel = () => {
+export const CarouselHome = () => {
   return (
     <div id="myCarousel" className="carousel slide" data-bs-ride="carousel">
       <div class="carousel-indicators">
@@ -44,7 +44,8 @@ export const Carousel = () => {
               <h1>Easy Restaurant</h1>
               <p>
                 Si tus clientes tienen que esperar que alguien los atienda para
-                poder realizar un pedido en tu restaurante, estás tardando demasaido en atenderlos.
+                poder realizar un pedido en tu restaurante, estás tardando
+                demasaido en atenderlos.
               </p>
               <p>
                 <a className="btn btn-lg btn-primary" href="#">
