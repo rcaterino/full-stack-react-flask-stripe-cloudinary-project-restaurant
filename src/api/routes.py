@@ -419,9 +419,9 @@ def postUserAllergen():
 # get all orders
 @api.route('/allorders', methods=['GET'])
 def getAllOrders():
-    orders_query = Order.query.filter_by(order_status=False)
+    orders_query = Order.query.all()
     all_orders= list(map(lambda x: x.serialize(), orders_query))
-    return jsonify(orders=all_orders), 200
+    return jsonify(all_orders), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 #Create new order
 @api.route('/neworder', methods=['POST'])
