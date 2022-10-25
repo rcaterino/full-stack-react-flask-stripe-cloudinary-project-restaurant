@@ -58,7 +58,7 @@ export default function CheckOutForm() {
       confirmParams: {
         // Make sure to change this to your payment completion page
         return_url:
-          "https://easyrestaurant1.herokuapp.com//pagocompletado",
+          "https://easyrestaurant1.herokuapp.com/pagocompletado",
       },
     });
 
