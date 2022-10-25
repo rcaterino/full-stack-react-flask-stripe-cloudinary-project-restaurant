@@ -6,11 +6,9 @@ export const OrderDetail = () => {
   const { store, actions } = useContext(Context);
   const [order, setOrder] = useState(false);
 
-  const deleteCarrito = () => {
-    actions.deleteCarrito();
-  };
 
   useEffect(() => {
+    actions.deleteCarrito();
     actions.getClientOrders(store.order_id)
     store.order_detail;
     if (store.order_detail.length > 0) setOrder(true);
@@ -47,7 +45,7 @@ export const OrderDetail = () => {
       </table>
       <Link to="/">
         <div className="d-flex justify-content-center">
-          <button onClick={deleteCarrito} className="button3" type="submit">
+          <button className="button3" type="submit">
             <span></span>
             Volver al menu
           </button>
