@@ -58,7 +58,7 @@ export default function CheckOutForm() {
       confirmParams: {
         // Make sure to change this to your payment completion page
         return_url:
-          "https://3000-rcaterino-easyrestauran-1d6u691tqcs.ws-eu72.gitpod.io/pagocompletado",
+          "https://easyrestaurant1.herokuapp.com//pagocompletado",
       },
     });
 
