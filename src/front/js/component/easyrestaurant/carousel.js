@@ -40,16 +40,14 @@ export const CarouselHome = () => {
           </svg>
 
           <div className="container">
-            <div className="carousel-caption text-start">
+            <div className="carousel-caption text-start mb-5" >
               <h1>Easy Restaurant</h1>
               <p>
-                Si tus clientes tienen que esperar que alguien los atienda para
-                poder realizar un pedido en tu restaurante, estás tardando
-                demasaido en atenderlos.
+               !Recuerda que tienes tu cocina donde ver los pedidos!
               </p>
               <p>
                 <a className="btn btn-lg btn-primary" href="#">
-                  ¡Regístrate ya!
+                  Ir a cocina
                 </a>
               </p>
             </div>
@@ -71,16 +69,14 @@ export const CarouselHome = () => {
           <div className="container">
             <div className="carousel-caption">
               <h1>
-                Tu cliente pide y tu recibes el pedido en cocina directamente
+                Vamos a modificar tu menu, personalizalo a tu gusto
               </h1>
               <p>
-                Así como lo lees, con Easy Restaurant, tus clientes pueden
-                realizar el pedido sin esperas y lo recibirás directamente en
-                cocina.
+                Tenemos la posibilidad de adaptar nuestro menu a tus necesidades, comencemos con las categorias
               </p>
               <p>
                 <a className="btn btn-lg btn-primary" href="#">
-                  Learn more
+                 Modificar categorias
                 </a>
               </p>
             </div>
@@ -101,15 +97,13 @@ export const CarouselHome = () => {
 
           <div className="container">
             <div className="carousel-caption text-end">
-              <h1>One more for good measure.</h1>
+              <h1>Sabemos que tu variedad es amplia, que mejor que tener una gran cantidad de Productos</h1>
               <p>
-                Fácil, rápido, sin colas, sin pasar por caja, tu cliente
-                recibirá su pedido realmente rápido y para ti será mucho más
-                facil gestionar la cocina y llevar el orden de los pedidos
+                Sigamos con tu marca personal, tus productos estrella
               </p>
               <p>
                 <a className="btn btn-lg btn-primary" href="#">
-                  Browse gallery
+                  Modificar productos
                 </a>
               </p>
             </div>
