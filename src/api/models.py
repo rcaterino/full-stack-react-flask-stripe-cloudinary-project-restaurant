@@ -251,7 +251,7 @@ class Order_Detail(db.Model):
     def serialize(self):
         return {
             "order_id": self.order_id,
-            "product_name": Product.query.get(self.product_id).name,
+            # "product_name": Product.query.get(self.product_id).name,
             "units": self.units,
             "unit_price": self.unit_price,
             "subtotal": self.subtotal,
