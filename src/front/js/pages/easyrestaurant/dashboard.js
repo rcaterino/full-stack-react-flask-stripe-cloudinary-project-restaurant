@@ -25,7 +25,7 @@ export const Dashboard = () => {
       store.token === undefined ? (
         <LogInAdmin />
       ) : (
-        <div className="dashboard">
+        <div className="bg-light">
           <NavbarAdmin />
           
 

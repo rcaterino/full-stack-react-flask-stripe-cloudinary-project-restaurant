@@ -20,10 +20,10 @@ export const Categorias = () => {
   }
   return (
     <>
-      <div>
+      <div className="bg-light">
         <NavbarAdmin />
 
-        <div className="container ">
+        <div className="container  ">
           <div className="col-8 bg-light m-auto align-items-center">
             <div>
               <div className="col">

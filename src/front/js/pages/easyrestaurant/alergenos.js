@@ -22,7 +22,7 @@ export const Alergenos = () => {
 
   return (
     <>
-      <div className="dashboard">
+      <div className="bg-light">
         <NavbarAdmin />
         <div className="container ">
           <div className="col-8 bg-light m-auto align-items-center">

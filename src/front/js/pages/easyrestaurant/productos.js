@@ -26,9 +26,9 @@ export const Productos = () => {
 
   return (
     <>
-      <div className="dashboard">
+      <div className="bg-light">
         <NavbarAdmin />
-        <div class="col-8 m-auto">
+        <div class="col-8 bg-light m-auto align-items-center">
           <div class="container  align-items-center">
             <div>
               <div class=" text-center">

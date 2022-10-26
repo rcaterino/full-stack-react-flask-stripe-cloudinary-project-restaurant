@@ -29,7 +29,7 @@ export const OrderInKitchen = () => {
       store.order == null ||
       store.order == "" ||
       store.order == undefined ? (
-        <div className="col-10 m-auto">
+        <div className="col-10 bg-light m-auto align-items-center">
           <Alert variant="danger">
             <Alert.Heading>
               Oh no, ¡en este momento no tenemos pedidos para preparar!
@@ -43,7 +43,7 @@ export const OrderInKitchen = () => {
           </Alert>
         </div>
       ) : (
-        <div className="container">
+        <div className="col-10 m-auto bg-light">
           <CardGroup>
             <Row xs={1} md={2} className="g-4">
               {store.order.map((order) => (
