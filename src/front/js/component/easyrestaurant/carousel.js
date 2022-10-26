@@ -1,4 +1,5 @@
 import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 export const CarouselHome = () => {
   return (
@@ -43,12 +44,14 @@ export const CarouselHome = () => {
             <div className="carousel-caption text-start mb-5" >
               <h1>Easy Restaurant</h1>
               <p>
-               !Recuerda que tienes tu cocina donde ver los pedidos!
+                !Recuerda que tienes tu cocina donde ver los pedidos!
               </p>
               <p>
+              <Link to="/portal10/cocina">
                 <a className="btn btn-lg btn-primary" href="#">
                   Ir a cocina
                 </a>
+                </Link>
               </p>
             </div>
           </div>
@@ -63,22 +66,24 @@ export const CarouselHome = () => {
             preserveAspectRatio="xMidYMid slice"
             focusable="false"
           >
-            
-            <img  width="100%" height="100%" fill="#777" />
+
+            <img width="100%" height="100%" fill="#777" />
           </svg>
 
           <div className="container">
             <div className="carousel-caption">
               <h1>
-                Vamos a modificar tu menu, personalizalo a tu gusto
+                Vamos a modificar tu menú, personalìzalo a tu gusto
               </h1>
               <p>
-                Tenemos la posibilidad de adaptar nuestro menu a tus necesidades, comencemos con las categorias
+                Tenemos la posibilidad de adaptar nuestro menù a tus necesidades, comencemos con las categorías
               </p>
               <p>
+              <Link to="/portal10/categorias">
                 <a className="btn btn-lg btn-primary" href="#">
-                 Modificar categorias
+                  Modificar categorias
                 </a>
+                </Link>
               </p>
             </div>
           </div>
@@ -103,9 +108,11 @@ export const CarouselHome = () => {
                 Sigamos con tu marca personal, tus productos estrella
               </p>
               <p>
+                <Link to="/portal10/productos">
                 <a className="btn btn-lg btn-primary" href="#">
                   Modificar productos
                 </a>
+                </Link>
               </p>
             </div>
           </div>
