@@ -12,7 +12,7 @@ export const LogInAdmin = () => {
     actions.loginRestaurant(email, password);
   };
   return (
-    <div className="container text-center align-items-center bg-light">
+    <div className="container text-center align-items-center ">
     <div className="p-3 border-0">
       <h1 className="text-center">Iniciar Sesión</h1>
       <div className="d-grid gap-2">

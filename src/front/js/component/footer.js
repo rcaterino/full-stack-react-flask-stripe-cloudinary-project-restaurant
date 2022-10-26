@@ -2,7 +2,7 @@ import React from "react";
 
 export const Footer = () => {
   return (
-    <footer className="py-3 text-center align-items-center pb-0">
+    <footer className="py-3 text-center align-items-center pb-0 ">
       <section className="container-fluid d-flex justify-content-center  p-1 border-bottom">
         <div>
           <a href="" className="me-4 text-reset">

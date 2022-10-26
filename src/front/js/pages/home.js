@@ -13,7 +13,7 @@ export const Home = () => {
   }, []);
 
   return (
-    <>
+    <div className="home">
       <Navbar />
       <h1 className="text-center">Bienvenido a Portal 10</h1>
       <div className="bodyMenu">
@@ -27,6 +27,6 @@ export const Home = () => {
             <i className="fa fa-whatsapp my-float"></i>
           </a>
       <Footer />
-    </>
+    </div>
   );
 };

@@ -151,6 +151,7 @@ export const Carrito = () => {
         <button
           className="button1"
           type="submit"
+          onClick={deleteCarrito}
         >
           Eliminar Carrito
         </button>
