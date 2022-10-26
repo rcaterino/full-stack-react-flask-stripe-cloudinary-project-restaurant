@@ -68,14 +68,8 @@ export const LogInAdmin = () => {
           </button>
         </form>
         <div className="d-grid gap-2 text-center">
-          <span>¿No tienes una cuenta?{"   "}</span>
           <Link to="/portal10">
           <span>Iniciar Sesión como Restaurante{"   "}</span>
-          </Link>
-          <Link className="d-grid gap-2 text-center" to="/register">
-            <button type="submit" className="buttonAdmin ">
-              Registrate
-            </button>
           </Link>
         </div>
       </div>
