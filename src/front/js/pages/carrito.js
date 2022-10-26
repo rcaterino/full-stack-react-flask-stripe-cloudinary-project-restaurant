@@ -155,6 +155,13 @@ export const Carrito = () => {
           Eliminar Carrito
         </button>
       </div>
+      <a
+            href="https://acortar.link/hp6ar1"
+            className="float"
+            target="_blank"
+          >
+            <i className="fa fa-whatsapp my-float"></i>
+          </a>
       <Footer/>
     </>
   );

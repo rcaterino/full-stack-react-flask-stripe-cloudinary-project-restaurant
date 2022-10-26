@@ -20,9 +20,7 @@ export const Productos = () => {
   }, []);
 
   function handleClick() {
-    actions.createProduct(name, description, price, category);
-    navigate("/admin");
-  }
+    actions.createProduct(name, description, price, category);  }
 
   return (
     <>

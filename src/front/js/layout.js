@@ -49,14 +49,14 @@ const Layout = () => {
             <Route element={<PaymantComplete />} path="/pagocompletado" />
             // EASY RESTAURANT
             <Route element={<HomeEasyRest />} path="/home" />
-            <Route element={<Dashboard />} path="/admin/" />
-            <Route element={<Cocina />} path="/admin/cocina" />
-            <Route element={<Alergenos />} path="/admin/alergenos" />
-            <Route element={<Ingredientes />} path="/admin/ingredientes" />
-            <Route element={<Categorias />} path="/admin/categorias" />
-            <Route element={<Productos />} path="/admin/productos" />
-            <Route element={<Clientes />} path="/admin/clientes" />
-            <Route element={<Correlativos />} path="/admin/correlativos" />
+            <Route element={<Dashboard />} path="/portal10/" />
+            <Route element={<Cocina />} path="/portal10/cocina" />
+            <Route element={<Alergenos />} path="/portal10/alergenos" />
+            <Route element={<Ingredientes />} path="/portal10/ingredientes" />
+            <Route element={<Categorias />} path="/portal10/categorias" />
+            <Route element={<Productos />} path="/portal10/productos" />
+            <Route element={<Clientes />} path="/portal10/clientes" />
+            <Route element={<Correlativos />} path="/portal10/correlativos" />
             <Route element={<SubirImages />} path="/Images" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>

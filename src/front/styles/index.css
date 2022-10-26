@@ -1,4 +1,4 @@
-body {
+body{
   background-image: url(https://img.freepik.com/fotos-premium/papel-tapiz-fondo-textura-papel-blanco-arrugado_53876-110213.jpg?w=2000);
 }
 .bodyMenu {
@@ -269,6 +269,15 @@ h1 {
   -webkit-box-shadow: 10px 10px 64px 0px rgba(186, 186, 202, 0.75);
   -moz-box-shadow: 10px 10px 64px 0px rgba(208, 208, 231, 0.75);
 }
+.cardA {
+  /* width: 400px;
+  height: 350px; */
+  background: #f4f6fb;
+  border: 1px solid white;
+  box-shadow: 10px 10px 64px 0px rgba(180, 180, 207, 0.75);
+  -webkit-box-shadow: 10px 10px 64px 0px rgba(186, 186, 202, 0.75);
+  -moz-box-shadow: 10px 10px 64px 0px rgba(208, 208, 231, 0.75);
+}
 
 .form {
   padding: 25px;
@@ -282,6 +291,11 @@ h1 {
 
 .cardL svg {
   color: #fcb000;
+  margin-bottom: 20px;
+  margin-right: 5px;
+}
+.cardA svg {
+  color: #016bff;
   margin-bottom: 20px;
   margin-right: 5px;
 }
@@ -452,3 +466,21 @@ label {
     width: 350px;
   }
 }
+
+.buttonAdmin{
+  padding: 16px 20px;
+  font-size: 18px;
+  background: linear-gradient(45deg, transparent 5%, #016bff 5%);
+  border: 0;
+  color: #fff;
+  letter-spacing: 3px;
+  line-height: 1;
+  box-shadow: 6px 0px 0px #00fffb;
+  outline: transparent;
+  position: relative;
+}
+
+.svgAdmin{
+  color: #016bff;
+}
+

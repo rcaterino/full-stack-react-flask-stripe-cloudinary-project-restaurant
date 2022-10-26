@@ -12,13 +12,13 @@ export const PaymantComplete = () => {
     actions.getUserDataFromSession();
     actions.getClientOrders(store.order_id);
   }, []);
-  
+
 
   return (
     <>
       <Navbar />
       <div className="text-center">
-      <h1 >Muchas gracias por su compra</h1>
+        <h1 >Muchas gracias por su compra</h1>
       </div>
       <OrderDetail />
       <Footer />
