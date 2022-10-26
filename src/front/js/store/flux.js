@@ -525,7 +525,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await resp.json();
-          setStore({ order: data.orders });
+          console.log(data);
+          setStore({ order: data });
           return true;
         } catch (error) {
           console.error(error);
@@ -623,6 +624,54 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
           const data = await resp.json();
           setStore({ order: data });
+          return true;
+        } catch (error) {
+          console.error(error);
+        }
+      },
+
+      postCategoria: async (categoria) => {
+        const opts = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: categoria,
+          }),
+        };
+        try {
+          let resp = await fetch(
+            process.env.BACKEND_URL + "/api/newcategory",
+            opts
+          );
+          if (resp.status !== 200) {
+            new Error("there has been an error");
+            return false;
+          }
+          const data = await resp.json();
+          setStore({ categories: data });
+          return true;
+        } catch (error) {
+          console.error(error);
+        }
+      },
+
+      deleteCategoria: async (id) => {
+        const opts = {
+          method: "DELETE",
+        };
+        try {
+          let resp = await fetch(
+            process.env.BACKEND_URL + "/api/deletecategory/" + id,
+            opts
+          );
+          if (resp.status !== 200) {
+            new Error("there has been an error");
+            return false;
+          }
+          const data = await resp.json();
+          setStore({ categories: data });
           return true;
         } catch (error) {
           console.error(error);

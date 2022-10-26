@@ -332,10 +332,12 @@ def getCategory(id):
 @api.route("/newcategory", methods=["POST"])
 def postCategory():
     info_request = request.get_json()
-    category1 = Category(name=info_request["name"], id=info_request["id"],)
+    category1 = Category(name=info_request["name"],)
     db.session.add(category1)
     db.session.commit()
-    return jsonify("categoria creada"), 200
+    category_query = Category.query.all()
+    all_category = list(map(lambda x: x.serialize(), category_query))
+    return jsonify(all_category), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------  
 #Editing a category by id
 @api.route("/editcategory/<int:id>", methods=["PUT"])
@@ -349,6 +351,18 @@ def putcategory(id):
         category1.name = info_request["name"]    
     db.session.commit()
     return jsonify("categoria editada"),200
+    #----------------------------------------------------------------------------------------------------------------------------------------------------------
+#Deleting category by id
+@api.route("/deletecategory/<int:id>", methods=["DELETE"])
+def deletecategory(id):
+    category = Category.query.get(id)
+    if category is None:
+        raise APIException('Category not found', status_code=404)
+    db.session.delete(category)
+    db.session.commit()
+    category_query = Category.query.all()
+    all_categories = list(map(lambda x: x.serialize(), category_query))
+    return jsonify(all_categories), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------  
 # get all allergens
 @api.route('/allergens', methods=["GET"])
@@ -419,7 +433,7 @@ def postUserAllergen():
 # get all orders
 @api.route('/allorders', methods=['GET'])
 def getAllOrders():
-    orders_query = Order.query.all()
+    orders_query = Order.query.filter_by(order_status=False)
     all_orders= list(map(lambda x: x.serialize(), orders_query))
     return jsonify(all_orders), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -452,7 +466,7 @@ def putEndOrder(id):
     db.session.commit()
     orders_query = Order.query.filter_by(order_status=False)
     all_orders= list(map(lambda x: x.serialize(), orders_query))
-    return jsonify(orders=all_orders), 200
+    return jsonify(all_orders), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 #Geting order detail by client id
 @api.route('/orderinprocess/<int:id>', methods=["GET"])
