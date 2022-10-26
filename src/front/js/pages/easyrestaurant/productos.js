@@ -24,12 +24,12 @@ export const Productos = () => {
 
   return (
     <>
-      <div className="bg-light">
+      <div className="bg-light" style={{height: "150vh"}}>
         <NavbarAdmin />
         <div class="col-8 bg-light m-auto align-items-center">
           <div class="container  align-items-center">
             <div>
-              <div class=" text-center">
+              <div class=" text-center pt-5">
                 <h2>Productos</h2>
                 <p class="lead">
                   Recuerda que para incluir un producto en la carta, debes

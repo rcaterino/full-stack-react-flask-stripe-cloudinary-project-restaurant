@@ -22,12 +22,12 @@ export const Alergenos = () => {
 
   return (
     <>
-      <div className="bg-light">
+      <div className="bg-light" style={{height: "100vh"}}>
         <NavbarAdmin />
         <div className="container ">
           <div className="col-8 bg-light m-auto align-items-center">
             <div>
-              <div className="col">
+              <div className="col pt-5">
                 <h2>Alérgenos</h2>
                 <p className="lead">
                   Para mejorar la experiencia de compra del usuario, podemos

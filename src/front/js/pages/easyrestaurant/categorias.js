@@ -20,13 +20,13 @@ export const Categorias = () => {
   }
   return (
     <>
-      <div className="bg-light">
+      <div className="bg-light" style={{height: "100vh"}}>
         <NavbarAdmin />
 
         <div className="container  ">
           <div className="col-8 bg-light m-auto align-items-center">
             <div>
-              <div className="col">
+              <div className="col pt-5">
                 <h2>Categorías</h2>
                 <p className="lead">
                   Para crear productos dentro del menú es necesario primero incluir categorías dentro de las cuales introducir productos.

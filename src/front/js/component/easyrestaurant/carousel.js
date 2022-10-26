@@ -26,7 +26,7 @@ export const CarouselHome = () => {
         ></button>
       </div>
       <div className="carousel-inner">
-        <div className="carousel-item active">
+        <div className="myCarousel carousel-item active">
           <svg
             className="bd-placeholder-img"
             width="100%"
@@ -36,7 +36,7 @@ export const CarouselHome = () => {
             preserveAspectRatio="xMidYMid slice"
             focusable="false"
           >
-            <rect width="100%" height="100%" fill="#777" />
+            <img width="100%" height="100%" fill="#777" />
           </svg>
 
           <div className="container">
@@ -53,7 +53,7 @@ export const CarouselHome = () => {
             </div>
           </div>
         </div>
-        <div className="carousel-item">
+        <div className=" myCarousel carousel-item">
           <svg
             className="bd-placeholder-img"
             width="100%"
@@ -63,7 +63,8 @@ export const CarouselHome = () => {
             preserveAspectRatio="xMidYMid slice"
             focusable="false"
           >
-            <rect width="100%" height="100%" fill="#777" />
+            
+            <img  width="100%" height="100%" fill="#777" />
           </svg>
 
           <div className="container">
@@ -82,7 +83,7 @@ export const CarouselHome = () => {
             </div>
           </div>
         </div>
-        <div className="carousel-item">
+        <div className=" myCarousel carousel-item">
           <svg
             className="bd-placeholder-img"
             width="100%"
@@ -92,7 +93,7 @@ export const CarouselHome = () => {
             preserveAspectRatio="xMidYMid slice"
             focusable="false"
           >
-            <rect width="100%" height="100%" fill="#777" />
+            <img width="100%" height="100%" fill="#777" />
           </svg>
 
           <div className="container">

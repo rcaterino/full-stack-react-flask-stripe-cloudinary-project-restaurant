@@ -24,7 +24,7 @@ export const NavbarAdmin = () => {
 
   return (
     <div>
-      <Navbar className="p-1" collapseOnSelect expand="lg" bg="primary" variant="dark">
+      <Navbar className="navbarAdmin p-1" collapseOnSelect expand="lg"  variant="dark">
         <Container>
           <Navbar.Brand href="/portal10">Easy Restaurant</Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />

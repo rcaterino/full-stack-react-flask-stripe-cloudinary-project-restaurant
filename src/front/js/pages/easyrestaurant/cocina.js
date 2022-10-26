@@ -9,7 +9,7 @@ import { OrderInKitchen } from "../../component/easyrestaurant/orderInKitchen";
 export const Cocina = () => {
   return (
     <>
-      <div className="bg-light">
+      <div className="bg-light" style={{height: "100vh"}}>
         <NavbarAdmin />
         <div className="col-10 m-auto pt-3">
           <Alert variant="success">

@@ -1,12 +1,16 @@
 body{
+  padding: 0;
   background-image: url(https://img.freepik.com/fotos-premium/papel-tapiz-fondo-textura-papel-blanco-arrugado_53876-110213.jpg?w=2000);
 }
 .bodyMenu {
   text-align: center;
   margin-top: 5px;
 }
-.footer{
+
+body.h-100{
+  padding: 0;
 }
+
 
 /* ------------------------------------------------------------------------------------------------------------------------------*/
 .card-text {
@@ -30,8 +34,8 @@ h1 {
   margin-bottom: 20px;
 }
 /* ------------------------------------------------------------------------------------------------------------------------------*/
-/* footer {
-  bottom: 0%;
+footer {
+  bottom: 0;
   margin-top: 120px;
   left: 0;
   width: 100%;
@@ -482,6 +486,10 @@ label {
 }
 
 .svgAdmin{
-  color: #016bff;
+  color: #020048;
+}.navbarAdmin{
+  background-color: rgb(0, 0, 0);
 }
-
+ .myCarousel{
+  background-image: url(https://flipdish.imgix.net/p9gPG4MNShN06rIGZMePphIvtk.jpg?w=1500&h=550);
+ }
