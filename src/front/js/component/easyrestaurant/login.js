@@ -12,7 +12,7 @@ export const LogInAdmin = () => {
     actions.loginRestaurant(email, password);
   };
   return (
-    <div className="container text-center align-items-center ">
+    <div className="container text-center align-items-center " >
     <div className="p-3 border-0">
       <h1 className="text-center">Iniciar Sesión</h1>
       <div className="d-grid gap-2">
@@ -68,8 +68,14 @@ export const LogInAdmin = () => {
           </button>
         </form>
         <div className="d-grid gap-2 text-center">
+          <span>¿No tienes una cuenta?{"   "}</span>
           <Link to="/portal10">
           <span>Iniciar Sesión como Restaurante{"   "}</span>
+          </Link>
+          <Link className="d-grid gap-2 text-center" to="/register">
+            <button type="submit" className="buttonAdmin ">
+              Registrate
+            </button>
           </Link>
         </div>
       </div>
