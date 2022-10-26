@@ -544,7 +544,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           );
           if (resp.status !== 200) {
             new Error("error");
-            alert("no existen ordenes de preparación en proceso");
+            // alert("no existen ordenes de preparación en proceso");
             return false;
           }
           const data = await resp.json();
