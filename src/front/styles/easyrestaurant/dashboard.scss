@@ -1,0 +1,31 @@
+.navbar {
+  padding: 1rem 2rem;
+  border-bottom: 1px solid;
+}
+
+.sidebar {
+  width: 14rem;
+  height: calc(100cv - 52px);
+  border-right: 1px solid;
+  padding-left: 1rem;
+  padding-top: 1rem;
+}
+
+.flex {
+  display: flex;
+  
+}
+
+.content {
+  padding-top: 1rem;
+}
+ul {
+  list-style: none;
+  padding: 1rem 2rem;
+}
+li {
+  margin-bottom: 1rem;
+}
+a {
+  text-decoration: none;
+}
