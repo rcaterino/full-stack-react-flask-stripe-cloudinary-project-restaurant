@@ -216,7 +216,7 @@ class Order(db.Model):
     order_total = db.Column(db.Float, unique=False)
     pay_method = db.Column(db.String(150), unique=False, nullable=True)
     order_status =db.Column(db.Boolean, unique=False, nullable=False)
-    user_relation = db.relationship('User', backref='order, Lazy=True')
+    user_relation = db.relationship('User', backref='order')#Lazy=True
     order_detail_relation = db.relationship("Order_Detail", backref='order', lazy=True)
     payment = db.relationship('Pay', backref='order', lazy=True)
     

@@ -98,7 +98,7 @@ def webhook():
     payload = request.data
     sig_header = request.headers['STRIPE_SIGNATURE']
     # This is your Stripe CLI webhook secret for testing your endpoint locally.
-    endpoint_secret = 'whsec_5gsg10eVLjSMRIsyK6HjxddkihWEeF5s'
+    endpoint_secret = 'whsec_AkKyqGQ3BN7T3ex7UODz8Qvu5ectM9zu'
 
     print("evento de webhoooks")
 
@@ -146,6 +146,7 @@ def webhook():
       total = (charge['amount'])/100
       print(total)
       newPay = Pay( user_id=charge['metadata']['user_id'], order_id =charge['metadata']['order_id'], payment_method= charge['payment_method_details']['type'], brand = charge['payment_method_details']['card']['brand'], last4 = charge['payment_method_details']['card']['last4'], status = charge['paid'], amount = total)
+      print(newPay)
       db.session.add(newPay)
       db.session.commit()
     elif event['type'] == 'charge.updated':
@@ -179,8 +180,6 @@ def create_user_token():
     query = User.query.filter_by(email = info_request['email'], password = info_request['password']).first()
     user = query.serialize()
     access_token = create_access_token(identity=user['email'])
-    print("user data:")
-    print(user)
     return jsonify(access_token=access_token, user_data = user), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 # #get only one restaurante
@@ -210,15 +209,12 @@ def create_restaurant_token():
 @api.route('/register', methods=['POST'])
 def createUser():
     info_request = request.get_json()
-    print("request en backend:")
-    print(info_request)
     newUser = User( user_type= info_request['user_type'], name = info_request['name'], lastname = info_request['lastname'], birthday = info_request['birthday'], phone = info_request['phone'], email = info_request['email'], password = info_request['password'], is_active = info_request['is_active'])
     db.session.add(newUser)
     db.session.commit()
     query = User.query.filter_by(email = info_request['email'], password = info_request['password']).first()
     user = query.serialize()
     access_token = create_access_token(identity=user['email'])
-    print(user)
     return jsonify(access_token=access_token, user_data = user), 200
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -332,23 +328,36 @@ def getCategory(id):
 @api.route("/newcategory", methods=["POST"])
 def postCategory():
     info_request = request.get_json()
-    category1 = Category(name=info_request["name"], id=info_request["id"],)
+    category1 = Category(name=info_request["name"],)
     db.session.add(category1)
     db.session.commit()
-    return jsonify("categoria creada"), 200
+    category_query = Category.query.all()
+    all_category = list(map(lambda x: x.serialize(), category_query))
+    return jsonify(all_category), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------  
 #Editing a category by id
 @api.route("/editcategory/<int:id>", methods=["PUT"])
 def putcategory(id):
     info_request = request.get_json()
     category1 = Category.query.get(id)
-    print(category1)
     if category1 is None:
         raise APIException('category not found', status_code=404)
     if "name" in info_request:
         category1.name = info_request["name"]    
     db.session.commit()
     return jsonify("categoria editada"),200
+    #----------------------------------------------------------------------------------------------------------------------------------------------------------
+#Deleting category by id
+@api.route("/deletecategory/<int:id>", methods=["DELETE"])
+def deletecategory(id):
+    category = Category.query.get(id)
+    if category is None:
+        raise APIException('Category not found', status_code=404)
+    db.session.delete(category)
+    db.session.commit()
+    category_query = Category.query.all()
+    all_categories = list(map(lambda x: x.serialize(), category_query))
+    return jsonify(all_categories), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------  
 # get all allergens
 @api.route('/allergens', methods=["GET"])
@@ -419,7 +428,7 @@ def postUserAllergen():
 # get all orders
 @api.route('/allorders', methods=['GET'])
 def getAllOrders():
-    orders_query = Order.query.all()
+    orders_query = Order.query.filter_by(order_status=False)
     all_orders= list(map(lambda x: x.serialize(), orders_query))
     return jsonify(all_orders), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -452,7 +461,7 @@ def putEndOrder(id):
     db.session.commit()
     orders_query = Order.query.filter_by(order_status=False)
     all_orders= list(map(lambda x: x.serialize(), orders_query))
-    return jsonify(orders=all_orders), 200
+    return jsonify(all_orders), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 #Geting order detail by client id
 @api.route('/orderinprocess/<int:id>', methods=["GET"])

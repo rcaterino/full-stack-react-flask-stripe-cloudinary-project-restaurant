@@ -11,7 +11,6 @@ export const OrderDetail = () => {
   };
 
   useEffect(() => {
-    actions.getClientOrders(store.order_id)
     store.order_detail;
     if (store.order_detail.length > 0) setOrder(true);
   }, [order]);

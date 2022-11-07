@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   PaymentElement,
   useStripe,
@@ -8,7 +9,7 @@ import {
 export default function CheckOutForm() {
   const stripe = useStripe();
   const elements = useElements();
-
+  const navigate = useNavigate();
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -44,7 +45,7 @@ export default function CheckOutForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded.
       // Make sure to disable form submission until Stripe.js has loaded.
@@ -58,7 +59,7 @@ export default function CheckOutForm() {
       confirmParams: {
         // Make sure to change this to your payment completion page
         return_url:
-          "https://3000-rcaterino-easyrestauran-e9jm2vzkwge.ws-eu72.gitpod.io/pagocompletado",
+          "https://3000-rcaterino-easyrestauran-e9jm2vzkwge.ws-eu74.gitpod.io/pagocompletado",
       },
     });
 
