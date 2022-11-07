@@ -20,76 +20,70 @@ export const Categorias = () => {
   }
   return (
     <>
-      <div className="bg-light">
-        <NavbarAdmin />
-
-        <div className="container  ">
-          <div className="col-8 bg-light m-auto align-items-center">
-            <div>
-              <div className="col">
-                <h2>Categorías</h2>
-                <p className="lead">
-                  Para crear productos dentro del menú es necesario primero incluir categorías dentro de las cuales introducir productos.
-                </p>
-              </div>
-              <form>
-                <div className="col align-items-center">
-                  <label className="form-label">Descripción</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="description"
-                    placeholder="Introduce Nombre descriptivo de la categoría para ser incluido en sistema"
-                    value={categoria}
-                    onChange={(e) => {
-                      setCategoria(e.target.value);
-                    }}
-                  />
-                </div>
-              </form>
-              <button
-                className="btn btn-primary btn-lg mt-3 mb-3"
-                type="submit"
-                onClick={handleClick}
-              >
-                Agregar Categoría
-              </button>
-              <div>
-                <h2>Listado de Categorías existentes</h2>
-              </div>
-              <div className="container">
-                <table className="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">Descripción</th>
-                      <th scope="col">Eliminar</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {store.categories?.map((categoria) => (
-                      <>
-                        <tr>
-                          <td scope="row">{categoria.name}</td>
-                          <td scope="row">
-                            <button
-                              type="button"
-                              className="btn-close"
-                              onClick={(e) => {
-                                const categoriaToDelete = categoria.id;
-                                deleteCategoria(categoriaToDelete);
-                              }}
-                            ></button>
-                          </td>
-                        </tr>
-                      </>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+      <div className="col-8 bg-light m-auto align-items-center">
+        <div>
+          <div className="col">
+            <h2>Categorías</h2>
+            <p className="lead">
+              Para crear productos dentro del menú es necesario primero incluir
+              categorías dentro de las cuales introducir productos.
+            </p>
+          </div>
+          <form>
+            <div className="col align-items-center">
+              <label className="form-label">Descripción</label>
+              <input
+                type="text"
+                className="form-control"
+                id="description"
+                placeholder="Introduce Nombre descriptivo de la categoría para ser incluido en sistema"
+                value={categoria}
+                onChange={(e) => {
+                  setCategoria(e.target.value);
+                }}
+              />
             </div>
+          </form>
+          <button
+            className="btn btn-primary btn-lg mt-3 mb-3"
+            type="submit"
+            onClick={handleClick}
+          >
+            Agregar Categoría
+          </button>
+          <div>
+            <h2>Listado de Categorías existentes</h2>
+          </div>
+          <div className="container">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th scope="col">Descripción</th>
+                  <th scope="col">Eliminar</th>
+                </tr>
+              </thead>
+              <tbody>
+                {store.categories?.map((categoria) => (
+                  <>
+                    <tr>
+                      <td scope="row">{categoria.name}</td>
+                      <td scope="row">
+                        <button
+                          type="button"
+                          className="btn-close"
+                          onClick={(e) => {
+                            const categoriaToDelete = categoria.id;
+                            deleteCategoria(categoriaToDelete);
+                          }}
+                        ></button>
+                      </td>
+                    </tr>
+                  </>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
-        <FooterEasy />
       </div>
     </>
   );

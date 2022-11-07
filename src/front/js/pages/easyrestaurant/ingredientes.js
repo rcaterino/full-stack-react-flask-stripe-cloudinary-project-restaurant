@@ -5,11 +5,7 @@ import { NavbarAdmin } from "../../component/easyrestaurant/navbarAdmin";
 export const Ingredientes = () => {
   return (
     <>
-      <div className="dashboard">
-        <NavbarAdmin />
-
-        <FooterEasy />
-      </div>
+      <div className="dashboard"></div>
     </>
   );
 };

@@ -27,7 +27,6 @@ export const Productos = () => {
   return (
     <>
       <div className="bg-light">
-        <NavbarAdmin />
         <div class="col-8 bg-light m-auto align-items-center">
           <div class="container  align-items-center">
             <div>
@@ -151,8 +150,6 @@ export const Productos = () => {
             </div>
           </div>
         </div>
-
-        <FooterEasy />
       </div>
     </>
   );

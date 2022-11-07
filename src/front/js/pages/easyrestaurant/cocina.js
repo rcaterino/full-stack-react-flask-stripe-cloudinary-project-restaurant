@@ -9,25 +9,19 @@ import { OrderInKitchen } from "../../component/easyrestaurant/orderInKitchen";
 export const Cocina = () => {
   return (
     <>
-      <div className="bg-light">
-        <NavbarAdmin />
-        <div className="col-10 m-auto pt-3">
-          <Alert variant="success">
-            <Alert.Heading>
-              Hey, este será un gran día, ¡vamos a divertirnos!
-            </Alert.Heading>
+      <Alert variant="success">
+        <Alert.Heading>
+          Hey, este será un gran día, ¡vamos a divertirnos!
+        </Alert.Heading>
 
-            <hr />
-            <h6 className="mb-0">
-              Recuerda que todos nuestros clientes son igual de importantes, por
-              favor, prepara los pedidos por orden de entrada
-            </h6>
-          </Alert>
-        </div>
+        <hr />
+        <h6 className="mb-0">
+          Recuerda que todos nuestros clientes son igual de importantes, por
+          favor, prepara los pedidos por orden de entrada
+        </h6>
+      </Alert>
 
-        <OrderInKitchen />
-        <FooterEasy />
-      </div>
+      <OrderInKitchen />
     </>
   );
 };

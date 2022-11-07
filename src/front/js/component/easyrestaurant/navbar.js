@@ -7,7 +7,13 @@ import Button from "react-bootstrap/Button";
 
 export const NavbarEasy = () => {
   return (
-    <Navbar className="sticky-top" collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <Navbar
+      className="sticky-top"
+      collapseOnSelect
+      expand="lg"
+      bg="dark"
+      variant="dark"
+    >
       <Container className="m-auto p-3">
         <Navbar.Brand href="/home">
           <img
@@ -22,9 +28,9 @@ export const NavbarEasy = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav>
-						<Nav.Link href="/Quienes Somos">Quienes Somos</Nav.Link>
+            <Nav.Link href="/Quienes Somos">Quienes Somos</Nav.Link>
             <Nav.Link href="/pricing">Precios</Nav.Link>
-            <Nav.Link href="/admin">Iniciar Sesión</Nav.Link>
+            <Nav.Link href="/dashboard">Iniciar Sesión</Nav.Link>
           </Nav>
         </Navbar.Collapse>
         <Nav>
