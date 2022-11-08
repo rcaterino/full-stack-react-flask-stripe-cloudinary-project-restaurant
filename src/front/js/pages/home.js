@@ -13,13 +13,13 @@ export const Home = () => {
   }, []);
 
   return (
-    <>
+    <div className="home">
       <Navbar />
       <h1 className="text-center">Bienvenido a Portal 10</h1>
       <div className="bodyMenu">
         <Menu />
       </div>
       <Footer />
-    </>
+    </div>
   );
 };

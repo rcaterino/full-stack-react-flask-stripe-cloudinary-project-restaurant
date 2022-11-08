@@ -66,7 +66,7 @@ class User(db.Model):
             "phone": self.phone,
             "user_type": self.user_type,
             "address": list(map(lambda x: x.serialize(), self.addresses_relation)),
-            #"orders": list(map(lambda x: x.serialize(), self.order_relation)),
+            "orders": list(map(lambda x: x.serialize(), self.order_relation)),
             "allergen": list(map(lambda x: x.serialize(), self.allergen_relation)),
             # do not serialize the password, its a security breach
         }
@@ -117,6 +117,7 @@ class Product(db.Model):
     active = db.Column(db.Boolean, unique=False, nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey("category.id"), nullable=False)
     image_url = db.Column(db.String(500), unique=False, nullable=True)
+    ingredient_relation = db.relationship("Ingredients", backref='product', lazy=True)
     order_detail_relation = db.relationship("Order_Detail", backref='product', lazy=True)
 
     def __repr__(self):
@@ -131,7 +132,8 @@ class Product(db.Model):
             "active": self.active,
             "image_url": self.image_url,
             "category_id": self.category_id,
-            "category": Category.query.get(self.category_id).name
+            "category": Category.query.get(self.category_id).name,
+            "ingredients": Ingredients.query.get(self.ingredients_id).description,
         }
 
  #---------------------------------------------------------------------------------
@@ -141,9 +143,10 @@ class Ingredients(db.Model):
     is_extra = db.Column(db.Boolean, unique=False, nullable=False)
     is_removable = db.Column(db.Boolean, unique=False, nullable=False)
     price = db.Column(db.Float, unique=False)
+    product_id = db.Column(db.Integer, db.ForeignKey("product.id"), nullable=False)
     
     def __repr__(self):
-        return f'<Product {self.name}>'
+        return f'<Product {self.description}>'
     
     def serialize(self):
         return{

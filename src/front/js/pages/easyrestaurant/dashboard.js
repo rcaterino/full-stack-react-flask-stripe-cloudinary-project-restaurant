@@ -20,12 +20,15 @@ import ListItemText from "@material-ui/core/ListItemText";
 import {
   Category,
   ExitToApp,
+  ListAlt,
   LocalPizza,
   Motorcycle,
   PeopleAlt,
   RateReview,
+  Receipt,
   Store,
   ViewQuilt,
+  Warning,
 } from "@material-ui/icons";
 
 import { Cocina } from "./cocina";
@@ -171,7 +174,7 @@ export const Dashboard = () => {
           </ListItem>
           <ListItem button component={Link} to="/dashboard/cocina">
             <ListItemIcon>
-              <LocalPizza />
+              <Receipt />
             </ListItemIcon>
             <ListItemText primary="Pedidos" />
           </ListItem>
@@ -181,6 +184,7 @@ export const Dashboard = () => {
             </ListItemIcon>
             <ListItemText primary="Clientes" />
           </ListItem>
+          
           <ListItem button component={Link} to="/dashboard/tiendas">
             <ListItemIcon>
               <Store />
@@ -193,17 +197,23 @@ export const Dashboard = () => {
             </ListItemIcon>
             <ListItemText primary="Categorias" />
           </ListItem>
-          <ListItem button component={Link} to="/dashboard/repartidores">
+          <ListItem button component={Link} to="/dashboard/alergenos">
             <ListItemIcon>
-              <Motorcycle />
+              <Warning />
             </ListItemIcon>
-            <ListItemText primary="Repartidores" />
+            <ListItemText primary="Alergenos" />
           </ListItem>
-          <ListItem button component={Link} to="/dashboard/reseñas">
+          <ListItem button component={Link} to="/dashboard/ingredientes">
             <ListItemIcon>
-              <RateReview />
+              <ListAlt />
             </ListItemIcon>
-            <ListItemText primary="Reseñas" />
+            <ListItemText primary="Ingredientes" />
+          </ListItem>
+          <ListItem button component={Link} to="/dashboard/productos">
+            <ListItemIcon>
+              <LocalPizza />
+            </ListItemIcon>
+            <ListItemText primary="Productos" />
           </ListItem>
           <ListItem button component={Link} to="/home">
             <ListItemIcon>
