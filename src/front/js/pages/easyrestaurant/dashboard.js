@@ -22,9 +22,7 @@ import {
   ExitToApp,
   ListAlt,
   LocalPizza,
-  Motorcycle,
   PeopleAlt,
-  RateReview,
   Receipt,
   Store,
   ViewQuilt,
@@ -38,12 +36,14 @@ import { Categorias } from "./categorias";
 import { Productos } from "./productos";
 import { Clientes } from "./clientes";
 import { Correlativos } from "./correlativos";
+import Main from "./Main";
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    background: "rgb(240,242,245)",
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -99,7 +99,7 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    padding: theme.spacing(2),
   },
 }));
 
@@ -166,11 +166,11 @@ export const Dashboard = () => {
         </div>
         <Divider />
         <List>
-          <ListItem button component={Link} to="/dashboard">
+          <ListItem button component={Link} to="/dashboard/main">
             <ListItemIcon>
               <ViewQuilt />
             </ListItemIcon>
-            <ListItemText primary="Tablero" />
+            <ListItemText primary="Dashboard" />
           </ListItem>
           <ListItem button component={Link} to="/dashboard/cocina">
             <ListItemIcon>
@@ -184,7 +184,7 @@ export const Dashboard = () => {
             </ListItemIcon>
             <ListItemText primary="Clientes" />
           </ListItem>
-          
+
           <ListItem button component={Link} to="/dashboard/tiendas">
             <ListItemIcon>
               <Store />
@@ -226,6 +226,7 @@ export const Dashboard = () => {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Routes>
+          <Route element={<Main />} path="/main" />
           <Route element={<Cocina />} path="/cocina" />
           <Route element={<Alergenos />} path="/alergenos" />
           <Route element={<Ingredientes />} path="/ingredientes" />

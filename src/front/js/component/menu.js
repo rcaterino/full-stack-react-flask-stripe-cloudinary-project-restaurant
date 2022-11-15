@@ -12,6 +12,12 @@ export const Menu = () => {
     actions.getAllCategories();
   }, []);
 
+  let propiedades = {};
+  const carta = store.categories.map((atributos) => {
+    propiedades = Object.getOwnPropertyNames(atributos);
+  });
+  console.log(propiedades);
+
   const handlePress = (e, product) => {
     toast.success("Se ha añadido a carrito!", {
       position: "bottom-left",
@@ -26,7 +32,7 @@ export const Menu = () => {
     let Car = [...store.carrito];
     let Total = store.total + product.price;
     actions.setTotal(Total);
-   
+
     Car.push({
       name: product.name,
       id: product.id,

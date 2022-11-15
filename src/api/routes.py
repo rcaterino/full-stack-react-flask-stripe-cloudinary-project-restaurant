@@ -466,8 +466,8 @@ def putEndOrder(id):
 #Geting order detail by client id
 @api.route('/orderinprocess/<int:id>', methods=["GET"])
 def getOrderInProcess(id):
-    order_query = Order.query.get(id)
-    return jsonify(order_query.serialize()),200
+    order_query = list(Order.query.get(id))
+    return jsonify([order_query.serialize()]),200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():

@@ -1,7 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
 import { Context } from "../../store/appContext";
-import { FooterEasy } from "../../component/easyrestaurant/footer";
-import { NavbarAdmin } from "../../component/easyrestaurant/navbarAdmin";
 
 export const Categorias = () => {
   const { store, actions } = useContext(Context);

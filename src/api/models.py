@@ -117,7 +117,7 @@ class Product(db.Model):
     active = db.Column(db.Boolean, unique=False, nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey("category.id"), nullable=False)
     image_url = db.Column(db.String(500), unique=False, nullable=True)
-    ingredient_relation = db.relationship("Ingredients", backref='product', lazy=True)
+    #ingredient_relation = db.relationship("Ingredients", backref='product', lazy=True)
     order_detail_relation = db.relationship("Order_Detail", backref='product', lazy=True)
 
     def __repr__(self):
@@ -133,7 +133,7 @@ class Product(db.Model):
             "image_url": self.image_url,
             "category_id": self.category_id,
             "category": Category.query.get(self.category_id).name,
-            "ingredients": Ingredients.query.get(self.ingredients_id).description,
+            #"ingredients": Ingredients.query.get(self.ingredients_id).description,
         }
 
  #---------------------------------------------------------------------------------
@@ -143,7 +143,7 @@ class Ingredients(db.Model):
     is_extra = db.Column(db.Boolean, unique=False, nullable=False)
     is_removable = db.Column(db.Boolean, unique=False, nullable=False)
     price = db.Column(db.Float, unique=False)
-    product_id = db.Column(db.Integer, db.ForeignKey("product.id"), nullable=False)
+    #product_id = db.Column(db.Integer, db.ForeignKey("product.id"), nullable=False)
     
     def __repr__(self):
         return f'<Product {self.description}>'

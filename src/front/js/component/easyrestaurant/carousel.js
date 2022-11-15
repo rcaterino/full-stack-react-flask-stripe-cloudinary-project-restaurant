@@ -3,7 +3,7 @@ import React from "react";
 export const CarouselHome = () => {
   return (
     <div id="myCarousel" className="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-indicators">
+      <div className="carousel-indicators">
         <button
           type="button"
           data-bs-target="#myCarousel"
