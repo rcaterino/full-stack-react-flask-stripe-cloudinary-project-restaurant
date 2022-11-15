@@ -273,6 +273,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           .then((res) => res.json())
           .then((categories) => {
             setStore({ categories: categories });
+            console.log(getStore().categories)
           })
           .catch((error) => {
             console.error("Error:", error);

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 export const CarouselHome = () => {
   return (
@@ -26,7 +27,7 @@ export const CarouselHome = () => {
         ></button>
       </div>
       <div className="carousel-inner">
-        <div className="carousel-item active">
+        <div className="myCarousel carousel-item active">
           <svg
             className="bd-placeholder-img"
             width="100%"
@@ -36,26 +37,26 @@ export const CarouselHome = () => {
             preserveAspectRatio="xMidYMid slice"
             focusable="false"
           >
-            <rect width="100%" height="100%" fill="#777" />
+            <img width="100%" height="100%" fill="#777" />
           </svg>
 
           <div className="container">
-            <div className="carousel-caption text-start">
-              <h1>Easy Restaurant</h1>
-              <p>
-                Si tus clientes tienen que esperar que alguien los atienda para
-                poder realizar un pedido en tu restaurante, estás tardando
-                demasaido en atenderlos.
+            <div className="carousel-caption text-start mb-5" >
+              <h1 className="Letra">Portal 10</h1>
+              <p className="Letra">
+                La mejor calidad en nuestras Pizzas
               </p>
               <p>
+              <Link to="/portal10/cocina">
                 <a className="btn btn-lg btn-primary" href="#">
-                  ¡Regístrate ya!
+                  Ir al Menu
                 </a>
+                </Link>
               </p>
             </div>
           </div>
         </div>
-        <div className="carousel-item">
+        <div className=" myCarousel carousel-item">
           <svg
             className="bd-placeholder-img"
             width="100%"
@@ -65,28 +66,29 @@ export const CarouselHome = () => {
             preserveAspectRatio="xMidYMid slice"
             focusable="false"
           >
-            <rect width="100%" height="100%" fill="#777" />
+
+            <img width="100%" height="100%" fill="#777" />
           </svg>
 
           <div className="container">
             <div className="carousel-caption">
               <h1>
-                Tu cliente pide y tu recibes el pedido en cocina directamente
+                Empanadas Argentinas al mejor precio
               </h1>
               <p>
-                Así como lo lees, con Easy Restaurant, tus clientes pueden
-                realizar el pedido sin esperas y lo recibirás directamente en
-                cocina.
+                Los ingredientes mas frescos para nuestros clientes
               </p>
               <p>
+              <Link to="/portal10/categorias">
                 <a className="btn btn-lg btn-primary" href="#">
-                  Learn more
+                  Ir al carrito
                 </a>
+                </Link>
               </p>
             </div>
           </div>
         </div>
-        <div className="carousel-item">
+        <div className=" myCarousel carousel-item">
           <svg
             className="bd-placeholder-img"
             width="100%"
@@ -96,21 +98,21 @@ export const CarouselHome = () => {
             preserveAspectRatio="xMidYMid slice"
             focusable="false"
           >
-            <rect width="100%" height="100%" fill="#777" />
+            <img width="100%" height="100%" fill="#777" />
           </svg>
 
           <div className="container">
             <div className="carousel-caption text-end">
-              <h1>One more for good measure.</h1>
+              <h1></h1>
               <p>
-                Fácil, rápido, sin colas, sin pasar por caja, tu cliente
-                recibirá su pedido realmente rápido y para ti será mucho más
-                facil gestionar la cocina y llevar el orden de los pedidos
+                Sigamos con tu marca personal, tus productos estrella
               </p>
               <p>
+                <Link to="/portal10/productos">
                 <a className="btn btn-lg btn-primary" href="#">
-                  Browse gallery
+                  Modificar productos
                 </a>
+                </Link>
               </p>
             </div>
           </div>

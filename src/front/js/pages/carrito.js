@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/carrito.css";
+import { Header, Image, Table } from 'semantic-ui-react'
 
 import { Navbar } from "../component/navbar.js";
 import { ToastContainer, toast } from "react-toastify";
@@ -17,6 +18,7 @@ export const Carrito = () => {
   }
 
   useEffect(() => {
+    actions.createOrder();
     actions.getCarrito();
     store.carrito;
     actions.getTotal();
@@ -60,38 +62,57 @@ export const Carrito = () => {
       <Navbar />
       <div className="container align-items-center mt-3">
         <div className="col m-auto">
-          <div className="text-center">
+          <div className="Letra text-center">
             <h2>Finalizar orden de preparación</h2>
             <p className="lead">Tu orden de preparación es la siguiente:</p>
           </div>
-
           <div className="row g-5">
             <div className="col-xs-4 md-8 col-lg-12  order-md-last">
-              <h4 className=" justify-content-between mb-3">
-                <span className="text-primary">Tus productos: </span>
-                <span className="badge bg-success rounded-pill">
+              <h4 className=" d-flex justify-content-center ">
+                <p >Tus productos: </p>
+                <p className="badge bg-success rounded-pill">
                   {store.carrito.length}
-                </span>
+                </p>
               </h4>
               <ul className="list-group mb-3">
                 {store.carrito.length > 0 &&
                   store.carrito.map((item) => {
                     return (
                       <>
-                        <li className="list-group-item d-flex justify-content-between lh-sm">
-                          <div key={item.id} className="col">
-                            <h6 className="my-0">{item.name}</h6>
-                            <small className="text">{item.description}</small>
-                          </div>
-                          <div className="text col">€ {item.price}</div>
-                          <button
-                            type="button"
-                            className="btn-close"
-                            onClick={(e) => {
-                              deleteClick(item.storeId, item.price);
-                            }}
-                          ></button>
-                        </li>
+                        <Table basic='very' celled collapsing className="tableBody">
+                          <Table.Header>
+                            <Table.Row>
+                              <Table.HeaderCell className="tableHead">Producto</Table.HeaderCell>
+                              <Table.HeaderCell className="tableHead">Precio </Table.HeaderCell>
+                            </Table.Row>
+                          </Table.Header>
+
+                          <Table.Body  >
+                            <Table.Row >
+                              <Table.Cell >
+                                <Header as='h4' image className="d-flex justify-content">
+                                  <img
+                                    src={item.image_url}
+                                    className="imgcloudCarrito img-fluid "
+
+                                    alt="..."
+                                  />
+
+                                  <Header.Subheader>{item.description}</Header.Subheader>
+
+                                </Header>
+                              </Table.Cell>
+                              <h4>${item.price}</h4>
+                              <button
+                                type="button"
+                                className="btn-close"
+                                onClick={(e) => {
+                                  deleteClick(item.storeId, item.price);
+                                }}
+                              ></button>
+                            </Table.Row>
+                          </Table.Body>
+                        </Table>
                       </>
                     );
                   })}
@@ -118,27 +139,18 @@ export const Carrito = () => {
                     </button>
                   </div>
                 </Link>) : (
-                <div class="accordion accordion-flush" id="accordionFlushExample">
-                  <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingOne">
-                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne" onClick={handleClick}>
-                        Dar por finalizado el pedido
-                      </button>
-                    </h2>
-                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                      <Link to="/checkout">
-                        <div className="d-grid gap-2">
-                          <button
-                            className="button1"
-                            type="submit"
-                          >
-                            Continuar al pago
-                          </button>
-                        </div>
-                      </Link>
-                    </div>
+
+                <Link to="/checkout">
+                  <div className="d-grid gap-2">
+                    <button
+                      className="button1"
+                      type="submit"
+                    >
+                      Continuar al pago
+                    </button>
                   </div>
-                </div>
+                </Link>
+
               )}
             </div>
           </div>
@@ -155,13 +167,22 @@ export const Carrito = () => {
         draggable
         pauseOnHover
       />
-      <div className="m-auto">
-        <button className="button1"> Eliminar carrito
-          <div class="icon">
-            <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg>
-          </div>
+      <div className="d-flex justify-content-center mt-5 mb-5">
+        <button
+          className="button1"
+          type="submit"
+          onClick={deleteCarrito}
+        >
+          Eliminar Carrito
         </button>
       </div>
+      <a
+        href="https://acortar.link/hp6ar1"
+        className="float"
+        target="_blank"
+      >
+        <i className="fa fa-whatsapp my-float"></i>
+      </a>
       <Footer />
     </>
   );

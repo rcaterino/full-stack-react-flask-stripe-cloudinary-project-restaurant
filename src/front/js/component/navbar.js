@@ -23,7 +23,7 @@ export const Navbar = () => {
       store.token === null ||
       store.token === "" ||
       store.token === undefined ? (
-        <nav className="navbar navbar-dark sticky-top navbar-expand-lg">
+        <nav className=" navbar navbar-dark sticky-top navbar-expand-lg">
           <div className="container-fluid">
             <div className="col-5">
               <Link to="/">

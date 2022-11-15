@@ -33,6 +33,7 @@ export const Menu = () => {
       storeId: uuidv4(),
       description: product.description,
       price: product.price,
+      image_url: product.image_url,
     });
     actions.setCarrito(Car);
   };
@@ -58,7 +59,7 @@ export const Menu = () => {
                   <div className="col-md-4">
                     <img
                       src={producto.image_url}
-                      className="imgcloud img-fluid rounded-start"
+                      className="imgcloud img-fluid "
                       alt="..."
                     />
                   </div>
