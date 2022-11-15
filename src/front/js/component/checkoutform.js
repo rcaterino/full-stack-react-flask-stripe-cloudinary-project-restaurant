@@ -59,7 +59,7 @@ export default function CheckOutForm() {
       confirmParams: {
         // Make sure to change this to your payment completion page
         return_url:
-          "https://3000-rcaterino-easyrestauran-2eafpev2m0q.ws-eu75.gitpod.io/pagocompletado",
+          "https://3000-rcaterino-easyrestauran-rqsrcq2c81o.ws-eu75.gitpod.io/pagocompletado",
       },
     });
 

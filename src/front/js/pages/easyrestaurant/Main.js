@@ -13,8 +13,8 @@ export default function Main() {
   return (
     <div>
       <Container>
-        {/* Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop */}
-        {/* <Row>
+         Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop 
+         <Row>
           <Col className="rounded shadow bg-light m-2 p-3 m-auto" xs={6} md={5}>
             <h6>Ventas Últimos 7 días</h6>
             <VentasDiarias />
@@ -22,7 +22,7 @@ export default function Main() {
           <Col className="rounded shadow bg-light m-2 p-3 m-auto" xs={6} md={5}>
             <PedidosDiarios />
           </Col>
-        </Row> */}
+        </Row> 
         <Row className="m-2 p-3 m-auto">
           <Col>
             <Orders />
