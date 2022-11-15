@@ -258,7 +258,10 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
           const data = await resp.json();
           sessionStorage.setItem("token", data.access_token);
-          sessionStorage.setItem("restaurant_data", data.restaurant_data);
+          sessionStorage.setItem(
+            "restaurant_data",
+            JSON.stringify(data.restaurant_data)
+          );
           setStore({
             token: data.access_token,
             user_data: data.user_data,

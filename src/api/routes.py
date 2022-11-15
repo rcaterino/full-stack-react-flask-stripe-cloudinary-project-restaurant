@@ -204,7 +204,7 @@ def create_restaurant_token():
     restaurant = query.serialize()
     access_token = create_access_token(identity=restaurant['email'])
     print(access_token)
-    return jsonify(access_token=access_token, user_data = restaurant), 200
+    return jsonify(access_token=access_token, restaurant_data = restaurant), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 # #create a new user in db
 @api.route('/register', methods=['POST'])
