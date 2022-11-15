@@ -16,8 +16,8 @@ export const Home = () => {
   return (
     <>
       <Navbar />
-      {/* <h1 className="Letra text-center">Bienvenido a Portal 10</h1> */}
-      <CarouselHome />
+       <h1 className="Letra text-center">Bienvenido a Portal 10</h1> 
+      {/* <CarouselHome /> */}
       <div className="bodyMenu">
         <Menu />
       </div>
