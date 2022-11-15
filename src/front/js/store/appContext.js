@@ -33,6 +33,7 @@ const injectContext = (PassedComponent) => {
       state.store.carrito = carrito2 ? carrito2 : [];
       state.actions.getTokenFromSession(); // <---- calling this function from the flux.js actions
       state.actions.getUserDataFromSession();
+      state.actions.getOrder();
     }, []);
 
     // The initial value for the context is not null anymore, but the current state of this component,

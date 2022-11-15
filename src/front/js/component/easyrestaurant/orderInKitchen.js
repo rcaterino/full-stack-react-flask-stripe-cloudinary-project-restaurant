@@ -29,7 +29,7 @@ export const OrderInKitchen = () => {
       store.order == null ||
       store.order == "" ||
       store.order == undefined ? (
-        <div className="col-10 bg-light m-auto align-items-center">
+        <div className="rounded shadow m-auto align-items-center">
           <Alert variant="danger">
             <Alert.Heading>
               Oh no, ¡en este momento no tenemos pedidos para preparar!
@@ -43,45 +43,43 @@ export const OrderInKitchen = () => {
           </Alert>
         </div>
       ) : (
-        <div className="col-10 m-auto bg-light">
-          <CardGroup>
-            <Row xs={1} md={2} className="g-4">
-              {store.order.map((order) => (
-                <div>
-                  <Card bg="warning">
-                    <Card.Body>
-                      <Card.Title>
-                        <h1>Pedido Número: {order.order_id}</h1>
-                      </Card.Title>
-                      <Card.Text>
-                        <ListGroup>
-                          {order.order_detail.map((item) => (
-                            <>
-                              <ListGroup.Item className="bg-danger text-white">
-                                <p>{item.product_name}</p>
-                              </ListGroup.Item>
-                            </>
-                          ))}
-                          ,
-                        </ListGroup>
-                      </Card.Text>
-                      <Button
-                        className="p-3"
-                        variant="success"
-                        onClick={(e) => {
-                          const orderToDelete = order.order_id;
-                          endOrder(orderToDelete);
-                        }}
-                      >
-                        <h6>Entregar pedido</h6>
-                      </Button>
-                    </Card.Body>
-                  </Card>
-                </div>
-              ))}
-            </Row>
-          </CardGroup>
-        </div>
+        <CardGroup>
+          <Row xs={1} md={2} lg={3} className="g-4">
+            {store.order.map((order) => (
+              <div>
+                <Card bg="warning">
+                  <Card.Body>
+                    <Card.Title>
+                      <h1>Pedido Número: {order.order_id}</h1>
+                    </Card.Title>
+                    <Card.Text>
+                      <ListGroup>
+                        {order.order_detail.map((item) => (
+                          <>
+                            <ListGroup.Item className="bg-danger text-white">
+                              <p>{item.product_name}</p>
+                            </ListGroup.Item>
+                          </>
+                        ))}
+                        ,
+                      </ListGroup>
+                    </Card.Text>
+                    <Button
+                      className="p-1"
+                      variant="success"
+                      onClick={(e) => {
+                        const orderToDelete = order.order_id;
+                        endOrder(orderToDelete);
+                      }}
+                    >
+                      <h6>Entregar pedido</h6>
+                    </Button>
+                  </Card.Body>
+                </Card>
+              </div>
+            ))}
+          </Row>
+        </CardGroup>
       )}
     </>
   );

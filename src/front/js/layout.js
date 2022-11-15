@@ -49,14 +49,7 @@ const Layout = () => {
             <Route element={<PaymantComplete />} path="/pagocompletado" />
             // EASY RESTAURANT
             <Route element={<HomeEasyRest />} path="/home" />
-            <Route element={<Dashboard />} path="/admin/" />
-            <Route element={<Cocina />} path="/admin/cocina" />
-            <Route element={<Alergenos />} path="/admin/alergenos" />
-            <Route element={<Ingredientes />} path="/admin/ingredientes" />
-            <Route element={<Categorias />} path="/admin/categorias" />
-            <Route element={<Productos />} path="/admin/productos" />
-            <Route element={<Clientes />} path="/admin/clientes" />
-            <Route element={<Correlativos />} path="/admin/correlativos" />
+            <Route element={<Dashboard />} path="/dashboard/*" />
             <Route element={<SubirImages />} path="/Images" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>

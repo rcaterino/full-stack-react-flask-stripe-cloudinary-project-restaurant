@@ -4,12 +4,19 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
+import { NavLink } from "react-router-dom";
 
 export const NavbarEasy = () => {
   return (
-    <Navbar className="sticky-top" collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <Navbar
+      className="sticky-top"
+      collapseOnSelect
+      expand="lg"
+      bg="dark"
+      variant="dark"
+    >
       <Container className="m-auto p-3">
-        <Navbar.Brand href="/home">
+        <Navbar.Brand to="/home">
           <img
             alt=""
             src=""
@@ -22,9 +29,9 @@ export const NavbarEasy = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav>
-						<Nav.Link href="/Quienes Somos">Quienes Somos</Nav.Link>
-            <Nav.Link href="/pricing">Precios</Nav.Link>
-            <Nav.Link href="/admin">Iniciar Sesión</Nav.Link>
+            <NavLink to="/Quienes Somos">Quienes Somos</NavLink>
+            <NavLink to="/pricing">Precios</NavLink>
+            <NavLink to="/dashboard/login">Iniciar Sesión</NavLink>
           </Nav>
         </Navbar.Collapse>
         <Nav>

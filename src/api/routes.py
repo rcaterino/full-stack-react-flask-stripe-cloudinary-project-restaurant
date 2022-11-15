@@ -203,7 +203,8 @@ def create_restaurant_token():
     query = Restaurant.query.filter_by(email = info_request['email'], password = info_request['password']).first()
     restaurant = query.serialize()
     access_token = create_access_token(identity=restaurant['email'])
-    return jsonify(access_token=access_token, user_data = restaurant), 200
+    print(access_token)
+    return jsonify(access_token=access_token, restaurant_data = restaurant), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 # #create a new user in db
 @api.route('/register', methods=['POST'])
@@ -466,7 +467,7 @@ def putEndOrder(id):
 #Geting order detail by client id
 @api.route('/orderinprocess/<int:id>', methods=["GET"])
 def getOrderInProcess(id):
-    order_query = Order.query.get(id)
+    order_query = list(Order.query.get(id))
     return jsonify([order_query.serialize()]),200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 @api.route('/hello', methods=['POST', 'GET'])

@@ -75,7 +75,7 @@ export const Featurettes = () => {
       <div className="row featurette">
         <div className="col-md-7">
           <h2 className="featurette-heading fw-normal lh-1">
-            And lastly, this one. <span class="text-muted">Checkmate.</span>
+            And lastly, this one. <span className="text-muted">Checkmate.</span>
           </h2>
           <p className="lead">
             And yes, this is the last block of representative placeholder
