@@ -203,6 +203,7 @@ def create_restaurant_token():
     query = Restaurant.query.filter_by(email = info_request['email'], password = info_request['password']).first()
     restaurant = query.serialize()
     access_token = create_access_token(identity=restaurant['email'])
+    print(access_token)
     return jsonify(access_token=access_token, user_data = restaurant), 200
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 # #create a new user in db

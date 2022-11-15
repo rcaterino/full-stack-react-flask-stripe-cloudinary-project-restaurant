@@ -31,7 +31,7 @@ export const NavbarEasy = () => {
           <Nav>
             <NavLink to="/Quienes Somos">Quienes Somos</NavLink>
             <NavLink to="/pricing">Precios</NavLink>
-            <NavLink to="/dashboard/main">Iniciar Sesión</NavLink>
+            <NavLink to="/dashboard/login">Iniciar Sesión</NavLink>
           </Nav>
         </Navbar.Collapse>
         <Nav>

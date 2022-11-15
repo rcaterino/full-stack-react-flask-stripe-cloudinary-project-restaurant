@@ -1,5 +1,6 @@
-import React from "react";
-import { Link, Route, Routes } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { Context } from "../../store/appContext";
+import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import clsx from "clsx";
 
 import { makeStyles, useTheme } from "@material-ui/core/styles";
@@ -37,6 +38,7 @@ import { Productos } from "./productos";
 import { Clientes } from "./clientes";
 import { Correlativos } from "./correlativos";
 import Main from "./Main";
+import { LoginEasy } from "./LoginEasy";
 
 const drawerWidth = 240;
 
@@ -107,6 +109,12 @@ export const Dashboard = () => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const { store, actions } = useContext(Context);
+  let navigate = useNavigate();
+
+  useEffect(() => {
+    store.user_data;
+  }, []);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -117,125 +125,137 @@ export const Dashboard = () => {
   };
 
   return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, {
-              [classes.hide]: open,
+    <div>
+      {!store.token ||
+      store.token === null ||
+      store.token === "" ||
+      store.token === undefined ? (
+        <div>
+          <LoginEasy />
+        </div>
+      ) : (
+        <div className={classes.root}>
+          <CssBaseline />
+          <AppBar
+            position="fixed"
+            className={clsx(classes.appBar, {
+              [classes.appBarShift]: open,
             })}
           >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap>
-            Easy Restaurant - Admin Panel
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        variant="permanent"
-        className={clsx(classes.drawer, {
-          [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open,
-        })}
-        classes={{
-          paper: clsx({
-            [classes.drawerOpen]: open,
-            [classes.drawerClose]: !open,
-          }),
-        }}
-      >
-        <div className={classes.toolbar}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "rtl" ? (
-              <ChevronRightIcon />
-            ) : (
-              <ChevronLeftIcon />
-            )}
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-          <ListItem button component={Link} to="/dashboard/main">
-            <ListItemIcon>
-              <ViewQuilt />
-            </ListItemIcon>
-            <ListItemText primary="Dashboard" />
-          </ListItem>
-          <ListItem button component={Link} to="/dashboard/cocina">
-            <ListItemIcon>
-              <Receipt />
-            </ListItemIcon>
-            <ListItemText primary="Pedidos" />
-          </ListItem>
-          <ListItem button component={Link} to="/dashboard/clientes">
-            <ListItemIcon>
-              <PeopleAlt />
-            </ListItemIcon>
-            <ListItemText primary="Clientes" />
-          </ListItem>
+            <Toolbar>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                onClick={handleDrawerOpen}
+                edge="start"
+                className={clsx(classes.menuButton, {
+                  [classes.hide]: open,
+                })}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Typography variant="h6" noWrap>
+                Easy Restaurant - Admin Panel
+              </Typography>
+            </Toolbar>
+          </AppBar>
+          <Drawer
+            variant="permanent"
+            className={clsx(classes.drawer, {
+              [classes.drawerOpen]: open,
+              [classes.drawerClose]: !open,
+            })}
+            classes={{
+              paper: clsx({
+                [classes.drawerOpen]: open,
+                [classes.drawerClose]: !open,
+              }),
+            }}
+          >
+            <div className={classes.toolbar}>
+              <IconButton onClick={handleDrawerClose}>
+                {theme.direction === "rtl" ? (
+                  <ChevronRightIcon />
+                ) : (
+                  <ChevronLeftIcon />
+                )}
+              </IconButton>
+            </div>
+            <Divider />
+            <List>
+              <ListItem button component={Link} to="/dashboard/main">
+                <ListItemIcon>
+                  <ViewQuilt />
+                </ListItemIcon>
+                <ListItemText primary="Dashboard" />
+              </ListItem>
+              <ListItem button component={Link} to="/dashboard/cocina">
+                <ListItemIcon>
+                  <Receipt />
+                </ListItemIcon>
+                <ListItemText primary="Pedidos" />
+              </ListItem>
+              <ListItem button component={Link} to="/dashboard/clientes">
+                <ListItemIcon>
+                  <PeopleAlt />
+                </ListItemIcon>
+                <ListItemText primary="Clientes" />
+              </ListItem>
 
-          <ListItem button component={Link} to="/dashboard/tiendas">
-            <ListItemIcon>
-              <Store />
-            </ListItemIcon>
-            <ListItemText primary="Tiendas" />
-          </ListItem>
-          <ListItem button component={Link} to="/dashboard/categorias">
-            <ListItemIcon>
-              <Category />
-            </ListItemIcon>
-            <ListItemText primary="Categorias" />
-          </ListItem>
-          <ListItem button component={Link} to="/dashboard/alergenos">
-            <ListItemIcon>
-              <Warning />
-            </ListItemIcon>
-            <ListItemText primary="Alergenos" />
-          </ListItem>
-          <ListItem button component={Link} to="/dashboard/ingredientes">
-            <ListItemIcon>
-              <ListAlt />
-            </ListItemIcon>
-            <ListItemText primary="Ingredientes" />
-          </ListItem>
-          <ListItem button component={Link} to="/dashboard/productos">
-            <ListItemIcon>
-              <LocalPizza />
-            </ListItemIcon>
-            <ListItemText primary="Productos" />
-          </ListItem>
-          <ListItem button component={Link} to="/home">
-            <ListItemIcon>
-              <ExitToApp />
-            </ListItemIcon>
-            <ListItemText primary="Logout" />
-          </ListItem>
-        </List>
-      </Drawer>
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        <Routes>
-          <Route element={<Main />} path="/main" />
-          <Route element={<Cocina />} path="/cocina" />
-          <Route element={<Alergenos />} path="/alergenos" />
-          <Route element={<Ingredientes />} path="/ingredientes" />
-          <Route element={<Categorias />} path="/categorias" />
-          <Route element={<Productos />} path="/productos" />
-          <Route element={<Clientes />} path="/clientes" />
-          <Route element={<Correlativos />} path="/correlativos" />
-        </Routes>
-      </main>
+              <ListItem button component={Link} to="/dashboard/tiendas">
+                <ListItemIcon>
+                  <Store />
+                </ListItemIcon>
+                <ListItemText primary="Tiendas" />
+              </ListItem>
+              <ListItem button component={Link} to="/dashboard/categorias">
+                <ListItemIcon>
+                  <Category />
+                </ListItemIcon>
+                <ListItemText primary="Categorias" />
+              </ListItem>
+              <ListItem button component={Link} to="/dashboard/alergenos">
+                <ListItemIcon>
+                  <Warning />
+                </ListItemIcon>
+                <ListItemText primary="Alergenos" />
+              </ListItem>
+              <ListItem button component={Link} to="/dashboard/ingredientes">
+                <ListItemIcon>
+                  <ListAlt />
+                </ListItemIcon>
+                <ListItemText primary="Ingredientes" />
+              </ListItem>
+              <ListItem button component={Link} to="/dashboard/productos">
+                <ListItemIcon>
+                  <LocalPizza />
+                </ListItemIcon>
+                <ListItemText primary="Productos" />
+              </ListItem>
+              <ListItem button component={Link} to="/home">
+                <ListItemIcon>
+                  <ExitToApp />
+                </ListItemIcon>
+                <ListItemText primary="Logout" />
+              </ListItem>
+            </List>
+          </Drawer>
+          <main className={classes.content}>
+            <div className={classes.toolbar} />
+            <Routes>
+              <Route element={<LoginEasy />} path="/login" />
+              <Route element={<Main />} path="/main" />
+              <Route element={<Cocina />} path="/cocina" />
+              <Route element={<Alergenos />} path="/alergenos" />
+              <Route element={<Ingredientes />} path="/ingredientes" />
+              <Route element={<Categorias />} path="/categorias" />
+              <Route element={<Productos />} path="/productos" />
+              <Route element={<Clientes />} path="/clientes" />
+              <Route element={<Correlativos />} path="/correlativos" />
+            </Routes>
+          </main>
+        </div>
+      )}
     </div>
   );
 };
