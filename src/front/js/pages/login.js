@@ -22,7 +22,7 @@ export const Login = () => {
   return (
     /* utilizando el operador ternario, evaluamos si la variable token dentro de store está vacía, nula o indefinida para renderizar el componente de login /
     /* en caso que si tenemos token guardado en la sesión, renderizamos el mensaje que ya el usuaio se encuentra logeado */
-    <div>
+    <div className="Login">
       <Navbar />
       {!store.token ||
       store.token === null ||
@@ -85,6 +85,9 @@ export const Login = () => {
               </form>
               <div className="d-grid gap-2 text-center">
                 <span>¿No tienes una cuenta?{"   "}</span>
+                <Link to="/loginEasy">
+            <span>Iniciar Sesion como restaurante{"   "}</span>
+            </Link >
                 <Link className="d-grid gap-2 text-center" to="/register">
                   <button type="submit" className="button1 ">
                     Registrate

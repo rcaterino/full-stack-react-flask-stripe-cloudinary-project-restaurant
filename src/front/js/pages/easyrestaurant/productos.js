@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { SubirImages } from "../../component/cloudinary";
 import { FooterEasy } from "../../component/easyrestaurant/footer";
 import { NavbarAdmin } from "../../component/easyrestaurant/navbarAdmin";
+import { Button, Checkbox, Form } from 'semantic-ui-react'
 
 export const Productos = () => {
   const { store, actions } = useContext(Context);
@@ -21,14 +22,110 @@ export const Productos = () => {
 
   function handleClick() {
     actions.createProduct(name, description, price, category);
-    navigate("/admin");
+    navigate("/producto");
   }
 
   return (
     <>
+      <Form>
+        <div class=" text-center">
+          <h2>Productos</h2>
+          <p class="lead">
+            Recuerda que para incluir un producto en la carta, debes
+            seleccionar la categoría a la que pertenece.
+          </p>
+        </div>
+        <Form.Field class="needs-validation">
+          <label for="nombre" class="form-label">
+            Nombre
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            id="nombre"
+            placeholder=""
+            required
+            value={name}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+          />
+          <div class="invalid-feedback">
+            Por favor introducir un nombre para el producto.
+          </div>
+        </Form.Field>
+        <Form.Field>
+          <label for="description" class="form-label">
+            Descripción
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            id="description"
+            placeholder=""
+            required
+            value={description}
+            onChange={(e) => {
+              setDescription(e.target.value);
+            }}
+          />
+          <div class="invalid-feedback">
+            Por favor introducir una descripción del producto.
+          </div>
+        </Form.Field>
+        <Form.Field>
+          <label for="category" class="form-label">
+            Categoría
+          </label>
+          <select
+            class="form-select"
+            id="category"
+            onChange={(e) => {
+              setCategory(e.target.value);
+            }}
+            required
+          >
+            <option>Elige una categoría...</option>
+            {store.categories?.map((categoria) => (
+              <>
+                <option value={categoria.id}>
+                  {categoria.name}
+                </option>
+              </>
+            ))}
+          </select>
+          <div class="invalid-feedback">
+            Por favor seleccione una categoría.
+          </div>
+        </Form.Field>
+        <Form.Field>
 
-    
-      <div className="bg-light">
+          <label for="price" class="form-label">
+            Precio:
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            id="price"
+            placeholder=""
+            required
+            value={price}
+            onChange={(e) => {
+              setPrice(e.target.value);
+            }}
+          />
+        </Form.Field>
+        <SubirImages />
+        <Button
+                      className=" btn btn-primary btn-lg mt-5"
+                      type="submit"
+                      onClick={handleClick}
+                    >
+                      Guardar
+                    </Button>
+      </Form>
+
+      {/* <div className="bg-light">
         <div class="col-8 bg-light m-auto align-items-center">
           <div class="container  align-items-center">
             <div>
@@ -152,7 +249,7 @@ export const Productos = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

@@ -25,6 +25,7 @@ import { HomeEasyRest } from "./pages/easyrestaurant/home";
 import { Dashboard } from "./pages/easyrestaurant/dashboard";
 
 import injectContext from "./store/appContext";
+import { LoginEasy } from "./pages/easyrestaurant/LoginEasy";
 
 //create your first component
 const Layout = () => {
@@ -49,6 +50,7 @@ const Layout = () => {
             <Route element={<PaymantComplete />} path="/pagocompletado" />
             // EASY RESTAURANT
             <Route element={<HomeEasyRest />} path="/home" />
+            <Route element={<LoginEasy />} path="/loginEasy" />
             <Route element={<Dashboard />} path="/dashboard/*" />
             <Route element={<SubirImages />} path="/Images" />
             <Route element={<h1>Not found!</h1>} />

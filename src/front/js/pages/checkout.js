@@ -47,7 +47,7 @@ export const Checkout = () => {
   };
 
   return (
-    <>
+    <div className="Checkout">
       <Navbar />
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
@@ -59,6 +59,6 @@ export const Checkout = () => {
         </Elements>
       )}
       <Footer />
-    </>
+    </div>
   );
 };

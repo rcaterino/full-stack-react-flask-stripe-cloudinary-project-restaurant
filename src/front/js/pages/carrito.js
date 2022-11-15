@@ -58,7 +58,7 @@ export const Carrito = () => {
   };
 
   return (
-    <>
+    <div className="Carrito">
       <Navbar />
       <div className="container align-items-center mt-3">
         <div className="col m-auto">
@@ -184,6 +184,6 @@ export const Carrito = () => {
         <i className="fa fa-whatsapp my-float"></i>
       </a>
       <Footer />
-    </>
+    </div>
   );
 };

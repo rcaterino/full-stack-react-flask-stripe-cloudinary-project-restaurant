@@ -14,13 +14,13 @@ export const PaymantComplete = () => {
   }, []);
 
   return (
-    <>
+    <div className="PagoCompleto">
       <Navbar />
       <div className="text-center">
         <h1 className="Letra">Muchas gracias por su compra</h1>
       </div>
       <OrderDetail />
       <Footer />
-    </>
+    </div>
   );
 };

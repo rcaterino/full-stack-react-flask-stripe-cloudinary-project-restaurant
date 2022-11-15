@@ -490,8 +490,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           let resp = await fetch(
             process.env.BACKEND_URL +
-              "/api/edituser/" +
-              getStore().user_data.id,
+            "/api/edituser/" +
+            getStore().user_data.id,
             opts
           );
           if (resp.status !== 200) {
@@ -606,6 +606,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await resp.json();
+          
           setStore({ order: data });
           return true;
         } catch (error) {

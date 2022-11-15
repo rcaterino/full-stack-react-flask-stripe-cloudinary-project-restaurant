@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
-import "../../styles/home.css";
+import "../../styles/Miperfil.css";
 import UserNavBar from "../component/usernavbar";
 import { Navbar } from "../component/navbar";
 import { Footer } from "../component/footer";
@@ -27,7 +27,7 @@ export const Miperfil = () => {
   };
 
   return (
-    <div>
+    <div className="Miperfil">
       <Navbar />
       {/* <UserNavBar /> */}
       <div className="form cardR m-auto">

@@ -195,19 +195,7 @@ export const Dashboard = () => {
                 </ListItemIcon>
                 <ListItemText primary="Pedidos" />
               </ListItem>
-              <ListItem button component={Link} to="/dashboard/clientes">
-                <ListItemIcon>
-                  <PeopleAlt />
-                </ListItemIcon>
-                <ListItemText primary="Clientes" />
-              </ListItem>
 
-              <ListItem button component={Link} to="/dashboard/tiendas">
-                <ListItemIcon>
-                  <Store />
-                </ListItemIcon>
-                <ListItemText primary="Tiendas" />
-              </ListItem>
               <ListItem button component={Link} to="/dashboard/categorias">
                 <ListItemIcon>
                   <Category />
@@ -220,23 +208,35 @@ export const Dashboard = () => {
                 </ListItemIcon>
                 <ListItemText primary="Alergenos" />
               </ListItem>
-              <ListItem button component={Link} to="/dashboard/ingredientes">
-                <ListItemIcon>
-                  <ListAlt />
-                </ListItemIcon>
-                <ListItemText primary="Ingredientes" />
-              </ListItem>
               <ListItem button component={Link} to="/dashboard/productos">
                 <ListItemIcon>
                   <LocalPizza />
                 </ListItemIcon>
                 <ListItemText primary="Productos" />
               </ListItem>
+              <ListItem button component={Link} to="/dashboard/ingredientes">
+                <ListItemIcon>
+                  <ListAlt />
+                </ListItemIcon>
+                <ListItemText primary="Ingredientes" />
+              </ListItem>
               <ListItem button component={Link} to="/home">
                 <ListItemIcon>
                   <ExitToApp />
                 </ListItemIcon>
                 <ListItemText primary="Logout" />
+              </ListItem>
+              <ListItem button component={Link} to="/dashboard/clientes">
+                <ListItemIcon>
+                  <PeopleAlt />
+                </ListItemIcon>
+                <ListItemText primary="Clientes" />
+              </ListItem>
+              <ListItem button component={Link} to="/dashboard/tiendas">
+                <ListItemIcon>
+                  <Store />
+                </ListItemIcon>
+                <ListItemText primary="Tiendas" />
               </ListItem>
             </List>
           </Drawer>

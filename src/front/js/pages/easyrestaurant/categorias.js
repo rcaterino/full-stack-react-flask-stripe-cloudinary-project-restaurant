@@ -3,6 +3,7 @@ import { Context } from "../../store/appContext";
 import { Button, Checkbox, Form } from 'semantic-ui-react'
 
 
+
 export const Categorias = () => {
   const { store, actions } = useContext(Context);
   const [categoria, setCategoria] = useState("");
@@ -20,7 +21,7 @@ export const Categorias = () => {
   }
   return (
     <>
-      <Form>
+      <Form className="productform">
         <Form.Field>
           <div className="col">
             <h2>Categorías</h2>
@@ -42,7 +43,7 @@ export const Categorias = () => {
         </Form.Field>
        
         <Button
-
+         className="primary"
           type="submit"
           onClick={handleClick}
         >

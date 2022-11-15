@@ -26,9 +26,9 @@ export const OrderInKitchen = () => {
   return (
     <>
       {!store.order ||
-      store.order == null ||
-      store.order == "" ||
-      store.order == undefined ? (
+        store.order == null ||
+        store.order == "" ||
+        store.order == undefined ? (
         <div className="rounded shadow m-auto align-items-center">
           <Alert variant="danger">
             <Alert.Heading>

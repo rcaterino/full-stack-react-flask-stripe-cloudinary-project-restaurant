@@ -21,7 +21,7 @@ export const Register = () => {
   };
 
   return (
-    <>
+    <div className="Register">
       <Navbar />
       <div className="container col align-items-center">
         <form className="form cardR m-auto mt-5">
@@ -119,6 +119,6 @@ export const Register = () => {
         </form>
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
