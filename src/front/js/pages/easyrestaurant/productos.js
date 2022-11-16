@@ -23,7 +23,7 @@ export const Productos = () => {
 
   function handleClick() {
     actions.createProduct(name, description, price, category);
-    navigate("/producto");
+    navigate("/dashboard/productos");
   }
 
   return (
