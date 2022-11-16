@@ -29,7 +29,7 @@ export const OrderDetail = () => {
               <Table.Row className="d-flex text-aligne" >
                 
                 <span className="" >
-                  <h1 className="Letra" key={order.order_id}>Total:"" ${order["order_total"]}</h1>
+                  <h1 className="Letra" key={order.order_id}>Total:${order["order_total"]}</h1>
                   <h4 >Cliente: {order["client"]}</h4>
                   <h4 >Fecha: {order["order_date"]}</h4>
                 </span>
