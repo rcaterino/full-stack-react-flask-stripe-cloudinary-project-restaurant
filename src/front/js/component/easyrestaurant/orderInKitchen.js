@@ -44,10 +44,10 @@ export const OrderInKitchen = () => {
         </div>
       ) : (
         <CardGroup>
-          <Row>
+          <Row xs={1} md={2} lg={2} className="g-4">
             {store.order.map((order) => (
               <div>
-                <Card bg="warning">
+                <Card className="card-cocina " bg="warning">
                   <Card.Body>
                     <Card.Title>
                       <h1>Pedido Número: {order.order_id}</h1>

@@ -1,5 +1,5 @@
 import React from "react";
-
+import { FooterEasy } from "../../component/easyrestaurant/footer";
 import Orders from "../../component/easyrestaurant/Orders";
 
 import Container from "react-bootstrap/Container";
@@ -8,6 +8,7 @@ import Col from "react-bootstrap/Col";
 
 import PedidosDiarios from "../../component/easyrestaurant/PedidosDiarios";
 import VentasDiarias from "../../component/easyrestaurant/VentasDiarias";
+
 
 export default function Main() {
   return (
@@ -29,6 +30,7 @@ export default function Main() {
           </Col>
         </Row>
       </Container>
+      <FooterEasy />
     </div>
   );
 }

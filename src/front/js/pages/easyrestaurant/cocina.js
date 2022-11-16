@@ -2,6 +2,7 @@ import React from "react";
 
 import Alert from "react-bootstrap/Alert";
 import { OrderInKitchen } from "../../component/easyrestaurant/orderInKitchen";
+import { FooterEasy } from "../../component/easyrestaurant/footer";
 
 export const Cocina = () => {
   return (

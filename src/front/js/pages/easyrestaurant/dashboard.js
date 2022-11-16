@@ -214,30 +214,30 @@ export const Dashboard = () => {
                 </ListItemIcon>
                 <ListItemText primary="Productos" />
               </ListItem>
-              <ListItem button component={Link} to="/dashboard/ingredientes">
-                <ListItemIcon>
-                  <ListAlt />
-                </ListItemIcon>
-                <ListItemText primary="Ingredientes" />
-              </ListItem>
               <ListItem button component={Link} to="/loginEasy">
                 <ListItemIcon>
                   <ExitToApp />
                 </ListItemIcon>
                 <ListItemText primary="Logout"/>
               </ListItem>
+              {/* <ListItem button component={Link} to="/dashboard/ingredientes">
+                <ListItemIcon>
+                  <ListAlt />
+                </ListItemIcon>
+                <ListItemText primary="Ingredientes" />
+              </ListItem> */}
               <ListItem button component={Link} to="/">
                 <ListItemIcon>
                   <PeopleAlt />
                 </ListItemIcon>
                 <ListItemText primary="Clientes" />
               </ListItem>
-              <ListItem button component={Link} to="/menu">
+              {/* <ListItem button component={Link} to="/menu">
                 <ListItemIcon>
                   <Store />
                 </ListItemIcon>
                 <ListItemText primary="Tiendas" />
-              </ListItem>
+              </ListItem> */}
             </List>
           </Drawer>
           <main className={classes.content}>

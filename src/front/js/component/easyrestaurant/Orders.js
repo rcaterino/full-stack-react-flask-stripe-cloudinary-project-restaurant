@@ -47,8 +47,7 @@ export default function Orders() {
                 <TableCell>{row.order_id}</TableCell>
                 <TableCell>{row.order_date}</TableCell>
                 <TableCell>{row.client}</TableCell>
-                <TableCell>{row.paymentMethod}</TableCell>
-                <TableCell>{row.order_total}</TableCell>
+                <TableCell>${row.order_total}</TableCell>
               </TableRow>
             ))}
           </TableBody>

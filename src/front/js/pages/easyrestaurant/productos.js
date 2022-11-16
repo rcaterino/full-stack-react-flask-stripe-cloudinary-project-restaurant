@@ -7,6 +7,7 @@ import { FooterEasy } from "../../component/easyrestaurant/footer";
 import { NavbarAdmin } from "../../component/easyrestaurant/navbarAdmin";
 import { Button, Checkbox, Form } from 'semantic-ui-react'
 
+
 export const Productos = () => {
   const { store, actions } = useContext(Context);
   const [name, setName] = useState("");
@@ -26,8 +27,8 @@ export const Productos = () => {
   }
 
   return (
-    <div>
-      <Form>
+    <div className="d-flex justify-content-center">
+      <Form className="productform">
         <div class=" text-center">
           <h2>Productos</h2>
           <p class="lead">

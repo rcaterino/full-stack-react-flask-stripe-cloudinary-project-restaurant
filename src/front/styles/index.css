@@ -493,3 +493,15 @@ label {
 .logo2 {
   margin-right: 3px;
 }
+
+.card-cocina{
+  min-width: 300px;
+  max-height: 600px;
+  min-height: 400px;
+  text-align: center;
+  margin: auto;
+}
+
+.productform{
+  min-width: 800px;
+}
