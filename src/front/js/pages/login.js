@@ -30,7 +30,7 @@ export const Login = () => {
       store.token === undefined ? (
         <div className="container text-center align-items-center">
           <div className="p-3 border-0">
-            <h1 className="text-center">Iniciar Sesión</h1>
+            <h1 className="Letra text-center">Iniciar Sesión</h1>
             <div className="d-grid gap-2">
               <form className="form cardL m-auto align-middle ">
                 <div className="card_header">

@@ -70,10 +70,8 @@ export const Categorias = () => {
                     <button
                       type="button"
                       className="btn-close"
-                      onClick={(e) => {
-                        const categoriaToDelete = categoria.id;
-                        deleteCategoria(categoriaToDelete);
-                      }}
+                      onClick={deleteCategoria}
+                      
                     ></button>
                   </td>
                 </tr>
