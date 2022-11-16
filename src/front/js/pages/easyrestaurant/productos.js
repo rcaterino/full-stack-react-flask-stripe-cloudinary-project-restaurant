@@ -26,7 +26,7 @@ export const Productos = () => {
   }
 
   return (
-    <>
+    <div>
       <Form>
         <div class=" text-center">
           <h2>Productos</h2>
@@ -250,6 +250,6 @@ export const Productos = () => {
           </div>
         </div>
       </div> */}
-    </>
+    </div>
   );
 };

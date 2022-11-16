@@ -3,6 +3,7 @@ import { Context } from "../../store/appContext";
 
 import { NavbarAdmin } from "../../component/easyrestaurant/navbarAdmin";
 import { FooterEasy } from "../../component/easyrestaurant/footer";
+import { Button, Checkbox, Form } from 'semantic-ui-react'
 
 export const Alergenos = () => {
   const { store, actions } = useContext(Context);
@@ -22,23 +23,19 @@ export const Alergenos = () => {
 
   return (
     <>
-      <div className="bg-light">
-        <div className="container ">
-          <div className="col-8 bg-light m-auto align-items-center">
-            <div>
-              <div className="col">
-                <h2>Alérgenos</h2>
-                <p className="lead">
-                  Para mejorar la experiencia de compra del usuario, podemos
-                  crear alergenos que luego podremos incluir en los platos de la
-                  carta. De esta manera, si el cliente los incluye en su perfil,
-                  la aplicación le avisará cuando intente pedir un producto que
-                  puede ser perjudicial para su salud.
-                </p>
-              </div>
-              <form>
-                <div className="col align-items-center">
-                  <label className="form-label">Descripción</label>
+      <Form>
+        <Form.Field>
+          <div className="col">
+            <h2>Alérgenos</h2>
+            <p className="lead">
+              Para mejorar la experiencia de compra del usuario, podemos
+              crear alergenos que luego podremos incluir en los platos de la
+              carta. De esta manera, si el cliente los incluye en su perfil,
+              la aplicación le avisará cuando intente pedir un producto que
+              puede ser perjudicial para su salud.
+            </p>
+          </div>
+          <label className="form-label">Descripción</label>
                   <input
                     type="text"
                     className="form-control"
@@ -49,19 +46,18 @@ export const Alergenos = () => {
                       setAlergeno(e.target.value);
                     }}
                   />
-                </div>
-              </form>
-              <button
+        </Form.Field>
+        <Form.Field>
+        <button
                 className="btn btn-primary btn-lg mt-3 mb-3"
                 type="submit"
                 onClick={handleClick}
               >
                 Agregar Alergeno
               </button>
-              <div>
-                <h2>Listado de Alérgenos</h2>
-              </div>
-              <div className="container">
+        </Form.Field>
+        <Form.Field>
+        <div className="container">
                 <table className="table">
                   <thead>
                     <tr>
@@ -90,12 +86,11 @@ export const Alergenos = () => {
                   </tbody>
                 </table>
               </div>
-            </div>
-          </div>
-        </div>
+        </Form.Field>
+      </Form>
 
-        <FooterEasy />
-      </div>
+
+      <FooterEasy />
     </>
   );
 };

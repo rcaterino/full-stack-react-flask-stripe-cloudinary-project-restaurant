@@ -31,7 +31,7 @@ export const Miperfil = () => {
       <Navbar />
       {/* <UserNavBar /> */}
       <div className="form cardR m-auto">
-        <h1 className="text-center">Formulario de Registro</h1>
+        <h1 className="Letra text-center">Formulario de Registro</h1>
         <div className="d-grid gap-2">
           <label className="form-label">Nombre</label>
           <div className="d-grid gap-2">

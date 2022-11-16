@@ -220,19 +220,19 @@ export const Dashboard = () => {
                 </ListItemIcon>
                 <ListItemText primary="Ingredientes" />
               </ListItem>
-              <ListItem button component={Link} to="/home">
+              <ListItem button component={Link} to="/loginEasy">
                 <ListItemIcon>
                   <ExitToApp />
                 </ListItemIcon>
-                <ListItemText primary="Logout" />
+                <ListItemText primary="Logout"/>
               </ListItem>
-              <ListItem button component={Link} to="/dashboard/clientes">
+              <ListItem button component={Link} to="/">
                 <ListItemIcon>
                   <PeopleAlt />
                 </ListItemIcon>
                 <ListItemText primary="Clientes" />
               </ListItem>
-              <ListItem button component={Link} to="/dashboard/tiendas">
+              <ListItem button component={Link} to="/menu">
                 <ListItemIcon>
                   <Store />
                 </ListItemIcon>

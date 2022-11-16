@@ -16,6 +16,7 @@ export const OrderDetail = () => {
   useEffect(() => {
     store.order_detail;
     if (store.order_detail.length > 0) setOrder(true);
+    actions.deleteCarrito();
   }, [order]);
 
   console.log(store.order_detail);

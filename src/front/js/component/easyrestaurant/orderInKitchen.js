@@ -44,7 +44,7 @@ export const OrderInKitchen = () => {
         </div>
       ) : (
         <CardGroup>
-          <Row xs={1} md={2} lg={3} className="g-4">
+          <Row>
             {store.order.map((order) => (
               <div>
                 <Card bg="warning">

@@ -38,8 +38,7 @@ export default function Orders() {
               <TableCell>Id</TableCell>
               <TableCell>Fecha</TableCell>
               <TableCell>Cliente</TableCell>
-              <TableCell>Comentario</TableCell>
-              <TableCell align="right">Monto Pagado</TableCell>
+              <TableCell >Monto Pagado</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -48,9 +47,8 @@ export default function Orders() {
                 <TableCell>{row.order_id}</TableCell>
                 <TableCell>{row.order_date}</TableCell>
                 <TableCell>{row.client}</TableCell>
-                <TableCell>{row.order_comments}</TableCell>
                 <TableCell>{row.paymentMethod}</TableCell>
-                <TableCell align="right">{row.order_total}</TableCell>
+                <TableCell>{row.order_total}</TableCell>
               </TableRow>
             ))}
           </TableBody>

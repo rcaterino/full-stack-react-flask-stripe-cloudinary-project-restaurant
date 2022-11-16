@@ -43,7 +43,7 @@ export const Categorias = () => {
         </Form.Field>
        
         <Button
-         className="primary"
+         className="btn-primary"
           type="submit"
           onClick={handleClick}
         >
