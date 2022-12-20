@@ -73,10 +73,33 @@
 		]
 	},
 	"dependencies": {
+		"@fontsource/roboto": "^4.5.8",
+		"@fortawesome/free-solid-svg-icons": "^6.1.2",
+		"@fortawesome/react-fontawesome": "^0.2.0",
+		"@material-ui/core": "^4.12.4",
+		"@material-ui/icons": "^4.11.3",
+		"@stripe/react-stripe-js": "^1.10.0",
+		"@stripe/stripe-js": "^1.37.0",
+		"bootstrap": "^5.2.2",
+		"chart.js": "^3.9.1",
+		"cloudinary": "^1.32.0",
+		"clsx": "^1.2.1",
+		"node-sass": "^7.0.3",
 		"prop-types": "^15.6.1",
+		"ra-data-json-server": "^4.4.1",
+		"ra-data-simple-rest": "^4.4.1",
 		"react": "^16.8.4",
+		"react-admin": "^4.4.1",
+		"react-bootstrap": "^2.6.0",
 		"react-dom": "^16.8.4",
+		"react-icons": "^4.6.0",
 		"react-polyfills": "0.0.1",
-		"react-router-dom": "^6.3.0"
+		"react-pro-sidebar": "^1.0.0-alpha.4",
+		"react-router-dom": "^6.4.2",
+		"react-toastify": "^9.0.8",
+		"recharts": "^2.1.16",
+		"semantic-ui-css": "^2.5.0",
+		"semantic-ui-react": "^2.1.3",
+		"uuid": "^9.0.0"
 	}
 }

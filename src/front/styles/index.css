@@ -1,3 +1,507 @@
-/* 
-    General Styles used on every website (Don't Repeat Yourself)
-*/
+
+.bodyMenu {
+  text-align: center;
+  margin: 5px;
+}
+/* ------------------------------------------------------------------------------------------------------------------------------*/
+.card-text {
+  font-family: "Bebas Neue", cursive;
+}
+.card {
+  padding: 0%;
+  /* border-radius: 15px; */
+}
+.card-title {
+  font-family: "Bebas Neue", cursive;
+}
+
+.categorias {
+  font-family: "Bungee Inline", cursive;
+  text-align: center;
+  font-size: 20px;
+}
+.Letra {
+  font-family: "Rubik Moonrocks", cursive;
+  margin-top: 20px;
+  /* margin-bottom: 20px; */
+}
+/* ------------------------------------------------------------------------------------------------------------------------------*/
+footer {
+  margin-top: 120px;
+  left: 0;
+  width: 100%;
+  height: 60px;
+}
+
+/* ------------------------------------------------------------------------------------------------------------------------------*/
+.navbar {
+  background-color: darkorange;
+  /* font-family: 'Rubik Moonrocks', cursive; */
+  font-size: 25px;
+}
+
+/* ------------------------------------------------------------------------------------------------------------------------------*/
+
+.button1,
+.button1::after {
+  padding: 16px 20px;
+  font-size: 18px;
+  background: linear-gradient(45deg, transparent 5%, #ff9101 5%);
+  border: 0;
+  color: #fff;
+  letter-spacing: 3px;
+  line-height: 1;
+  box-shadow: 6px 0px 0px #00fffb;
+  outline: transparent;
+  position: relative;
+}
+
+.button1:after {
+  --slice-0: inset(50% 50% 50% 50%);
+  --slice-1: inset(80% -6px 0 0);
+  --slice-2: inset(50% -6px 30% 0);
+  --slice-3: inset(10% -6px 85% 0);
+  --slice-4: inset(40% -6px 43% 0);
+  --slice-5: inset(80% -6px 5% 0);
+  content: "PIZZERIA";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    45deg,
+    transparent 3%,
+    #ffffff 3%,
+    #ffffff 5%,
+    #ff8d01 5%
+  );
+  text-shadow: -3px -3px 0px #f8f005, 3px 3px 0px #ffffff;
+  clip-path: var(--slice-0);
+}
+
+.button1:hover::after {
+  animation: 1s glitch;
+  animation-timing-function: steps(2, end);
+}
+.button1:active {
+  box-shadow: 0 0 0.6em 0.25em var(--glow-color),
+    0 0 2.5em 2em var(--glow-spread-color),
+    inset 0 0 0.5em 0.25em var(--glow-color);
+}
+
+@keyframes glitch {
+  0% {
+    clip-path: var(--slice-1);
+    transform: translate(-20px, -10px);
+  }
+
+  10% {
+    clip-path: var(--slice-3);
+    transform: translate(10px, 10px);
+  }
+
+  20% {
+    clip-path: var(--slice-1);
+    transform: translate(-10px, 10px);
+  }
+
+  30% {
+    clip-path: var(--slice-3);
+    transform: translate(0px, 5px);
+  }
+
+  40% {
+    clip-path: var(--slice-2);
+    transform: translate(-5px, 0px);
+  }
+
+  50% {
+    clip-path: var(--slice-3);
+    transform: translate(5px, 0px);
+  }
+
+  60% {
+    clip-path: var(--slice-4);
+    transform: translate(5px, 10px);
+  }
+
+  70% {
+    clip-path: var(--slice-2);
+    transform: translate(-10px, 10px);
+  }
+
+  80% {
+    clip-path: var(--slice-5);
+    transform: translate(20px, -10px);
+  }
+
+  90% {
+    clip-path: var(--slice-1);
+    transform: translate(-10px, 0px);
+  }
+
+  100% {
+    clip-path: var(--slice-1);
+    transform: translate(0);
+  }
+}
+/* ------------------------------------------------------------------------------------------------------------------------------*/
+.box {
+  text-align: center;
+  width: 140px;
+  height: auto;
+  float: left;
+  transition: 0.5s linear;
+  position: relative;
+  display: block;
+  overflow: hidden;
+  padding: 15px;
+  text-align: center;
+  margin: 0 5px;
+  background: transparent;
+  text-transform: uppercase;
+  font-weight: 900;
+}
+
+.box:before {
+  position: absolute;
+  content: "";
+  left: 0;
+  bottom: 0;
+  height: 4px;
+  width: 100%;
+  border-bottom: 4px solid transparent;
+  border-left: 4px solid transparent;
+  box-sizing: border-box;
+  transform: translateX(100%);
+}
+
+.box:after {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  border-top: 4px solid transparent;
+  border-right: 4px solid transparent;
+  box-sizing: border-box;
+  transform: translateX(-100%);
+}
+
+.box:hover {
+  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.5);
+}
+
+.box:hover:before {
+  border-color: #ffffff;
+  height: 100%;
+  transform: translateX(0);
+  transition: 0.3s transform linear, 0.3s height linear 0.3s;
+}
+
+.box:hover:after {
+  border-color: #ffffff;
+  height: 100%;
+  transform: translateX(0);
+  transition: 0.3s transform linear, 0.3s height linear 0.5s;
+}
+
+.button2 {
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  background: transparent;
+}
+
+/* ------------------------------------------------------------------------------------------------------------------------------*/
+
+.float {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  bottom: 40px;
+  right: 40px;
+  background-color: #25d366;
+  color: #fff;
+  border-radius: 50px;
+  text-align: center;
+  font-size: 30px;
+  box-shadow: 2px 2px 3px #999;
+  z-index: 100;
+}
+.float:hover {
+  text-decoration: none;
+  color: #25d366;
+  background-color: #fff;
+}
+
+.my-float {
+  margin-top: 16px;
+}
+
+/* ------------------------------------------------------------------------------------------------------------------------------*/
+
+.cardR {
+  /* width: 500px;
+  height: 600px; */
+  background: #f4f6fb;
+  border: 1px solid white;
+  box-shadow: 10px 10px 64px 0px rgba(180, 180, 207, 0.75);
+  -webkit-box-shadow: 10px 10px 64px 0px rgba(186, 186, 202, 0.75);
+  -moz-box-shadow: 10px 10px 64px 0px rgba(208, 208, 231, 0.75);
+}
+
+.cardL {
+  /* width: 400px;
+  height: 350px; */
+  background: #f4f6fb;
+  border: 1px solid white;
+  box-shadow: 10px 10px 64px 0px rgba(180, 180, 207, 0.75);
+  -webkit-box-shadow: 10px 10px 64px 0px rgba(186, 186, 202, 0.75);
+  -moz-box-shadow: 10px 10px 64px 0px rgba(208, 208, 231, 0.75);
+}
+
+.form {
+  padding: 25px;
+  max-width: 500px;
+}
+
+.card_header {
+  display: flex;
+  align-items: center;
+}
+
+.cardL svg {
+  color: #fcb000;
+  margin-bottom: 20px;
+  margin-right: 5px;
+}
+
+.form_heading {
+  padding-bottom: 20px;
+  font-size: 21px;
+  color: #fcb000;
+}
+
+.field {
+  padding-bottom: 10px;
+}
+
+.input {
+  border-radius: 5px;
+  background-color: #e9e9f7;
+  padding: 5px;
+  width: 100%;
+  color: #7a7ab3;
+  border: 1px solid #dadaf7;
+}
+
+.input:focus-visible {
+  outline: 1px solid #aeaed6;
+}
+
+.input::placeholder {
+  color: #bcbcdf;
+}
+
+label {
+  color: #b2bac8;
+  font-size: 14px;
+  display: block;
+  padding-bottom: 4px;
+}
+
+/* ------------------------------------------------------------------------------------------------------------------------------*/
+.cssbuttons-io-button {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  font-size: 15px;
+  padding: 0.7em 1.4em 0.7em 1.4em;
+  color: white;
+  background: #ad5389;
+  background: linear-gradient(0deg, #ff9101 0%, #ff9101 100%);
+  border: none;
+  box-shadow: 0 0.7em 1.5em -0.7em #ffcc00;
+  letter-spacing: 0.05em;
+  border-radius: 60em;
+}
+
+.cssbuttons-io-button:hover {
+  box-shadow: 0 0.5em 1.5em -0.5em #fbda03;
+}
+
+.cssbuttons-io-button:active {
+  box-shadow: 0 0.3em 1em -0.5em #ff000098;
+}
+
+.cardpago {
+  width: 400px;
+  height: 500px;
+  background: rgb(255, 255, 255);
+  /* border-radius: 0.4em;
+  box-shadow: 0.3em 0.3em 0.7em #00000015; */
+  transition: border 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: rgb(250, 250, 250) 0.2em solid;
+  border-radius: 20px;
+  box-shadow: 15px 15px 30px #bebebe, -15px -15px 30px #ffffff;
+  border: #ffae00 0.2em solid;
+}
+
+.titledetail {
+  background-color: #ffae00;
+  border-radius: 10px;
+}
+.titleproduct {
+  background-color: #ffae00;
+}
+
+.infoclient {
+  font-size: 20px;
+  font-family: "Bebas Neue", cursive;
+}
+
+.total {
+  background-color: #ffae00;
+  border: black;
+}
+
+/* .button3{
+  width: 200px;
+  height: 50px;
+} */
+
+.button3 {
+  border: none;
+  display: block;
+  position: relative;
+  padding: 0.7em 2.4em;
+  font-size: 18px;
+  background: transparent;
+  cursor: pointer;
+  user-select: none;
+  overflow: hidden;
+  color: #000000;
+  z-index: 1;
+  font-family: inherit;
+  font-weight: 500;
+}
+
+.button3 span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  z-index: -1;
+  border: 4px solid #ffae00;
+}
+
+.button3 span::before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 8%;
+  height: 500%;
+  background: var(--lightgray);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-60deg);
+  transition: all 0.3s;
+}
+
+.button3:hover span::before {
+  transform: translate(-50%, -50%) rotate(-90deg);
+  width: 100%;
+  background: #ffae00;
+}
+
+.button3:hover {
+  color: white;
+}
+
+.button3:active span::before {
+  background: #ffae00;
+}
+.imgcloudCarrito {
+  max-width: 200px;
+  min-height: 150px;
+  max-height: 150px;
+  border-radius: 5px;
+  margin-right: 15px;
+}
+.imgcloud {
+  max-width: 200px;
+  min-height: 150px;
+  max-height: 150px;
+  border-radius: 5px;
+}
+@media screen and (max-width: 762px) {
+  .card {
+    width: 350px;
+  }
+  .imgcloud {
+    min-width: 350px;
+    min-height: 300px;
+  }
+  .cssbuttons-io-button {
+    border-radius: 0%;
+    width: 350px;
+  }
+}
+
+.myCarousel {
+  background-image: url(https://i.pinimg.com/736x/13/9c/ad/139cad4d793b31b943a686cc90a4112a.jpg);
+  max-height: 30ch;
+
+}
+
+.tableBody {
+  width: 800px;
+
+  margin: auto;
+}
+.tableHead {
+  font-size: large;
+}
+
+.recibo {
+  width: 500px;
+  margin: auto;
+}
+
+.fotorecibo {
+  width: 200px;
+  height: 200px;
+}
+
+.logo {
+  font-size: 10ch;
+}
+
+.productrecibo {
+  border-bottom-width: 2px;
+  border-bottom: #000000;
+}
+
+.logo2 {
+  margin-right: 3px;
+}
+
+.card-cocina{
+  min-width: 300px;
+  max-height: 600px;
+  min-height: 400px;
+  text-align: center;
+  margin: auto;
+}
+
+.productform{
+  min-width: 800px;
+}
