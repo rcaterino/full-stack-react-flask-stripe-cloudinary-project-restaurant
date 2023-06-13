@@ -1,3 +1,21 @@
+# 🍕 WebApp de Portal 10 - ¡Ordene su Pizza en Línea! 📱💳
+
+¡Bienvenidos al proyecto final del Bootcamp de 4Geeks Academy! Aquí les presentamos nuestra increíble aplicación desarrollada especialmente para la pizzería Portal 10, ubicada en el acogedor barrio de Chueca en Madrid. 🍕🌃
+
+¿Quieres disfrutar de una deliciosa pizza sin tener que esperar en la fila? ¡Estás en el lugar correcto! Nuestra misión era optimizar el tiempo de atención al cliente en esta pequeña pizzería de barrio, donde los propios dueños se encargan de todo, desde preparar los pedidos hasta atender a los clientes en la caja. 😊💨
+
+Nuestra solución revolucionaria permite a los clientes explorar el menú, seleccionar sus productos favoritos y realizar pedidos sin tener que pasar por la caja. ¡Y eso no es todo! Pueden pagar de forma segura con su tarjeta de débito o crédito directamente desde sus dispositivos móviles. ¿No es genial? El pedido se envía en tiempo real a la cocina, donde el personal se dedica por completo a preparar y entregar las pizzas, sin perder tiempo en recibir pedidos o procesar pagos. ¡Así reducimos el tiempo de atención y entrega al máximo! ⏱️🚀
+
+## Características del Proyecto 🚀
+
+- Frontend desarrollado con React y Bootstrap: Interfaz de usuario atractiva y fácil de usar.
+- Backend desarrollado con Flask: Potencia y flexibilidad en el manejo de datos.
+- Base de datos SQL: Almacenamiento seguro y eficiente de la información.
+- Integración con Stripe: Pasarela de pago segura y confiable.
+- Integración con Cloudinary: Almacenamiento y optimización de imágenes para una experiencia visual perfecta. 🖼️✨
+
+¿Estás listo para unirte a la revolución de las pizzas en línea? Sigue las instrucciones a continuación para empezar. 🍕💻
+
 # Plantilla base de WebApp con React JS y Flask API
 
 [![Abrir en Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io#https://github.com/4GeeksAcademy/react-flask-hello.git)
